@@ -1,6 +1,9 @@
 if (!require(devtools)) install.packages("devtools") 
 if (!require(DBI)) devtools::install_github("rstats-db/DBI")
+if (!require(RSQLite)) devtools::install_github("rstats-db/RSQLite")
 if (!require(RMySQL)) devtools::install_github("rstats-db/RMySQL")
+
+
 
 # user<-"root"
 # pw<-"XXXXXXXXXXXXXXXX"
