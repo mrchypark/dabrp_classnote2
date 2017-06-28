@@ -542,31 +542,27 @@ order by num_characters desc;
 
 ## 과제
 
-1. RSQLite와 DBI를 활용해서 `nycflights13` 데이터를 db Table로 만들고, 제출해 주세요.
-  1) 'nycflights13' 패키지를 설치하고 5개 데이터를 확인하세요.
-  2) dbConnect 명령으로 SQLite 파일을 sql_[이름].db 으로 생성하세요.
-  3) 5개의 데이터를 각각의 이름으로 table을 생성하세요.
-  4) 1)~3)의 과정을 모두 코드로 남기고 run_[이름].R로 저장하세요.
-  5) run_[이름].R과 sql_[이름].db 두 개의 파일을 class2assignment 폴더에 저장하세요.
-  6) github에서 pull request로 제출해 주세요.
-  7) recomen 폴더에 있는 데이터 6개도 같은 과정을 진행하고, 제출은 하지 마세요.
-  8) .gitignore를 이용하면 push의 범위에서 제외할 수 있습니다.
+  1. RSQLite와 DBI를 활용해서 `nycflights13` 데이터를 db Table로 만들고, 제출해 주세요.
+      1) 'nycflights13' 패키지를 설치하고 5개 데이터를 확인하세요.
+      2) dbConnect 명령으로 SQLite 파일을 sql_[이름].db 으로 생성하세요.
+      3) 5개의 데이터를 각각의 이름으로 table을 생성하세요.
+      4) 1)~3)의 과정을 모두 코드로 남기고 run_[이름].R로 저장하세요.
+      5) run_[이름].R과 sql_[이름].db 두 개의 파일을 class2assignment 폴더에 저장하세요.
+      6) github에서 pull request로 제출해 주세요.
+      7) recomen 폴더에 있는 데이터 6개도 같은 과정을 진행하고, 제출은 하지 마세요.
+      8) .gitignore를 이용하면 push의 범위에서 제외할 수 있습니다.
   
 ## 과제
 
-1. RSQLite와 DBI를 활용해서 `nycflights13` 데이터를 db Table로 만들고, 제출해 주세요.
-  1) 'nycflights13' 패키지를 설치하고 5개 데이터를 확인하세요.
-  2) dbConnect 명령으로 SQLite 파일을 sql_[이름].db 으로 생성하세요.
-  3) 5개의 데이터를 각각의 이름으로 table을 생성하세요.
-  4) 1)~3)의 과정을 모두 코드로 남기고 run_[이름].R로 저장하세요.
-  5) run_[이름].R과 sql_[이름].db 두 개의 파일을 class2assignment 폴더에 저장하세요.
-  6) github에서 pull request로 제출해 주세요.
-  7) recomen 폴더에 있는 데이터 6개도 같은 과정을 진행하고, 제출은 하지 마세요.
-  8) .gitignore를 이용하면 push의 범위에서 제외할 수 있습니다.
-  
-
-
-https://raw.githubusercontent.com/hadley/nycflights13/master/data-raw/airports.csv
+  2. recomen 폴더에 있는 데이터 6개를 bigquery에 업로드 하고 질의를 실행해 보세요.
+      1) "bigrquery" 패키지의 기능으로 작은 용량 5개의 데이터를 업로드해 주세요.
+      2) Storage 서비스를 이용해서 `tran.csv` 파일을 bigquery에 테이블로 생성하세요.
+      3) query_exec 함수와 "select * from [tran] limit 10" 을 실행하고 결과를 받으세요.
+          * [tran]은 각자 해당하는 이름으로 변경하셔야 합니다.
+      4) 1)~3)의 과정을 big_[이름].R로 저장하세요.
+      5) big_[이름].R 파일을 class2assignment 폴더에 저장하세요.
+      6) github에서 pull request로 제출해 주세요.
+      
 
 [1]: https://opentutorials.org/course/195/1399
 [2]: http://www.sqlite.org/

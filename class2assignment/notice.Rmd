@@ -8,3 +8,4 @@ knitr::opts_chunk$set(echo = TRUE)
 ```
 
 1. 이 폴더에 run_[이름].R과 sql_[이름].db 파일을 저장하고 Pull request를 수행해 주세요.
+2. 이 폴더에 big_[이름].R 파일을 저장하고 Pull request를 수행해 주세요.
