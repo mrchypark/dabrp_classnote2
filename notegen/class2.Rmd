@@ -144,10 +144,10 @@ system.time(dbWriteTable(con, "member", "./recomen/membership.csv",row.names=F))
 
 해들리 위컴이 설명한 [tidy data][5]의 요건에 맞게 가공하여 데이터를 쉽게 다룰 수 있게 만든 상태
 
-  - 측정하는 각 변수는 하나의 열에 있어야 합니다.
-  - 측정하는 각 관찰은 하나의 행에 있어야 합니다.
-  - 각 종류의 변수에 대해 각 하나의 테이블이 있어야합니다.
-  - 여러 개의 테이블이있는 경우 테이블에 합치기 위한 기준 열을 포함해야합니다
+  - 측정하는 각 변수는 하나의 열에 있어야 함
+  - 측정하는 각 관찰은 하나의 행에 있어야 함
+  - 각 종류의 변수에 대해 각 하나의 테이블이 있어야 함
+  - 여러 개의 테이블이있는 경우 테이블에 합치기 위한 기준 열을 포함해야 함
 
 ## 코드북
 
@@ -169,7 +169,6 @@ system.time(dbWriteTable(con, "member", "./recomen/membership.csv",row.names=F))
 
 ## 데이터 훑어보기
 
-  - tibble: 
   - head: 최초 6행의 데이터를 보여줌(행갯수 조절 가능)
   - tail: 마지막 6행의 데이터를 보여줌(행갯수 조절 가능)
   - summary: 각 컬럼의 자료형과 숫자라면 대표값을 함께 보여줌
@@ -178,7 +177,7 @@ system.time(dbWriteTable(con, "member", "./recomen/membership.csv",row.names=F))
   - nrow: 행 갯수 출력(data.frame)
   - is.na: NA 인지 확인
   - complete.cases: 값이 모두 있는지 행단위로 검사
-
+  - tibble: 최근 기법으로 재구성된 data.frame
 
 ## 추천 데이터 - chennel
 
@@ -281,8 +280,107 @@ str(tran, max.level=1)
 
 
 ## 클라우드 서비스 소개
+
+클라우딩 컴퓨팅은 사용자의 환경 밖에서 서비스로서 제공된 확장 가능한 컴퓨팅 자원을 사용한 양에 따라 비용을 지불하고 사용하는 것
+
+
+출처: [P. Changanti, 가상 인프라용 클라우드 서비스, Part 1: IaaS(Infrastructure as a Service) 및 Eucalyptus][6]
+
+
 ## 구글 클라우드
+
+![](http://tech.whatap.io/wp-content/uploads/2016/03/gcp-header-logo.png)
+
+## 구글 클라우드
+
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (1).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (2).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (3).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (4).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (5).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (6).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (7).png)
+
 ## R MySQL 연결
+
+```
+library(RMySQL)
+con <- dbConnect(MySQL(),
+                 user = user,
+                 password = pw,
+                 host = host,
+                 dbname = "recom")
+dbListTables(conn = con)
+dbWriteTable(conn = con, name = 'tran', value = "./recomen/tran.csv")
+dbReadTable(conn = con, name = "tran")
+```
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (7).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (8).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (9).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (10).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (11).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (12).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (13).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (14).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (15).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (16).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (17).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (18).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (19).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (20).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (21).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (22).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (23).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (24).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (25).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (26).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (27).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (28).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (29).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (22).png)
+
+
+## R bigquery 연결
+
+`query_exec`가 첫 실행이면 브라우저에서 권한 확인을 합니다.
+```
+library(bigrquery)
+project <- "konlper-168808" 
+sql <- "SELECT * FROM [konlper-168808:recom.chennel] LIMIT 5"
+query_exec(sql, project = project)
+```
+
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (30).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (31).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (32).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (33).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (34).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (35).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (36).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (37).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (38).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (39).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (40).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (41).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (42).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (43).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (44).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (45).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (46).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (47).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (48).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (49).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (50).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (51).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (52).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (53).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (54).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (55).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (56).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (57).png)
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (58).png)
+
+
 
 
 
@@ -291,3 +389,4 @@ str(tran, max.level=1)
 [3]: http://jtleek.com/
 [4]: https://github.com/jtleek/datasharing
 [5]: http://vita.had.co.nz/papers/tidy-data.pdf
+[6]: http://www.ibm.com/developerworks/kr/library/os-cloud-virtual1/index.html 

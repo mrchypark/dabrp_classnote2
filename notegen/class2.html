@@ -258,10 +258,10 @@ system.time(dbWriteTable(con, &quot;member&quot;, &quot;./recomen/membership.csv
 <p>해들리 위컴이 설명한 <a href='http://vita.had.co.nz/papers/tidy-data.pdf' title=''>tidy data</a>의 요건에 맞게 가공하여 데이터를 쉽게 다룰 수 있게 만든 상태</p>
 
 <ul>
-<li>측정하는 각 변수는 하나의 열에 있어야 합니다.</li>
-<li>측정하는 각 관찰은 하나의 행에 있어야 합니다.</li>
-<li>각 종류의 변수에 대해 각 하나의 테이블이 있어야합니다.</li>
-<li>여러 개의 테이블이있는 경우 테이블에 합치기 위한 기준 열을 포함해야합니다</li>
+<li>측정하는 각 변수는 하나의 열에 있어야 함</li>
+<li>측정하는 각 관찰은 하나의 행에 있어야 함</li>
+<li>각 종류의 변수에 대해 각 하나의 테이블이 있어야 함</li>
+<li>여러 개의 테이블이있는 경우 테이블에 합치기 위한 기준 열을 포함해야 함</li>
 </ul>
 
 </article></slide><slide class=''><hgroup><h2>코드북</h2></hgroup><article >
@@ -287,7 +287,6 @@ system.time(dbWriteTable(con, &quot;member&quot;, &quot;./recomen/membership.csv
 </article></slide><slide class=''><hgroup><h2>데이터 훑어보기</h2></hgroup><article  id="-">
 
 <ul>
-<li>tibble:</li>
 <li>head: 최초 6행의 데이터를 보여줌(행갯수 조절 가능)</li>
 <li>tail: 마지막 6행의 데이터를 보여줌(행갯수 조절 가능)</li>
 <li>summary: 각 컬럼의 자료형과 숫자라면 대표값을 함께 보여줌</li>
@@ -296,6 +295,7 @@ system.time(dbWriteTable(con, &quot;member&quot;, &quot;./recomen/membership.csv
 <li>nrow: 행 갯수 출력(data.frame)</li>
 <li>is.na: NA 인지 확인</li>
 <li>complete.cases: 값이 모두 있는지 행단위로 검사</li>
+<li>tibble: 최근 기법으로 재구성된 data.frame</li>
 </ul>
 
 </article></slide><slide class=''><hgroup><h2>추천 데이터 - chennel</h2></hgroup><article  id="----chennel">
@@ -479,9 +479,47 @@ system.time(dbWriteTable(con, &quot;member&quot;, &quot;./recomen/membership.csv
 
 </article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>클라우드 서비스</h2></hgroup><article  id="-">
 
-<pre >- 클라우드 서비스 소개
-- 구글 클라우드
-- RMySQL 연결</pre></article></slide>
+</article></slide><slide class=''><hgroup><h2>클라우드 서비스 소개</h2></hgroup><article  id="--">
+
+<p>클라우딩 컴퓨팅은 사용자의 환경 밖에서 서비스로서 제공된 확장 가능한 컴퓨팅 자원을 사용한 양에 따라 비용을 지불하고 사용하는 것</p>
+
+<p>출처: <a href='http://www.ibm.com/developerworks/kr/library/os-cloud-virtual1/index.html' title=''>P. Changanti, 가상 인프라용 클라우드 서비스, Part 1: IaaS(Infrastructure as a Service) 및 Eucalyptus</a></p>
+
+</article></slide><slide class=''><hgroup><h2>구글 클라우드</h2></hgroup><article  id="-">
+
+<img src='http://tech.whatap.io/wp-content/uploads/2016/03/gcp-header-logo.png' title='fig:'/>
+
+</article></slide><slide class=''><hgroup><h2>구글 클라우드</h2></hgroup><article  id="--1">
+
+<p><img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(1).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(2).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(3).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(4).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(5).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(6).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(7).png' title=''/></p>
+
+</article></slide><slide class=''><hgroup><h2>R MySQL 연결</h2></hgroup><article  id="r-mysql-">
+
+<pre >library(RMySQL)
+con &lt;- dbConnect(MySQL(),
+                 user = user,
+                 password = pw,
+                 host = host,
+                 dbname = &quot;recom&quot;)
+dbListTables(conn = con)
+dbWriteTable(conn = con, name = &#39;tran&#39;, value = &quot;./recomen/tran.csv&quot;)
+dbReadTable(conn = con, name = &quot;tran&quot;)</pre>
+
+<p><img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(7).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(8).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(9).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(10).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(11).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(12).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(13).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(14).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(15).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(16).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(17).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(18).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(19).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(20).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(21).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(22).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(23).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(24).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(25).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(26).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(27).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(28).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(29).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(22).png' title=''/></p>
+
+</article></slide><slide class=''><hgroup><h2>R bigquery 연결</h2></hgroup><article  id="r-bigquery-">
+
+<pre >library(RMySQL)
+con &lt;- dbConnect(MySQL(),
+                 user = user,
+                 password = pw,
+                 host = host,
+                 dbname = &quot;recom&quot;)
+dbListTables(conn = con)
+dbWriteTable(conn = con, name = &#39;tran&#39;, value = &quot;./recomen/tran.csv&quot;)
+dbReadTable(conn = con, name = &quot;tran&quot;)</pre>
+
+<p><img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(30).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(31).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(32).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(33).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(34).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(35).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(36).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(37).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(38).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(39).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(40).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(41).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(42).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(43).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(44).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(45).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(46).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(47).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(48).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(49).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(50).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(51).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(52).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(53).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(54).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(55).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(56).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(57).png' title=''/> <img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud%20(58).png' title=''/></p></article></slide>
 
 
   <slide class="backdrop"></slide>
