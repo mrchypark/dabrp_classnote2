@@ -5,10 +5,14 @@ date: "2017년 6월 27일"
 output:
   ioslides_presentation:
     widescreen: true
+    self_contained: true
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = FALSE)
+knitr::opts_chunk$set(echo = FALSE, cache = T)
+dbex<-data.frame("엑셀"=c("파일","시트"),
+                 "DBMS"=c("데이터베이스","테이블"))
+
 ```
 
 ## 목차
@@ -16,9 +20,9 @@ knitr::opts_chunk$set(echo = FALSE)
   - 데이터베이스
     - 데이터베이스란
     - 서버와 클라이언트
-    - DBI, RSQLite
+    - R과 DB를 연결해주는 DBI
   - 데이터 소개
-    - 공유 데이터의 조건
+    - 데이터 공유
     - 데이터 원본
     - 데이터 훑어보기
   - 클라우드 서비스
@@ -37,21 +41,253 @@ knitr::opts_chunk$set(echo = FALSE)
 
 단순한 관찰이나 측정 등의 수단을 통해 현실 세계로부터 수집된 사실이나 값
 
-의미있게 사용하기 위해서 구조화가 필요    
+의미있게 사용하기 위해서 구조화가 필요함    
 * 구조화: 체계적으로 조직하는 것
+
+## DBMS
+
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/class2_database.png)    
+* 이미지 출처: [생활코딩 MySQL 수업][1]
 
 ## 데이터베이스란
 
-![]()
+```{r dbex}
+knitr::kable(dbex, row.names = F)
+```
 
+## 데이터베이스 클라이언트
+
+  - 대표적인 클라이언트
+    - MySQL monitor
+    - PHPmyAdmin
+    - Navicat
+    - HeidiSQL
 
 ## 서버와 클라이언트
 
+![](https://s3-ap-northeast-2.amazonaws.com/opentutorials-user-file/module/2790/5800.png)
+
 ## 테이블
 
+![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/class2_database.png)    
+* 이미지 출처: [생활코딩 MySQL 수업][1]
+
+## data.frame
+
+```{r printh}
+print(head(iris))
+```
+
+## SQL
+
+Structured Query Language
+
+구조적 데이터 요청 언어
+
+## DBI
+
+```{r dbi}
+if (!require(devtools)) install.packages("devtools") 
+if (!require(DBI)) devtools::install_github("rstats-db/DBI")
+if (!require(RSQLite)) devtools::install_github("rstats-db/RSQLite")
+```
+
+## SQLite
+
+[SQLite][2]    
+
+> SQLite is a self-contained, high-reliability, embedded, full-featured, public-domain, SQL database engine.
+
+> 파일 하나로 구성하는 작고, 무료인 sql db
+
+## DBI
+
+```
+library(DBI)
+library(RSQLite)
+con <- dbConnect(RSQLite::SQLite(), dbname="class2.sqlite")
+
+dbListTables(con)
+
+dbWriteTable(con, "mtcars", mtcars, overwrite=T)
+dbListTables(con)
+
+dbReadTable(con, "mtcars")
+
+dbRemoveTable(con,"mtcars")
+dbListTables(con)
+
+system.time(dbWriteTable(con, "member", "./recomen/membership.csv",row.names=F))
+```
+
+# 데이터
+
+## 데이터 공유
+
+[Leek group][3]에서 소개하는 [데이터 공유 가이드][4]
+
+  - 원시 데이터
+  - 정제후 데이터
+  - 코드북
+  - 변수 작성법
+  - 재현성
+
+## 원시 데이터
+
+최초 획득한 당시 그대로의 데이터
+
+  - 어떤 식으로든 수정을 가하지 않은 상태
+  - 수정을 가하는 과정을 함께 기록함으로써 신뢰성 확보
+  - 위 두 가지가 없는 경우 상황을 상상해야 함
+
+## 정제후 데이터
+
+해들리 위컴이 설명한 [tidy data][5]의 요건에 맞게 가공하여 데이터를 쉽게 다룰 수 있게 만든 상태
+
+  - 측정하는 각 변수는 하나의 열에 있어야 합니다.
+  - 측정하는 각 관찰은 하나의 행에 있어야 합니다.
+  - 각 종류의 변수에 대해 각 하나의 테이블이 있어야합니다.
+  - 여러 개의 테이블이있는 경우 테이블에 합치기 위한 기준 열을 포함해야합니다
+
+## 코드북
+
+데이터셋에 대해 필요한 설명을 담은 문서
+
+  - 정제후 데이터에 대해 추가적으로 필요한 설명이나 정보(단위 등)
+  - 정제 과정에서 사용한 방법의 설명과 사용한 이유
+  - 데이터가 사용된 분석에 대한 정보
 
 
-# 데이터 소개
+## 데이터 원본
+
+확보할 당시의 원시 데이터나, 항상 최신 상태를 유지하여 신뢰할 수 있는 데이터
+
+  - 커뮤니케이션 비용 감소
+  - 의사결정 및 활동의 기준
+  - 가공된 데이터의 신뢰성 확보
+
+
+## 데이터 훑어보기
+
+  - tibble: 
+  - head: 최초 6행의 데이터를 보여줌(행갯수 조절 가능)
+  - tail: 마지막 6행의 데이터를 보여줌(행갯수 조절 가능)
+  - summary: 각 컬럼의 자료형과 숫자라면 대표값을 함께 보여줌
+  - str: 각 컬럼의 자료형과 초기 값을 보여줌
+  - length: 데이터의 길이 출력(vector)
+  - nrow: 행 갯수 출력(data.frame)
+  - is.na: NA 인지 확인
+  - complete.cases: 값이 모두 있는지 행단위로 검사
+
+
+## 추천 데이터 - chennel
+
+```{r loaddata, message=FALSE}
+library(readr)
+chennel<-read_csv("../recomen/chennel.csv")
+competitor<-read_csv("../recomen/competitor.csv")
+customer<-read_csv("../recomen/customer.csv")
+item<-read_csv("../recomen/item.csv")
+membership<-read_csv("../recomen/membership.csv")
+tran<-read_csv("../recomen/tran.csv")
+```
+  - cusID  : 5자리 숫자조합으로 구성된 고객ID
+  - chennel: 접속 체널
+  - useCnt : 사용횟수(건)
+```{r strchennel}
+summary(chennel)
+str(chennel, max.level=1)
+```
+
+## 추천 데이터 - competitor
+
+  - cusID     : 5자리 숫자조합으로 구성된 고객ID
+  - partner   : 제휴사
+  - competitor: 경쟁사
+  - useDate   : 이용년월(YYYYDD)
+```{r strcompetitor1}
+summary(competitor)
+```
+
+## 추천 데이터 - competitor
+
+```{r strcompetitor2}
+str(competitor, max.level=1)
+```
+
+
+## 추천 데이터 - customer
+
+  - cusID: 5자리 숫자조합으로 구성된 고객ID
+  - sex  : 성별
+  - age  : 연령    
+    * `r unique(customer$age)[length(unique(customer$age)):1]`
+  - area : 거주지역
+  
+## 추천 데이터 - customer
+
+```{r strcustomer}
+summary(customer)
+str(customer, max.level=1)
+```
+
+
+## 추천 데이터 - item
+
+  - partner    : 재휴사
+  - cate_1     : 대분류
+  - cate_2     : 중분류
+  - cate_3     : 소분류
+  - cate_2_name: 중분류명
+  - cate_3_name: 소분류명
+  
+## 추천 데이터 - item
+
+```{r stritem1}
+summary(item)
+```
+
+## 추천 데이터 - item
+
+```{r stritem2}
+str(item, max.level=1)
+```
+
+## 추천 데이터 - membership
+
+  - cusID     : 5자리 숫자조합으로 구성된 고객ID
+  - memberShip: 멤버십명
+  - regDate   : 가입년월
+```{r strmembership}
+summary(membership)
+str(membership, max.level=1)
+```
+
+
+## 추천 데이터 - tran
+
+```{r strtran1}
+summary(tran)
+```
+
+## 추천 데이터 - tran
+
+```{r strtran2}
+str(tran, max.level=1)
+```
 
 
 # 클라우드 서비스
+
+
+## 클라우드 서비스 소개
+## 구글 클라우드
+## R MySQL 연결
+
+
+
+[1]: https://opentutorials.org/course/195/1399
+[2]: http://www.sqlite.org/
+[3]: http://jtleek.com/
+[4]: https://github.com/jtleek/datasharing
+[5]: http://vita.had.co.nz/papers/tidy-data.pdf

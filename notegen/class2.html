@@ -105,12 +105,12 @@
 <ul>
 <li>데이터베이스란</li>
 <li>서버와 클라이언트</li>
-<li>DBI, RSQLite</li>
+<li>R과 DB를 연결해주는 DBI</li>
 </ul></li>
 <li>데이터 소개
 
 <ul>
-<li>공유 데이터의 조건</li>
+<li>데이터 공유</li>
 <li>데이터 원본</li>
 <li>데이터 훑어보기</li>
 </ul></li>
@@ -131,19 +131,357 @@
 
 <p>단순한 관찰이나 측정 등의 수단을 통해 현실 세계로부터 수집된 사실이나 값</p>
 
-<p>의미있게 사용하기 위해서 구조화가 필요<br/>* 구조화: 체계적으로 조직하는 것</p>
+<p>의미있게 사용하기 위해서 구조화가 필요함<br/>* 구조화: 체계적으로 조직하는 것</p>
+
+</article></slide><slide class=''><hgroup><h2>DBMS</h2></hgroup><article  id="dbms">
+
+<p><img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/class2_database.png' title=''/><br/>* 이미지 출처: <a href='https://opentutorials.org/course/195/1399' title=''>생활코딩 MySQL 수업</a></p>
 
 </article></slide><slide class=''><hgroup><h2>데이터베이스란</h2></hgroup><article >
 
-<img src='https://s3.ap-northeast-2.amazonaws.com/opentutorials-user-file/module/98/320.png' title='fig:'/>
+<table class = 'rmdtable'>
+<tr class="header">
+<th align="left">엑셀</th>
+<th align="left">DBMS</th>
+</tr>
+<tr class="odd">
+<td align="left">파일</td>
+<td align="left">데이터베이스</td>
+</tr>
+<tr class="even">
+<td align="left">시트</td>
+<td align="left">테이블</td>
+</tr>
+</table>
+
+</article></slide><slide class=''><hgroup><h2>데이터베이스 클라이언트</h2></hgroup><article  id="-">
+
+<ul>
+<li>대표적인 클라이언트
+
+<ul>
+<li>MySQL monitor</li>
+<li>PHPmyAdmin</li>
+<li>Navicat</li>
+<li>HeidiSQL</li>
+</ul></li>
+</ul>
 
 </article></slide><slide class=''><hgroup><h2>서버와 클라이언트</h2></hgroup><article  id="-">
 
+<img src='https://s3-ap-northeast-2.amazonaws.com/opentutorials-user-file/module/2790/5800.png' title='fig:'/>
+
 </article></slide><slide class=''><hgroup><h2>테이블</h2></hgroup><article >
 
-</article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>데이터 소개</h2></hgroup><article  id="-">
+<p><img src='https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/class2_database.png' title=''/><br/>* 이미지 출처: <a href='https://opentutorials.org/course/195/1399' title=''>생활코딩 MySQL 수업</a></p>
 
-</article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>클라우드 서비스</h2></hgroup><article  id="-"></article></slide>
+</article></slide><slide class=''><hgroup><h2>data.frame</h2></hgroup><article  id="data.frame">
+
+<pre >##   Sepal.Length Sepal.Width Petal.Length Petal.Width Species
+## 1          5.1         3.5          1.4         0.2  setosa
+## 2          4.9         3.0          1.4         0.2  setosa
+## 3          4.7         3.2          1.3         0.2  setosa
+## 4          4.6         3.1          1.5         0.2  setosa
+## 5          5.0         3.6          1.4         0.2  setosa
+## 6          5.4         3.9          1.7         0.4  setosa</pre>
+
+</article></slide><slide class=''><hgroup><h2>SQL</h2></hgroup><article  id="sql">
+
+<p>Structured Query Language</p>
+
+<p>구조적 데이터 요청 언어</p>
+
+</article></slide><slide class=''><hgroup><h2>DBI</h2></hgroup><article  id="dbi">
+
+<pre >## Loading required package: devtools</pre>
+
+<pre >## Loading required package: DBI</pre>
+
+<pre >## Loading required package: RSQLite</pre>
+
+</article></slide><slide class=''><hgroup><h2>SQLite</h2></hgroup><article  id="sqlite">
+
+<p><a href='http://www.sqlite.org/' title=''>SQLite</a></p>
+
+<blockquote>
+<p>SQLite is a self-contained, high-reliability, embedded, full-featured, public-domain, SQL database engine.</p>
+</blockquote>
+
+<blockquote>
+<p>파일 하나로 구성하는 작고, 무료인 sql db</p>
+</blockquote>
+
+</article></slide><slide class=''><hgroup><h2>DBI</h2></hgroup><article  id="dbi-1">
+
+<pre >library(DBI)
+library(RSQLite)
+con &lt;- dbConnect(RSQLite::SQLite(), dbname=&quot;class2.sqlite&quot;)
+
+dbListTables(con)
+
+dbWriteTable(con, &quot;mtcars&quot;, mtcars, overwrite=T)
+dbListTables(con)
+
+dbReadTable(con, &quot;mtcars&quot;)
+
+dbRemoveTable(con,&quot;mtcars&quot;)
+dbListTables(con)
+
+system.time(dbWriteTable(con, &quot;member&quot;, &quot;./recomen/membership.csv&quot;,row.names=F))</pre>
+
+</article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>데이터</h2></hgroup><article >
+
+</article></slide><slide class=''><hgroup><h2>데이터 공유</h2></hgroup><article  id="-">
+
+<p><a href='http://jtleek.com/' title=''>Leek group</a>에서 소개하는 <a href='https://github.com/jtleek/datasharing' title=''>데이터 공유 가이드</a></p>
+
+<ul>
+<li>원시 데이터</li>
+<li>정제후 데이터</li>
+<li>코드북</li>
+<li>변수 작성법</li>
+<li>재현성</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>원시 데이터</h2></hgroup><article  id="-">
+
+<p>최초 획득한 당시 그대로의 데이터</p>
+
+<ul>
+<li>어떤 식으로든 수정을 가하지 않은 상태</li>
+<li>수정을 가하는 과정을 함께 기록함으로써 신뢰성 확보</li>
+<li>위 두 가지가 없는 경우 상황을 상상해야 함</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>정제후 데이터</h2></hgroup><article  id="-">
+
+<p>해들리 위컴이 설명한 <a href='http://vita.had.co.nz/papers/tidy-data.pdf' title=''>tidy data</a>의 요건에 맞게 가공하여 데이터를 쉽게 다룰 수 있게 만든 상태</p>
+
+<ul>
+<li>측정하는 각 변수는 하나의 열에 있어야 합니다.</li>
+<li>측정하는 각 관찰은 하나의 행에 있어야 합니다.</li>
+<li>각 종류의 변수에 대해 각 하나의 테이블이 있어야합니다.</li>
+<li>여러 개의 테이블이있는 경우 테이블에 합치기 위한 기준 열을 포함해야합니다</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>코드북</h2></hgroup><article >
+
+<p>데이터셋에 대해 필요한 설명을 담은 문서</p>
+
+<ul>
+<li>정제후 데이터에 대해 추가적으로 필요한 설명이나 정보(단위 등)</li>
+<li>정제 과정에서 사용한 방법의 설명과 사용한 이유</li>
+<li>데이터가 사용된 분석에 대한 정보</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>데이터 원본</h2></hgroup><article  id="-">
+
+<p>확보할 당시의 원시 데이터나, 항상 최신 상태를 유지하여 신뢰할 수 있는 데이터</p>
+
+<ul>
+<li>커뮤니케이션 비용 감소</li>
+<li>의사결정 및 활동의 기준</li>
+<li>가공된 데이터의 신뢰성 확보</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>데이터 훑어보기</h2></hgroup><article  id="-">
+
+<ul>
+<li>tibble:</li>
+<li>head: 최초 6행의 데이터를 보여줌(행갯수 조절 가능)</li>
+<li>tail: 마지막 6행의 데이터를 보여줌(행갯수 조절 가능)</li>
+<li>summary: 각 컬럼의 자료형과 숫자라면 대표값을 함께 보여줌</li>
+<li>str: 각 컬럼의 자료형과 초기 값을 보여줌</li>
+<li>length: 데이터의 길이 출력(vector)</li>
+<li>nrow: 행 갯수 출력(data.frame)</li>
+<li>is.na: NA 인지 확인</li>
+<li>complete.cases: 값이 모두 있는지 행단위로 검사</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>추천 데이터 - chennel</h2></hgroup><article  id="----chennel">
+
+<ul>
+<li>cusID : 5자리 숫자조합으로 구성된 고객ID</li>
+<li>chennel: 접속 체널</li>
+<li>useCnt : 사용횟수(건)</li>
+</ul>
+
+<pre >##      cusID         chennel              useCnt      
+##  Min.   :    7   Length:8824        Min.   :  1.00  
+##  1st Qu.: 6107   Class :character   1st Qu.:  2.00  
+##  Median : 9506   Mode  :character   Median :  7.00  
+##  Mean   : 9835                      Mean   : 13.57  
+##  3rd Qu.:13812                      3rd Qu.: 19.00  
+##  Max.   :19382                      Max.   :240.00</pre>
+
+<pre >## Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    8824 obs. of  3 variables:
+##  $ cusID  : int  7 14 42 74 74 94 112 112 122 123 ...
+##  $ chennel: chr  &quot;A_MOBILE/APP&quot; &quot;A_MOBILE/APP&quot; &quot;B_MOBILE/APP&quot; &quot;A_MOBILE/APP&quot; ...
+##  $ useCnt : int  4 1 23 1 30 14 16 1 27 10 ...
+##  - attr(*, &quot;spec&quot;)=List of 2
+##   ..- attr(*, &quot;class&quot;)= chr &quot;col_spec&quot;</pre>
+
+</article></slide><slide class=''><hgroup><h2>추천 데이터 - competitor</h2></hgroup><article  id="----competitor">
+
+<ul>
+<li>cusID : 5자리 숫자조합으로 구성된 고객ID</li>
+<li>partner : 제휴사</li>
+<li>competitor: 경쟁사</li>
+<li>useDate : 이용년월(YYYYDD)</li>
+</ul>
+
+<pre >##     cusID             partner           competitor           useDate      
+##  Length:28159       Length:28159       Length:28159       Min.   :201501  
+##  Class :character   Class :character   Class :character   1st Qu.:201504  
+##  Mode  :character   Mode  :character   Mode  :character   Median :201507  
+##                                                           Mean   :201507  
+##                                                           3rd Qu.:201510  
+##                                                           Max.   :201512</pre>
+
+</article></slide><slide class=''><hgroup><h2>추천 데이터 - competitor</h2></hgroup><article  id="----competitor-1">
+
+<pre >## Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    28159 obs. of  4 variables:
+##  $ cusID     : chr  &quot;00002&quot; &quot;00051&quot; &quot;00077&quot; &quot;00077&quot; ...
+##  $ partner   : chr  &quot;D&quot; &quot;D&quot; &quot;D&quot; &quot;D&quot; ...
+##  $ competitor: chr  &quot;D02&quot; &quot;D01&quot; &quot;D02&quot; &quot;D02&quot; ...
+##  $ useDate   : int  201507 201504 201503 201506 201507 201508 201511 201510 201511 201508 ...
+##  - attr(*, &quot;spec&quot;)=List of 2
+##   ..- attr(*, &quot;class&quot;)= chr &quot;col_spec&quot;</pre>
+
+</article></slide><slide class=''><hgroup><h2>추천 데이터 - customer</h2></hgroup><article  id="----customer">
+
+<ul>
+<li>cusID: 5자리 숫자조합으로 구성된 고객ID</li>
+<li>sex : 성별</li>
+<li>age : 연령
+
+<ul>
+<li>19세이하, 20세~24세, 25세~29세, 30세~34세, 35세~39세, 40세~44세, 45세~49세, 50세~54세, 55세~59세, 60세이상</li>
+</ul></li>
+<li>area : 거주지역</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>추천 데이터 - customer</h2></hgroup><article  id="----customer-1">
+
+<pre >##     cusID               sex                age           
+##  Length:19383       Length:19383       Length:19383      
+##  Class :character   Class :character   Class :character  
+##  Mode  :character   Mode  :character   Mode  :character  
+##      area          
+##  Length:19383      
+##  Class :character  
+##  Mode  :character</pre>
+
+<pre >## Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    19383 obs. of  4 variables:
+##  $ cusID: chr  &quot;00001&quot; &quot;00002&quot; &quot;00003&quot; &quot;00004&quot; ...
+##  $ sex  : chr  &quot;M&quot; &quot;M&quot; &quot;M&quot; &quot;F&quot; ...
+##  $ age  : chr  &quot;60세이상&quot; &quot;60세이상&quot; &quot;60세이상&quot; &quot;60세이상&quot; ...
+##  $ area : chr  &quot;060&quot; &quot;100&quot; &quot;033&quot; &quot;016&quot; ...
+##  - attr(*, &quot;spec&quot;)=List of 2
+##   ..- attr(*, &quot;class&quot;)= chr &quot;col_spec&quot;</pre>
+
+</article></slide><slide class=''><hgroup><h2>추천 데이터 - item</h2></hgroup><article  id="----item">
+
+<ul>
+<li>partner : 재휴사</li>
+<li>cate_1 : 대분류</li>
+<li>cate_2 : 중분류</li>
+<li>cate_3 : 소분류</li>
+<li>cate_2_name: 중분류명</li>
+<li>cate_3_name: 소분류명</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>추천 데이터 - item</h2></hgroup><article  id="----item-1">
+
+<pre >##    partner             cate_1             cate_2         
+##  Length:4386        Length:4386        Length:4386       
+##  Class :character   Class :character   Class :character  
+##  Mode  :character   Mode  :character   Mode  :character  
+##     cate_3          cate_2_name        cate_3_name       
+##  Length:4386        Length:4386        Length:4386       
+##  Class :character   Class :character   Class :character  
+##  Mode  :character   Mode  :character   Mode  :character</pre>
+
+</article></slide><slide class=''><hgroup><h2>추천 데이터 - item</h2></hgroup><article  id="----item-2">
+
+<pre >## Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    4386 obs. of  6 variables:
+##  $ partner    : chr  &quot;A&quot; &quot;A&quot; &quot;A&quot; &quot;A&quot; ...
+##  $ cate_1     : chr  &quot;01&quot; &quot;01&quot; &quot;01&quot; &quot;01&quot; ...
+##  $ cate_2     : chr  &quot;0101&quot; &quot;0101&quot; &quot;0101&quot; &quot;0101&quot; ...
+##  $ cate_3     : chr  &quot;A010101&quot; &quot;A010102&quot; &quot;A010103&quot; &quot;A010104&quot; ...
+##  $ cate_2_name: chr  &quot;일용잡화&quot; &quot;일용잡화&quot; &quot;일용잡화&quot; &quot;일용잡화&quot; ...
+##  $ cate_3_name: chr  &quot;위생세제&quot; &quot;휴지류&quot; &quot;뷰티상품&quot; &quot;일용잡화&quot; ...
+##  - attr(*, &quot;spec&quot;)=List of 2
+##   ..- attr(*, &quot;class&quot;)= chr &quot;col_spec&quot;</pre>
+
+</article></slide><slide class=''><hgroup><h2>추천 데이터 - membership</h2></hgroup><article  id="----membership">
+
+<ul>
+<li>cusID : 5자리 숫자조합으로 구성된 고객ID</li>
+<li>memberShip: 멤버십명</li>
+<li>regDate : 가입년월</li>
+</ul>
+
+<pre >##     cusID            memberShip           regDate      
+##  Length:7456        Length:7456        Min.   :201210  
+##  Class :character   Class :character   1st Qu.:201311  
+##  Mode  :character   Mode  :character   Median :201407  
+##                                        Mean   :201412  
+##                                        3rd Qu.:201504  
+##                                        Max.   :201512</pre>
+
+<pre >## Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    7456 obs. of  3 variables:
+##  $ cusID     : chr  &quot;00011&quot; &quot;00021&quot; &quot;00037&quot; &quot;00043&quot; ...
+##  $ memberShip: chr  &quot;하이마트&quot; &quot;하이마트&quot; &quot;하이마트&quot; &quot;하이마트&quot; ...
+##  $ regDate   : int  201512 201506 201306 201403 201411 201312 201506 201404 201406 201311 ...
+##  - attr(*, &quot;spec&quot;)=List of 2
+##   ..- attr(*, &quot;class&quot;)= chr &quot;col_spec&quot;</pre>
+
+</article></slide><slide class=''><hgroup><h2>추천 데이터 - tran</h2></hgroup><article  id="----tran">
+
+<pre >##    partner            receiptNum           cate_1          cate_2    
+##  Length:28593030    Min.   :       1   Min.   : 1.00   Min.   : 101  
+##  Class :character   1st Qu.: 3922474   1st Qu.: 4.00   1st Qu.: 401  
+##  Mode  :character   Median : 7167787   Median :11.00   Median :1102  
+##                     Mean   : 6447881   Mean   :18.37   Mean   :1840  
+##                     3rd Qu.: 9116336   3rd Qu.:18.00   3rd Qu.:1808  
+##                     Max.   :11096601   Max.   :92.00   Max.   :9206  
+##     cate_3              cusID         storeCode           date         
+##  Length:28593030    Min.   :    1   Min.   :  1.00   Min.   :20140101  
+##  Class :character   1st Qu.: 5206   1st Qu.: 16.00   1st Qu.:20140711  
+##  Mode  :character   Median :10104   Median : 44.00   Median :20150110  
+##                     Mean   : 9904   Mean   : 92.26   Mean   :20145817  
+##                     3rd Qu.:14638   3rd Qu.:110.00   3rd Qu.:20150703  
+##                     Max.   :19383   Max.   :593.00   Max.   :20151231  
+##       time           amount         
+##  Min.   : 0.00   Min.   :        1  
+##  1st Qu.:14.00   1st Qu.:     2050  
+##  Median :17.00   Median :     4290  
+##  Mean   :16.71   Mean   :    23678  
+##  3rd Qu.:19.00   3rd Qu.:     9900  
+##  Max.   :23.00   Max.   :101330000</pre>
+
+</article></slide><slide class=''><hgroup><h2>추천 데이터 - tran</h2></hgroup><article  id="----tran-1">
+
+<pre >## Classes &#39;tbl_df&#39;, &#39;tbl&#39; and &#39;data.frame&#39;:    28593030 obs. of  10 variables:
+##  $ partner   : chr  &quot;B&quot; &quot;B&quot; &quot;B&quot; &quot;B&quot; ...
+##  $ receiptNum: int  8664000 8664000 8664000 8664000 8664001 8664001 8664002 8664002 8664002 8664003 ...
+##  $ cate_1    : int  15 16 16 18 5 15 10 43 54 5 ...
+##  $ cate_2    : int  1504 1601 1602 1803 509 1501 1003 4301 5403 504 ...
+##  $ cate_3    : chr  &quot;B150401&quot; &quot;B160101&quot; &quot;B160201&quot; &quot;B180301&quot; ...
+##  $ cusID     : int  17218 17218 17218 17218 17674 17674 14388 14388 14388 15773 ...
+##  $ storeCode : int  44 44 44 44 44 44 44 44 44 44 ...
+##  $ date      : int  20140222 20140222 20140222 20140222 20140222 20140222 20140222 20140222 20140222 20140222 ...
+##  $ time      : int  20 20 20 20 22 22 23 23 23 21 ...
+##  $ amount    : int  2420 1070 8060 6000 1120 1200 5290 5960 9900 970 ...
+##  - attr(*, &quot;spec&quot;)=List of 2
+##   ..- attr(*, &quot;class&quot;)= chr &quot;col_spec&quot;</pre>
+
+</article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>클라우드 서비스</h2></hgroup><article  id="-">
+
+<pre >- 클라우드 서비스 소개
+- 구글 클라우드
+- RMySQL 연결</pre></article></slide>
 
 
   <slide class="backdrop"></slide>

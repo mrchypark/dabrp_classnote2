@@ -2,5 +2,6 @@
 .Rhistory
 .RData
 .Ruserdata
-recomen/*
+recomen/tran.csv
 gsql.RData
+*cache*
