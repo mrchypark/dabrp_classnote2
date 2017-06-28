@@ -258,10 +258,10 @@ system.time(dbWriteTable(con, &quot;member&quot;, &quot;./recomen/membership.csv
 <p>해들리 위컴이 설명한 <a href='http://vita.had.co.nz/papers/tidy-data.pdf' title=''>tidy data</a>의 요건에 맞게 가공하여 데이터를 쉽게 다룰 수 있게 만든 상태</p>
 
 <ul>
-<li>측정하는 각 변수는 하나의 열에 있어야 합니다.</li>
-<li>측정하는 각 관찰은 하나의 행에 있어야 합니다.</li>
-<li>각 종류의 변수에 대해 각 하나의 테이블이 있어야합니다.</li>
-<li>여러 개의 테이블이있는 경우 테이블에 합치기 위한 기준 열을 포함해야합니다</li>
+<li>측정하는 각 변수는 하나의 열에 있어야 함</li>
+<li>측정하는 각 관찰은 하나의 행에 있어야 함</li>
+<li>각 종류의 변수에 대해 각 하나의 테이블이 있어야 함</li>
+<li>여러 개의 테이블이있는 경우 테이블에 합치기 위한 기준 열을 포함해야 함</li>
 </ul>
 
 </article></slide><slide class=''><hgroup><h2>코드북</h2></hgroup><article >
@@ -287,7 +287,6 @@ system.time(dbWriteTable(con, &quot;member&quot;, &quot;./recomen/membership.csv
 </article></slide><slide class=''><hgroup><h2>데이터 훑어보기</h2></hgroup><article  id="-">
 
 <ul>
-<li>tibble:</li>
 <li>head: 최초 6행의 데이터를 보여줌(행갯수 조절 가능)</li>
 <li>tail: 마지막 6행의 데이터를 보여줌(행갯수 조절 가능)</li>
 <li>summary: 각 컬럼의 자료형과 숫자라면 대표값을 함께 보여줌</li>
@@ -296,6 +295,7 @@ system.time(dbWriteTable(con, &quot;member&quot;, &quot;./recomen/membership.csv
 <li>nrow: 행 갯수 출력(data.frame)</li>
 <li>is.na: NA 인지 확인</li>
 <li>complete.cases: 값이 모두 있는지 행단위로 검사</li>
+<li>tibble: 최근 기법으로 재구성된 data.frame</li>
 </ul>
 
 </article></slide><slide class=''><hgroup><h2>추천 데이터 - chennel</h2></hgroup><article  id="----chennel">
@@ -479,9 +479,292 @@ system.time(dbWriteTable(con, &quot;member&quot;, &quot;./recomen/membership.csv
 
 </article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>클라우드 서비스</h2></hgroup><article  id="-">
 
-<pre >- 클라우드 서비스 소개
-- 구글 클라우드
-- RMySQL 연결</pre></article></slide>
+</article></slide><slide class=''><hgroup><h2>클라우드 서비스 소개</h2></hgroup><article  id="--">
+
+<p>클라우딩 컴퓨팅은 사용자의 환경 밖에서 서비스로서 제공된 확장 가능한 컴퓨팅 자원을 사용한 양에 따라 비용을 지불하고 사용하는 것</p>
+
+<p>출처: <a href='http://www.ibm.com/developerworks/kr/library/os-cloud-virtual1/index.html' title=''>P. Changanti, 가상 인프라용 클라우드 서비스, Part 1: IaaS(Infrastructure as a Service) 및 Eucalyptus</a></p>
+
+</article></slide><slide class=''><hgroup><h2>구글 클라우드</h2></hgroup><article  id="-">
+
+<img src='http://tech.whatap.io/wp-content/uploads/2016/03/gcp-header-logo.png' title='fig:'/>
+
+</article></slide><slide class=''><hgroup><h2>구글 클라우드 시작하기</h2></hgroup><article  id="--">
+
+<pre >https://cloud.google.com/</pre>
+
+<p><img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(1).png" width="100%"/></p>
+
+</article></slide><slide class=''><hgroup><h2>구글 클라우드 로그인</h2></hgroup><article  id="--">
+
+<p><img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(3).png" width="100%"/></p>
+
+</article></slide><slide class=''><hgroup><h2>구글 클라우드 설문</h2></hgroup><article  id="--">
+
+<p><img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(4).png" width="100%"/></p>
+
+</article></slide><slide class=''><hgroup><h2>구글 클라우드 설문 선택</h2></hgroup><article  id="---">
+
+<p><img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(5).png" width="100%"/></p>
+
+</article></slide><slide class=''><hgroup><h2>구글 클라우드 카드 등록</h2></hgroup><article  id="---">
+
+<p><img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(6).png" width="100%"/></p>
+
+</article></slide><slide class=''><hgroup><h2>구글 클라우드 프로젝트 생성</h2></hgroup><article  id="---">
+
+<p><img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(7).png" width="100%"/></p>
+
+</article></slide><slide class=''><hgroup><h2>R MySQL 연결</h2></hgroup><article  id="r-mysql-">
+
+<p><code>DBI</code>로 MySQL을 연결하는 패키지와 사용</p>
+
+<pre >library(RMySQL)
+con &lt;- dbConnect(MySQL(),
+                 user = user,
+                 password = pw,
+                 host = host,
+                 dbname = &quot;recom&quot;)
+dbListTables(conn = con)
+dbWriteTable(conn = con, name = &#39;tran&#39;, value = &quot;./recomen/tran.csv&quot;)
+dbReadTable(conn = con, name = &quot;tran&quot;)</pre>
+
+</article></slide><slide class=''><hgroup><h2>MySQL 인스턴스 생성</h2></hgroup><article  id="mysql--">
+
+<p><img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(8).png" width="100%"/></p>
+
+</article></slide><slide class=''><hgroup><h2>엔진선택</h2></hgroup><article >
+
+<p><img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(9).png" width="100%"/></p>
+
+</article></slide><slide class=''><hgroup><h2>MySQL 2세대 선택</h2></hgroup><article  id="mysql-2-">
+
+<p><img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(10).png" width="100%"/></p>
+
+</article></slide><slide class=''><hgroup><h2>인스턴스 설정</h2></hgroup><article  id="-">
+
+<p><img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(11).png" width="100%"/></p>
+
+</article></slide><slide class=''><hgroup><h2>접속 허용 IP 설정</h2></hgroup><article  id="--ip-">
+
+<p><img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(12).png" width="100%"/></p>
+
+</article></slide><slide class=''><hgroup><h2>접속 허용 IP 설정</h2></hgroup><article  id="--ip--1">
+
+<p><img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(13).png" width="100%"/></p>
+
+</article></slide><slide class=''><hgroup><h2>현재 IP 확인하기</h2></hgroup><article  id="-ip-">
+
+<p><img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(14).png" width="100%"/></p>
+
+</article></slide><slide class=''><hgroup><h2>whatismyip</h2></hgroup><article  id="whatismyip">
+
+<pre >https://www.whatismyip.com/</pre>
+
+<p><img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(15).png" width="100%"/></p>
+
+</article></slide><slide class=''><hgroup><h2>ip 입력</h2></hgroup><article  id="ip-">
+
+<p><img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(16).png" width="100%"/></p>
+
+</article></slide><slide class=''><hgroup><h2>root 계정 비밀번호 생성</h2></hgroup><article  id="root---">
+
+<p><img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(17).png" width="100%"/></p>
+
+</article></slide><slide class=''><hgroup><h2>SQL 인스턴스 생성중</h2></hgroup><article  id="sql--">
+
+<p><img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(19).png" width="100%"/></p>
+
+</article></slide><slide class=''><hgroup><h2>RMySQL로 연결하기</h2></hgroup><article  id="rmysql-">
+
+<ul>
+<li>host 주소 파악 <img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(20).png" width="100%"/></li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>RMySQL로 연결하기</h2></hgroup><article  id="rmysql--1">
+
+<p><img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(21).png" width="100%"/></p>
+
+</article></slide><slide class=''><hgroup><h2>데이터베이스 만들기</h2></hgroup><article  id="-">
+
+<p><img src="https://raw.  githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(22).png" width="100%"/></p>
+
+</article></slide><slide class=''><hgroup><h2>데이터베이스 만들기</h2></hgroup><article  id="--1">
+
+<p><img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(23).png" width="100%"/></p>
+
+</article></slide><slide class=''><hgroup><h2>데이터베이스 만들기</h2></hgroup><article  id="--2">
+
+<p><img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(24).png" width="100%"/></p>
+
+</article></slide><slide class=''><hgroup><h2>데이터베이스 만들기</h2></hgroup><article  id="--3">
+
+<p><img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(25).png" width="100%"/></p>
+
+</article></slide><slide class=''><hgroup><h2>데이터베이스 만들기</h2></hgroup><article  id="--4">
+
+<p><img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(26).png" width="100%"/></p>
+
+</article></slide><slide class=''><hgroup><h2>데이터베이스 만들기</h2></hgroup><article  id="--5">
+
+<p><img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(27).png" width="100%"/></p>
+
+</article></slide><slide class=''><hgroup><h2>host와 dbname 설정</h2></hgroup><article  id="host-dbname-">
+
+<p><img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(28).png" width="100%"/></p>
+
+</article></slide><slide class=''><hgroup><h2>실습 진행</h2></hgroup><article  id="-">
+
+<p><img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(22).png" width="100%"/></p>
+
+</article></slide><slide class=''><hgroup><h2>R bigquery 연결</h2></hgroup><article  id="r-bigquery-">
+
+<p><code>query_exec</code>가 첫 실행이면 브라우저에서 권한 확인을 합니다.</p>
+
+<pre >library(bigrquery)
+project &lt;- &quot;konlper-168808&quot; 
+sql &lt;- &quot;SELECT * FROM [konlper-168808:recom.chennel] LIMIT 5&quot;
+query_exec(sql, project = project)</pre>
+
+</article></slide><slide class=''><hgroup><h2>bigquery 인스턴스 생성</h2></hgroup><article  id="bigquery--">
+
+<p><img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(30).png" width="100%"/></p>
+
+</article></slide><slide class=''><hgroup><h2>bigquery 첫 화면</h2></hgroup><article  id="bigquery--">
+
+<p><img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(31).png" width="100%"/></p>
+
+</article></slide><slide class=''><hgroup><h2>dataset 만들기</h2></hgroup><article  id="dataset-">
+
+<p><img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(32).png" width="100%"/></p>
+
+</article></slide><slide class=''><hgroup><h2></h2></hgroup><article  id="section">
+
+<p><img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(33).png" width="100%"/></p>
+
+</article></slide><slide class=''><hgroup><h2>table 생성</h2></hgroup><article  id="table-">
+
+<p><img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(34).png" width="100%"/></p>
+
+</article></slide><slide class=''><hgroup><h2>큰 데이터는 storage를 통해 업로드</h2></hgroup><article  id="--storage--">
+
+<p><img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(35).png" width="100%"/></p>
+
+</article></slide><slide class=''><hgroup><h2></h2></hgroup><article  id="section-1">
+
+<p><img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(36).png" width="100%"/></p>
+
+</article></slide><slide class=''><hgroup><h2>버킷 만들기</h2></hgroup><article  id="-">
+
+<p><img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(37).png" width="100%"/></p>
+
+</article></slide><slide class=''><hgroup><h2></h2></hgroup><article  id="section-2">
+
+<p><img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(38).png" width="100%"/></p>
+
+</article></slide><slide class=''><hgroup><h2>버킷 확인</h2></hgroup><article  id="-">
+
+<p><img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(42).png" width="100%"/></p>
+
+</article></slide><slide class=''><hgroup><h2>폴더 업로드</h2></hgroup><article  id="-">
+
+<p><img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(39).png" width="100%"/></p>
+
+</article></slide><slide class=''><hgroup><h2>업로드 확인</h2></hgroup><article  id="-">
+
+<p><img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(43).png" width="100%"/></p>
+
+</article></slide><slide class=''><hgroup><h2>업로드 확인</h2></hgroup><article  id="--1">
+
+<p><img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(44).png" width="100%"/></p>
+
+</article></slide><slide class=''><hgroup><h2>gs:// 경로확인</h2></hgroup><article  id="gs-">
+
+<p><img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(45).png" width="100%"/></p>
+
+</article></slide><slide class=''><hgroup><h2>작업 결과 확인</h2></hgroup><article  id="--">
+
+<p><img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(46).png" width="100%"/></p>
+
+</article></slide><slide class=''><hgroup><h2>query 실행화면</h2></hgroup><article  id="query-">
+
+<p><img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(47).png" width="100%"/></p>
+
+</article></slide><slide class=''><hgroup><h2>비용 발생 경고</h2></hgroup><article  id="--">
+
+<p><img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(48).png" width="100%"/></p>
+
+</article></slide><slide class=''><hgroup><h2>query 결과 확인</h2></hgroup><article  id="query--">
+
+<p><img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(49).png" width="100%"/></p>
+
+</article></slide><slide class=''><hgroup><h2>공개 데이터셋</h2></hgroup><article  id="-">
+
+<p><img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(50).png" width="100%"/></p>
+
+</article></slide><slide class=''><hgroup><h2>wikipedia dataset</h2></hgroup><article  id="wikipedia-dataset">
+
+<p><img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(52).png" width="100%"/></p>
+
+</article></slide><slide class=''><hgroup><h2>dataset 복사</h2></hgroup><article  id="dataset-">
+
+<p><img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(53).png" width="100%"/></p>
+
+</article></slide><slide class=''><hgroup><h2></h2></hgroup><article  id="section-3">
+
+<p><img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(54).png" width="100%"/></p>
+
+</article></slide><slide class=''><hgroup><h2>데이터 구조 보기</h2></hgroup><article  id="--">
+
+<p><img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(56).png" width="100%"/></p>
+
+</article></slide><slide class=''><hgroup><h2>큰 데이터 query 진행</h2></hgroup><article  id="--query-">
+
+<pre >select title,sum(num_characters) as num_characters
+from [konlper-168808:test.wikipedia_copy]
+where regexp_match(title,&#39;[Ss]eoul&#39;)
+group by title
+order by num_characters desc;</pre>
+
+</article></slide><slide class=''><hgroup><h2>query 결과</h2></hgroup><article  id="query-">
+
+<p><img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(58).png" width="100%"/></p>
+
+</article></slide><slide class=''><hgroup><h2>과제</h2></hgroup><article >
+
+<ol>
+<li>RSQLite와 DBI를 활용해서 <code>nycflights13</code> 데이터를 db Table로 만들고, 제출해 주세요.
+
+<ol>
+<li>&#39;nycflights13&#39; 패키지를 설치하고 5개 데이터를 확인하세요.</li>
+<li>dbConnect 명령으로 SQLite 파일을 sql_[이름].db 으로 생성하세요.</li>
+<li>5개의 데이터를 각각의 이름으로 table을 생성하세요.</li>
+<li>1)~3)의 과정을 모두 코드로 남기고 run_[이름].R로 저장하세요.</li>
+<li>run_[이름].R과 sql_[이름].db 두 개의 파일을 class2assignment 폴더에 저장하세요.</li>
+<li>github에서 pull request로 제출해 주세요.</li>
+<li>recomen 폴더에 있는 데이터 6개도 같은 과정을 진행하고, 제출은 하지 마세요.</li>
+<li>.gitignore를 이용하면 push의 범위에서 제외할 수 있습니다.</li>
+</ol></li>
+</ol>
+
+</article></slide><slide class=''><hgroup><h2>과제</h2></hgroup><article  id="-1">
+
+<ol>
+<li>recomen 폴더에 있는 데이터 6개를 bigquery에 업로드 하고 질의를 실행해 보세요.
+
+<ol>
+<li>&quot;bigrquery&quot; 패키지의 기능으로 작은 용량 5개의 데이터를 업로드해 주세요.</li>
+<li>Storage 서비스를 이용해서 <code>tran.csv</code> 파일을 bigquery에 테이블로 생성하세요.</li>
+<li>query_exec 함수와 &quot;select * from [tran] limit 10&quot; 을 실행하고 결과를 받으세요.
+
+<ul>
+<li>[tran]은 각자 해당하는 이름으로 변경하셔야 합니다.</li>
+</ul></li>
+<li>1)~3)의 과정을 big_[이름].R로 저장하세요.</li>
+<li>big_[이름].R 파일을 class2assignment 폴더에 저장하세요.</li>
+<li>github에서 pull request로 제출해 주세요.</li>
+</ol></li>
+</ol></article></slide>
 
 
   <slide class="backdrop"></slide>
