@@ -291,17 +291,36 @@ str(tran, max.level=1)
 
 ![](http://tech.whatap.io/wp-content/uploads/2016/03/gcp-header-logo.png)
 
-## 구글 클라우드
+## 구글 클라우드 시작하기
+```
+https://cloud.google.com/
+```
+<img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(1).png" width="100%"/>
 
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (1).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (2).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (3).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (4).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (5).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (6).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (7).png)
+## 구글 클라우드 로그인
+
+<img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(3).png" width="100%"/>
+
+## 구글 클라우드 설문
+
+<img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(4).png" width="100%"/>
+
+## 구글 클라우드 설문 선택
+
+<img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(5).png" width="100%"/>
+
+## 구글 클라우드 카드 등록
+
+<img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(6).png" width="100%"/>
+
+## 구글 클라우드 프로젝트 생성
+
+<img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(7).png" width="100%"/>
+
 
 ## R MySQL 연결
+
+`DBI`로 MySQL을 연결하는 패키지와 사용
 
 ```
 library(RMySQL)
@@ -314,30 +333,95 @@ dbListTables(conn = con)
 dbWriteTable(conn = con, name = 'tran', value = "./recomen/tran.csv")
 dbReadTable(conn = con, name = "tran")
 ```
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (7).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (8).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (9).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (10).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (11).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (12).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (13).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (14).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (15).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (16).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (17).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (18).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (19).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (20).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (21).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (22).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (23).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (24).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (25).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (26).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (27).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (28).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (29).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (22).png)
+
+## MySQL 인스턴스 생성
+
+<img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(8).png" width="100%"/>
+
+## 엔진선택
+
+<img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(9).png" width="100%"/>
+
+## MySQL 2세대 선택
+
+<img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(10).png" width="100%"/>
+
+## 인스턴스 설정
+
+<img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(11).png" width="100%"/>
+
+## 접속 허용 IP 설정
+
+<img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(12).png" width="100%"/>
+
+## 접속 허용 IP 설정
+
+<img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(13).png" width="100%"/>
+
+## 현재 IP 확인하기
+
+<img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(14).png" width="100%"/>
+
+## whatismyip
+
+```
+https://www.whatismyip.com/
+```
+
+<img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(15).png" width="100%"/>
+
+## ip 입력
+
+<img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(16).png" width="100%"/>
+
+## root 계정 비밀번호 생성
+
+<img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(17).png" width="100%"/>
+
+## SQL 인스턴스 생성중
+
+<img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(19).png" width="100%"/>
+
+## RMySQL로 연결하기
+
+  - host 주소 파악
+<img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(20).png" width="100%"/>
+
+## RMySQL로 연결하기
+
+<img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(21).png" width="100%"/>
+
+## 데이터베이스 만들기
+
+<img src="https://raw.  githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(22).png" width="100%"/>
+
+## 데이터베이스 만들기
+
+<img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(23).png" width="100%"/>
+
+## 데이터베이스 만들기
+
+<img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(24).png" width="100%"/>
+
+## 데이터베이스 만들기
+
+<img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(25).png" width="100%"/>
+
+## 데이터베이스 만들기
+
+<img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(26).png" width="100%"/>
+
+## 데이터베이스 만들기
+
+<img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(27).png" width="100%"/>
+
+## host와 dbname 설정
+
+<img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(28).png" width="100%"/>
+
+## 실습 진행
+
+<img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(22).png" width="100%"/>
 
 
 ## R bigquery 연결
@@ -350,39 +434,139 @@ sql <- "SELECT * FROM [konlper-168808:recom.chennel] LIMIT 5"
 query_exec(sql, project = project)
 ```
 
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (30).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (31).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (32).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (33).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (34).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (35).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (36).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (37).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (38).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (39).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (40).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (41).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (42).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (43).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (44).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (45).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (46).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (47).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (48).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (49).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (50).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (51).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (52).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (53).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (54).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (55).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (56).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (57).png)
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cloud (58).png)
+## bigquery 인스턴스 생성
+
+<img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(30).png" width="100%"/>
+
+## bigquery 첫 화면
+
+<img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(31).png" width="100%"/>
+
+## dataset 만들기
+
+<img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(32).png" width="100%"/>
+
+## 
+
+<img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(33).png" width="100%"/>
+
+## table 생성
+
+<img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(34).png" width="100%"/>
+
+## 큰 데이터는 storage를 통해 업로드
+
+<img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(35).png" width="100%"/>
+
+## 
+
+<img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(36).png" width="100%"/>
+
+## 버킷 만들기
+
+<img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(37).png" width="100%"/>
+
+## 
+
+<img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(38).png" width="100%"/>
+
+## 버킷 확인
+
+<img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(42).png" width="100%"/>
+
+## 폴더 업로드
+
+<img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(39).png" width="100%"/>
+
+## 업로드 확인
+
+<img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(43).png" width="100%"/>
+
+## 업로드 확인
+
+<img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(44).png" width="100%"/>
+
+## gs:// 경로확인
+
+<img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(45).png" width="100%"/>
+
+## 작업 결과 확인
+
+<img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(46).png" width="100%"/>
+
+## query 실행화면
+
+<img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(47).png" width="100%"/>
+
+## 비용 발생 경고
+
+<img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(48).png" width="100%"/>
+
+## query 결과 확인
+
+<img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(49).png" width="100%"/>
+
+## 공개 데이터셋
+
+<img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(50).png" width="100%"/>
+
+## wikipedia dataset
+
+<img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(52).png" width="100%"/>
+
+## dataset 복사
+
+<img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(53).png" width="100%"/>
+
+## 
+
+<img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(54).png" width="100%"/>
+
+## 데이터 구조 보기
+
+<img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(56).png" width="100%"/>
+
+## 큰 데이터 query 진행
+
+```
+select title,sum(num_characters) as num_characters
+from [konlper-168808:test.wikipedia_copy]
+where regexp_match(title,'[Ss]eoul')
+group by title
+order by num_characters desc;
+```
+
+## query 결과
+
+<img src="https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/cluod%20(58).png" width="100%"/>
+
+## 과제
+
+1. RSQLite와 DBI를 활용해서 `nycflights13` 데이터를 db Table로 만들고, 제출해 주세요.
+  1) 'nycflights13' 패키지를 설치하고 5개 데이터를 확인하세요.
+  2) dbConnect 명령으로 SQLite 파일을 sql_[이름].db 으로 생성하세요.
+  3) 5개의 데이터를 각각의 이름으로 table을 생성하세요.
+  4) 1)~3)의 과정을 모두 코드로 남기고 run_[이름].R로 저장하세요.
+  5) run_[이름].R과 sql_[이름].db 두 개의 파일을 class2assignment 폴더에 저장하세요.
+  6) github에서 pull request로 제출해 주세요.
+  7) recomen 폴더에 있는 데이터 6개도 같은 과정을 진행하고, 제출은 하지 마세요.
+  8) .gitignore를 이용하면 push의 범위에서 제외할 수 있습니다.
+  
+## 과제
+
+1. RSQLite와 DBI를 활용해서 `nycflights13` 데이터를 db Table로 만들고, 제출해 주세요.
+  1) 'nycflights13' 패키지를 설치하고 5개 데이터를 확인하세요.
+  2) dbConnect 명령으로 SQLite 파일을 sql_[이름].db 으로 생성하세요.
+  3) 5개의 데이터를 각각의 이름으로 table을 생성하세요.
+  4) 1)~3)의 과정을 모두 코드로 남기고 run_[이름].R로 저장하세요.
+  5) run_[이름].R과 sql_[이름].db 두 개의 파일을 class2assignment 폴더에 저장하세요.
+  6) github에서 pull request로 제출해 주세요.
+  7) recomen 폴더에 있는 데이터 6개도 같은 과정을 진행하고, 제출은 하지 마세요.
+  8) .gitignore를 이용하면 push의 범위에서 제외할 수 있습니다.
+  
 
 
-
-
+https://raw.githubusercontent.com/hadley/nycflights13/master/data-raw/airports.csv
 
 [1]: https://opentutorials.org/course/195/1399
 [2]: http://www.sqlite.org/
