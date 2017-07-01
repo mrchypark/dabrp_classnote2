@@ -9,7 +9,6 @@ nycflights13::airlines
 # check db tables
 dbListTables(con)
 
-
 # write table to db
 dbWriteTable(con, "airlines", nycflights13::airlines, overwrite=T)
 dbWriteTable(con, "aiports", nycflights13::airports, overwrite=T)
