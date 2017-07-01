@@ -8,6 +8,7 @@ nycflights13::airlines
 
 # check db tables
 dbListTables(con)
+d
 
 
 # write table to db
