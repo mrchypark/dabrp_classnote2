@@ -4,4 +4,9 @@
 .Ruserdata
 recomen/tran.csv
 gsql.RData
+recomen/chennel.csv
+recomen/membership.csv
+recomen/item.csv
+recomen/customer.csv
+recomen/competitor.csv
 *cache*
