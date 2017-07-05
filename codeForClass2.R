@@ -1,4 +1,6 @@
-## set packages
+## set packages 패키지가 없으면 다운로드하는 명령어
+## devtools는 github에 올라와있는 패키지이므로 항시 업데이트되어 사용할 수 있도록 하고 있음
+## devtools::로 devtools내의 함수를 직접 사용
 
 if (!require(devtools)) install.packages("devtools") 
 if (!require(DBI)) devtools::install_github("rstats-db/DBI")
@@ -16,14 +18,19 @@ library(RSQLite)
 con <- dbConnect(RSQLite::SQLite(),
                  dbname="class2.sqlite")
 
+# class2.sqlite라는 이름의 파일이 생성됨
 
 # check db tables
 dbListTables(con)
 
 # write table to db
-dbWriteTable(con, "mtcars",
-             mtcars, overwrite=T)
+dbWriteTable(con, "mtcars", mtcars, overwrite=T)
+#mtcars라는 데이터를 불러와서 class2.sqlite 파일 내에 저장함. 
+#이 경우 현재의 mtcars에 rowname으로 지정된 차이름이 ID로 적절하지 않아 임의로 숫자로 ID를 지정함
+#해당 행위를 dbwriteTable 명령어가 알아서 지정해서 파일에 저장
 dbListTables(con)
+identical(dbReadTable(con,"mtcars"),mtcars) ##That two files are same -> "True"
+#dbwriteTable의 임의 ID지정으로 인해 False가 결과로 나오
 
 
 # get table data
@@ -39,8 +46,6 @@ dbListTables(con)
 system.time(dbWriteTable(con, "member", 
                          "./recomen/membership.csv",row.names=F))
 
-
-
 ## get data
 
 chk<-file.info("./recomen/tran.csv")
@@ -54,6 +59,8 @@ if(is.na(chk$size)){
 ## load data to R
 
 library(readr)
+
+#readr library에 tibble 명령어가 포함되어 있음
 chennel<-read_csv("./recomen/chennel.csv")
 competitor<-read_csv("./recomen/competitor.csv")
 customer<-read_csv("./recomen/customer.csv")
@@ -75,6 +82,7 @@ tran
 ## control print row count
 
 options(tibble.print_min = 10)
+#현재 tibble은 기본 설정이 10개 db를 보여주는데 그 수치를 위 명령어로 변경할 수 있음
 item
 
 
@@ -106,21 +114,17 @@ str(customer)
 str(item)
 str(membership)
 str(tran)
-
-
-# 
-
-
+#factor형 column의 경우 각 요소별 크기를 지정하는 기능도 있음
 ## set Mysql with google cloud
 
-user<-"root"
-pw<-"awedfawdf"
-host<-'12.12.12.12'
-save(user,pw,host,file ="./gsql.RData")
-rm(pw)
-rm(host)
+# ctrl + shift + c : 주석처리를 한번에 할 수있는 단축
 
-
+# user<-"root"
+# pw<-"XXXXXXXXXXXXXXXXX"
+# host<-'XXX.XXX.XXX.XXX'
+#rm(pw)
+#rm(host)
+#save(user,pw,host,file ="./gsql.RData")
 
 load("./gsql.RData")
 
@@ -131,7 +135,7 @@ con <- dbConnect(MySQL(),
                  host = host,
                  dbname = "recom")
 dbListTables(conn = con)
-dbWriteTable(conn = con, name = 'tran', value = "./recomen/tran.csv")
+dbWriteTable(conn = con, name = 'chennel', value = "./recomen/chennel.csv")
 dbReadTable(conn = con, name = "Test")
 
 ## for bigquery query
