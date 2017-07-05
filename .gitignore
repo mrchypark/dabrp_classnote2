@@ -5,3 +5,5 @@
 recomen/tran.csv
 gsql.RData
 *cache*
+.httr-oauth
+*HW*

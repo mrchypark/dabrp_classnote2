@@ -1,7 +1,7 @@
 ## set packages
 
 if (!require(devtools)) install.packages("devtools") 
-if (!require(DBI)) devtools::install_github("rstats-db/DBI")
+if (!require(DBI)) devtools::install_github("rstats-db/DBI")  # different from CRAN repository 
 if (!require(RSQLite)) devtools::install_github("rstats-db/RSQLite")
 if (!require(RMySQL)) devtools::install_github("rstats-db/RMySQL")
 if (!require(bigrquery)) devtools::install_github("rstats-db/bigrquery")
@@ -27,7 +27,7 @@ dbListTables(con)
 
 # get table data
 dbReadTable(con, "mtcars")
-
+identical(dbReadTable(con, "mtcars"),mtcars)
 
 # remove
 dbRemoveTable(con,"tran")
@@ -98,6 +98,9 @@ summary(tran)
 ## get data structure
 
 str(chennel)
+chennel2 <- read.csv("./recomen/chennel.csv")
+str(chennel2)
+rm(chennel2)
 str(competitor)
 str(customer)
 str(item)
@@ -111,9 +114,10 @@ str(tran)
 ## set Mysql with google cloud
 
 # user<-"root"
-# pw<-"XXXXXXXXXXXXXXXX"
-# host<-'XXX.XXX.XXX.XXX'
-
+# pw<-""
+# host<-''
+# rm(pw)
+# rm(host)
 # save(user,pw,host,file ="./gsql.RData")
 
 load("./gsql.RData")
@@ -123,7 +127,7 @@ con <- dbConnect(MySQL(),
                  user = user,
                  password = pw,
                  host = host,
-                 dbname = "recom")
+                 dbname = "fctestp")
 dbListTables(conn = con)
 dbWriteTable(conn = con, name = 'tran', value = "./recomen/tran.csv")
 dbReadTable(conn = con, name = "Test")
