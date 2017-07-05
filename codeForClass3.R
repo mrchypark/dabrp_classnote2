@@ -56,7 +56,6 @@ dbGetQuery(con, "select * from flights where arr_delay > 120 or dep_delay > 120"
 # inner join
 dbGetQuery(con, "select * from flights as a inner join planes as b on a.tailnum = b.tailnum")
 
-
 library(tidyverse)
 
 # data
@@ -66,7 +65,7 @@ flights
 filter(flights, month == 1, day == 1)
 jan1 <- filter(flights, month == 1, day == 1)
 (dec25 <- filter(flights, month == 12, day == 25))
-
+dec25 %>% summary
 filter(flights, month == 11 | month == 12)
 nov_dec <- filter(flights, month %in% c(11, 12))
 filter(flights, !(arr_delay > 120 | dep_delay > 120))
@@ -84,6 +83,7 @@ arrange(df, desc(x))
 # select like select
 select(flights, year, month, day)
 select(flights, year:day)
+head(flights)
 select(flights, -(year:day))
 
 rename(flights, tail_num = tailnum)
@@ -96,7 +96,7 @@ flights_sml <- select(flights,
                       distance, 
                       air_time
 )
-
+names(flights_sml)
 # mutate make new columns using calculate others
 mutate(flights_sml,
        gain = arr_delay - dep_delay,
@@ -128,6 +128,7 @@ summarise(flights, delay = mean(dep_delay, na.rm = TRUE))
 # group_by 
 by_day <- group_by(flights, year, month, day)
 class(by_day)
+class(flights)
 summarise(by_day, delay = mean(dep_delay, na.rm = TRUE))
 
 daily <- group_by(flights, year, month, day)
@@ -140,17 +141,21 @@ daily %>%
   ungroup() %>% 
   summarise(flights = n())
 
+ungroup(daily)
+
 # with pipe
 flights_sml %>% 
   group_by(year, month, day) %>%
   filter(rank(desc(arr_delay)) < 10)
+filter(group_by(flights_sml, year, month, day), rank(desc(arr_delay)) < 10)
 
 # assign values
 popular_dests <- flights %>% 
   group_by(dest) %>% 
   filter(n() > 365)
 popular_dests
-
+popular_dests <- filter(group_by(flights, dest), n() > 365)
+popular_dests
 
 popular_dests %>% 
   filter(arr_delay > 0) %>% 
