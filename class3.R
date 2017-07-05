@@ -57,6 +57,11 @@ dbGetQuery(con, "select * from flights where arr_delay > 120 or dep_delay > 120"
 
 # inner join
 dbGetQuery(con, "select * from flights as a inner join planes as b on a.tailnum = b.tailnum")
+dbGetQuery(con, "select * from flights as a inner join planes as b on a.tailnum = b.tailnum")->tem
+dim(tem)
+dim(flights)
+dim(planes)
+#a에만 있고, 
 
 
 library(tidyverse)
@@ -65,31 +70,42 @@ library(tidyverse)
 flights
 
 # filter like where
-filter(flights, month == 1, day == 1)
+filter(flights, month == 1, day == 1)  #filter 명령어는 쉼표로 여러개의 and조건을 처리할 수 있음
+
 jan1 <- filter(flights, month == 1, day == 1)
 (dec25 <- filter(flights, month == 12, day == 25))
+dec25 %>% summary
+#12월 25일만 뽑아서 dec25에 저장하고, summary로 잘 뽑아냈는지 확ㅇ
 
 filter(flights, month == 11 | month == 12)
-nov_dec <- filter(flights, month %in% c(11, 12))
+nov_dec <- filter(flights, month %in% c(11, 12))인
+# %in% sms 뒤에 오는 기간내의 모든 row를 뽑는다는 의미
 filter(flights, !(arr_delay > 120 | dep_delay > 120))
 filter(flights, arr_delay <= 120, dep_delay <= 120)
+#위 두 명령어는 같은 결과가 나온다. !를 통해서 반대의 데이터 추출한다.
 
 # arrange like order by
+# arrange 원하는 조건을 순서대로 나열, 아래의 명령어는 year로 1차, month로 2차, day로 마지막 정렬을 한다.
 arrange(flights, year, month, day)
-arrange(flights, desc(arr_delay))
+arrange(flights, desc(arr_delay))함 #desc는 거꾸로 배ㅇ
 
 # test NA|
 df <- tibble(x = c(5, 2, NA))
 arrange(df, x)
 arrange(df, desc(x))
+#arrange는 항상 NA를 가장 마지막으로 배열한다.
 
 # select like select
 select(flights, year, month, day)
 select(flights, year:day)
 select(flights, -(year:day))
+# -로 해당 row를 제외한 나머지 row 선택
 
-rename(flights, tail_num = tailnum)
+
+rename(flights, tail_num = tailnum) #column 이름 변경, 앞에가 변경할 이르
 select(flights, time_hour, air_time, everything())
+#everything 앞에 column을 지정했고, 그 뒤에 everything을 써도 중복으로 column이 작성되지 않음
+
 
 # ends_with with select
 flights_sml <- select(flights, 
@@ -99,7 +115,8 @@ flights_sml <- select(flights,
                       air_time
 )
 
-# mutate make new columns using calculate others
+# mutate make new columns using calculate others열
+# 있는 column으로 계산하여 column을 추가하는 명령어
 mutate(flights_sml,
        gain = arr_delay - dep_delay,
        speed = distance / air_time * 60
@@ -112,6 +129,7 @@ mutate(flights_sml,
 )
 
 # only get new columns
+# 새로 정의한 column만 나오고, 기존의 column은 사라짐.
 transmute(flights,
           gain = arr_delay - dep_delay,
           hours = air_time / 60,
@@ -121,8 +139,8 @@ transmute(flights,
 # extra functions
 
 (x <- 1:10)
-lag(x)
-lead(x)
+lag(x) # 하나 뒤로 미룸(맨 앞 없애기) 
+lead(x) # 하나 앞으로 당김(맨 끝 없애기)
 
 # summarise what you want to get
 summarise(flights, delay = mean(dep_delay, na.rm = TRUE))
@@ -137,10 +155,20 @@ daily <- group_by(flights, year, month, day)
 (per_month <- summarise(per_day, flights = sum(flights)))
 (per_year  <- summarise(per_month, flights = sum(flights)))
 
-# ungroup
+# ungroup : 그룹해제
 daily %>% 
   ungroup() %>% 
   summarise(flights = n())
+# n(()) 개수를 세는 명령어
+
+summarise(group_by(flights,year,month,day)
+          delay = mean(dep_delay, na.rm = TRUE))
+flights %>%
+  group_by(year,month,day) %?%
+  summarise(delay=mean(dep_delay, na.rm = TRUE))
+#위 두 명령어는 같은 명령어. pipe를 사용한 것 뿐이다.
+
+
 
 # with pipe
 flights_sml %>% 
@@ -159,7 +187,7 @@ popular_dests %>%
   mutate(prop_delay = arr_delay / sum(arr_delay)) %>% 
   select(year:day, dest, arr_delay, prop_delay)
 
-# tidyr examples
+# tidyr examples : 패키지에 내장시켜놓음. 
 table1
 table2
 table3
@@ -174,6 +202,8 @@ table4a %>%
 # case of value is column name
 table2
 spread(table2, key = type, value = count)
+#key는 어떤 column을 펼칠 것인지, value는 어떤 값을 펼쳐서 나타낼건지 지정
+
 
 # separate columns
 table3
@@ -183,18 +213,22 @@ table3 %>%
 # separate columns with class set
 table3 %>% 
   separate(rate, into = c("cases", "population"), convert = TRUE)
+# chr로 된 column의 형태를 int로 변환해주는게 convert
 
-# separate int columns
+
+# separate int columns : 2글자로 쪼개기
 table3 %>% 
   separate(year, into = c("century", "year"), sep = 2)
 
-# unite two columns to new column
+# unite two columns to new column: 합치면 중간 인자가 기본적으로 _ (under bar)가 들어감.
 table5 %>% 
   unite(new, century, year)
 
 # unite two columns to new column controll to sep characters
 table5 %>% 
   unite(new, century, year, sep = "")
+# sep로 중간 인자 지정
+
 
 
 # join example
@@ -255,8 +289,9 @@ src_bigquery
 
 
 # data.table
-
+# 속도가 더 빨라서, 대용량 데이터 불러올때 용이함.
 library(data.table)
+#data table cheat sheet -> data.table using method explain.
 
 # get data
 
@@ -288,6 +323,7 @@ head(ans)
 
 # select columns like select
 ans <- flights[, .(arr_delay, dep_delay)]
+# column을 불러올 때, C를 사용하지 않고, 점(.)만 찍고 row name도 ""를 하지 않음
 head(ans)
 
 # rename
@@ -303,6 +339,7 @@ flights[origin == "JFK" & month == 6L, length(dest)]
 
 # make count table 
 flights[, .(.N), by = .(origin)]
+# origin으로 묶어서 (.N)을 쓰면 개수를 세는 것. / .sd는 표준편차를 구함
 
 # make count table with condition
 flights[carrier == "AA", .N, by = origin]
@@ -312,5 +349,7 @@ flights[carrier == "AA", .N, by = .(origin,dest)]
 
 # add options
 flights[carrier == "AA", .N, by = .(origin, dest)][order(origin, -dest)][1:10,]
+# pipe로 데이터 연산을 연속하는 것처럼, data.table은 []를 이용해서 연산자를 연결함.
+
 
 
