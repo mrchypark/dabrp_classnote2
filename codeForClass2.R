@@ -129,13 +129,12 @@ str(tran)
 # rm(pw)
 # rm(host)
 # save(user,pw,host,file ="./gsql.RData")
-=======
+
 # pw<-"XXXXXXXXXXXXXXXXX"
 # host<-'XXX.XXX.XXX.XXX'
 #rm(pw)
 #rm(host)
 #save(user,pw,host,file ="./gsql.RData")
->>>>>>> df2f776da2a74c3fc3941d44ef1aeb52103fabec
 
 load("./gsql.RData")
 

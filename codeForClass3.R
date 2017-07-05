@@ -161,7 +161,7 @@ popular_dests %>%
   filter(arr_delay > 0) %>% 
   mutate(prop_delay = arr_delay / sum(arr_delay)) %>% 
   select(year:day, dest, arr_delay, prop_delay)
-
+popular_dests
 # tidyr examples
 table1
 table2
@@ -268,10 +268,11 @@ library(data.table)
 # download.file(url,destfile = "./data/flights14.csv")
 
 # read data
-system.time(flights <- read.csv("./data/flights14.csv"))
-system.time(flights <- read_csv("./data/flights14.csv"))
-system.time(flights <- fread("./data/flights14.csv"))
+system.time(flights <- read.csv("./data/flights14.csv"))  # to data.frame
+system.time(flights <- read_csv("./data/flights14.csv"))  # to tibble
+system.time(flights <- fread("./data/flights14.csv"))     # to data.table
 flights
+class(flights)
 dim(flights)
 
 # subset like where
@@ -315,4 +316,4 @@ flights[carrier == "AA", .N, by = .(origin,dest)]
 
 # add options
 flights[carrier == "AA", .N, by = .(origin, dest)][order(origin, -dest)][1:10,]
-
+## like pipe %>%      [][][]....[]
