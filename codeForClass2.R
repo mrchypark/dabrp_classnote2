@@ -13,15 +13,16 @@ if (!require(readr)) install.packages("readr")
 
 library(DBI)
 library(RSQLite)
-con <- dbConnect(RSQLite::SQLite(), dbname="class2.sqlite")
+con <- dbConnect(RSQLite::SQLite(),
+                 dbname="class2.sqlite")
 
 
 # check db tables
 dbListTables(con)
 
-
 # write table to db
-dbWriteTable(con, "mtcars", mtcars, overwrite=T)
+dbWriteTable(con, "mtcars",
+             mtcars, overwrite=T)
 dbListTables(con)
 
 
@@ -30,12 +31,14 @@ dbReadTable(con, "mtcars")
 
 
 # remove
-dbRemoveTable(con,"tran")
+dbRemoveTable(con,"mtcars")
 dbListTables(con)
 
 
 # you can write table from file directly.
-system.time(dbWriteTable(con, "member", "./recomen/membership.csv",row.names=F))
+system.time(dbWriteTable(con, "member", 
+                         "./recomen/membership.csv",row.names=F))
+
 
 
 ## get data
@@ -110,11 +113,14 @@ str(tran)
 
 ## set Mysql with google cloud
 
-# user<-"root"
-# pw<-"XXXXXXXXXXXXXXXX"
-# host<-'XXX.XXX.XXX.XXX'
+user<-"root"
+pw<-"awedfawdf"
+host<-'12.12.12.12'
+save(user,pw,host,file ="./gsql.RData")
+rm(pw)
+rm(host)
 
-# save(user,pw,host,file ="./gsql.RData")
+
 
 load("./gsql.RData")
 
