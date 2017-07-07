@@ -169,3 +169,31 @@ extract  : 데이터를 분리하는 폼을 지정하여 분리
 ## data.table
 
 [cheat sheet](https://s3.amazonaws.com/assets.datacamp.com/img/blog/data+table+cheat+sheet.pdf)
+
+## 과제
+
+- recomen 폴더에 있는 6개 데이터를 활용해서 다음장의 6개 질문에 답해주세요.
+- 데이터가 5개이신 분은 아래 코드를 실행해서 다운로드해주세요. 1.4G라 시간이 좀 걸립니다.    
+
+```
+chk<-file.info("./recomen/tran.csv")
+if(is.na(chk$size)){
+  recoment<-"http://rcoholic.duckdns.org/oc/index.php/s/jISrPutj4ocLci2/download"
+  dir.create("./recomen", showWarnings = F)
+  download.file(recoment,destfile="./recomen/tran.csv",mode='wb')
+}
+
+```    
+
+- 답을 구하기 위한 코드와 답을 class3assignment 폴더에 class3_[이름].R로 제출해주세요.(답은 주석으로 작성)
+- sql, dplyr+tidyr, data.table 등 무엇이든 사용하시고, 외부서비스도 가능하시면 무엇이든 사용하세요. 몇 문제는 계산 시간이 오래걸릴 수 있습니다.
+
+## 문제
+
+1. receiptNum가 "6998419"인 구매기록의 가격(amout)의 합은 얼마인가요?
+2. 가장 비싼 item은 무엇인가요?
+3. 사용자들이 가장 많이 사용한 체널은 mobile/app과 onlinemall 중에 무엇입니까?
+4. 월매출이 2015년 03월 가장 높은 매장의 storeCode는 무엇인가요?
+5. 경쟁사의 이용기록이 가장 많은 사용자의 성별은 무엇입니까?
+  (competitor 데이터에서 1row가 1건이라고 가정)
+6. 한번에 3개 이상 구매한 경우에 가장 많이 구매에 포함된 제품 카테고리(cate_3)는 무엇입니까?
