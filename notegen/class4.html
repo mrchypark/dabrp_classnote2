@@ -150,7 +150,7 @@
 
 </article></slide><slide class=''><hgroup><h2>메타문자</h2></hgroup><article >
 
-<p>-<code>^</code> : 문자열의 시작<br/>-<code>$</code> : 문자열의 종료<br/>-<code>.</code> : 어떤 문자던 한 개를 표현<br/>-<code>[]</code>: 문자클래스로서 괄호안에 조건에 해당하는 글자 한 개를 표현<br/>-<code>|</code> : or<br/>-<code>?</code> : 앞에 있는 문자가 없거나 하나<br/>-<code>+</code> : 앞에 있는 문자가 하나 이상<br/>-<code>*</code> : 앞에 있는 문자가 없거나 이상<br/>-<code>{n,m}</code> : 앞 문자가 n개 이상 m개 이하<br/>-<code>()</code> : 하나의 그룹으로 지정하고 글자처럼 취급하며 이후에  등으로 사용 가능</p>
+<p>-<code>^</code> : 문자열의 시작<br/>-<code>$</code> : 문자열의 종료<br/>-<code>.</code> : 어떤 문자던 한 개를 표현<br/>-<code>[]</code>: 문자클래스로서 괄호안에 조건에 해당하는 글자 한 개를 표현<br/>-<code>?</code> : 앞에 있는 문자가 없거나 하나<br/>-<code>+</code> : 앞에 있는 문자가 하나 이상<br/>-<code>*</code> : 앞에 있는 문자가 없거나 하나 이상<br/>-<code>{n,m}</code> : 앞 문자가 n개 이상 m개 이하<br/>-<code>()</code> : 하나의 그룹으로 지정하고 글자처럼 취급하며 이후에  등으로 사용 가능</p>
 
 </article></slide><slide class=''><hgroup><h2>단순 매칭</h2></hgroup><article  id="-">
 
@@ -233,9 +233,103 @@ grep(&quot;[^02468]&quot;, x)</pre>
 
 <pre >## [1] 1 2 3</pre>
 
+</article></slide><slide class=''><hgroup><h2>문자 클래스의 연속</h2></hgroup><article  id="--">
+
+<p>작성하는 문자 클래스가 범위를 가질 경우 <code>-</code>를 통해서 앞에 글자에서부터 뒤의 글자까지라는 의미로 사용합니다. 예를 들어 숫자 전체는 <code>[0-9]</code>로 표현되고 소문자 알파벳 전체라면 <code>[a-z]</code>라고 합니다. 알파벳 전체는 <code>[a-zA-Z]</code>라고 합니다. 한글도 동작해서 <code>[ㄱ-ㅎ]</code>(자음 전체), <code>[가-힣]</code>(한글 전체) 등등도 지원합니다.</p>
+
 </article></slide><slide class=''><hgroup><h2>관례적 문자 클래스</h2></hgroup><article  id="--">
 
-<p>문자 클래스는 관례적으로 여러</p></article></slide>
+<p>문자 클래스는 관례적으로 여러 단축 표현이 있습니다. <code>[[:xxxx:]]</code>의 형태를 띄고 의미는 아래와 같습니다.</p>
+
+<p>[[:ascii:]] ASCII 문자(모두 128)<br/>[[:alpha:]] 알파벳 문자(영문자)<br/>[[:digit:]] 숫자<br/>[[:alnum:]] 영문자와 숫자<br/>[[:blank:]] 빈 문자(스페이스, 탭 등 전체)<br/>[[:space:]] 공백 문자<br/>[[:lower:]] 소문자<br/>[[:upper:]] 대문자</p>
+
+<p><a href='https://opentutorials.org/course/730/4570' title=''>기타 문자클래스</a></p>
+
+</article></slide><slide class=''><hgroup><h2>앞의 글자가 없거나 하나</h2></hgroup><article  id="---">
+
+<p><code>?</code>는 글자 뒤에 붙어서 그 글자가 한개 있거나 없는 경우 모두를 표현할 때 사용합니다.</p>
+
+<pre class = 'prettyprint lang-r'>x &lt;- c(&quot;apple&quot;, &quot;banana&quot;, &quot;pear&quot;, &quot;aple&quot;)
+grep(&quot;app?&quot;, x)</pre>
+
+<pre >## [1] 1 4</pre>
+
+</article></slide><slide class=''><hgroup><h2>앞의 글자가 하나 이상</h2></hgroup><article  id="---">
+
+<p><code>+</code>는 글자 뒤에 붙어서 그 글자가 한개 <code>이상</code> 연속하는 모두를 표현할 때 사용합니다.</p>
+
+<pre class = 'prettyprint lang-r'>x &lt;- c(&quot;apple&quot;, &quot;banana&quot;, &quot;pear&quot;, &quot;aple&quot;)
+grep(&quot;p+&quot;, x)</pre>
+
+<pre >## [1] 1 3 4</pre>
+
+<pre class = 'prettyprint lang-r'>grep(&quot;ap+&quot;, x)</pre>
+
+<pre >## [1] 1 4</pre>
+
+</article></slide><slide class=''><hgroup><h2>앞의 글자가 없거나 하나 이상</h2></hgroup><article  id="----">
+
+<p><code>*</code>는 글자 뒤에 붙어서 그 글자가 없는 경우부터 여러 개 연속하는 모두를 표현할 때 사용합니다.</p>
+
+<pre class = 'prettyprint lang-r'>x &lt;- c(&quot;apple&quot;, &quot;banana&quot;, &quot;pear&quot;, &quot;aple&quot;, &quot;abble&quot;,&quot;appppppppple&quot;)
+grep(&quot;app*&quot;, x)</pre>
+
+<pre >## [1] 1 4 6</pre>
+
+</article></slide><slide class=''><hgroup><h2>글자의 갯수를 조절하기</h2></hgroup><article  id="--">
+
+<p>앞의 메타 문자는 모두 없거나 하나, 아니면 갯수와 상관없이 연속되는 경우를 뜻합니다. 그래서 이제 몇 개에서 부터 몇 개까지만 연속하는 것을 찾고 싶을 때 사용하는 문법이 있습니다. <code>{ }</code>은 몇 가지 사용법이 있는데,</p>
+
+<p><code>{n}</code> : 글자가 <code>n</code>개인 경우<br/><code>{n, }</code> : 글자가 <code>n</code>개 이거나 더 많은 경우 <code>{ ,m}</code> : 글자가 <code>m</code>개 이거나 더 적은 경우 <code>{n,m}</code> : 글자가 <code>n</code>개에서 부터 <code>m</code>개 사이에 있는 경우</p>
+
+</article></slide><slide class=''><hgroup><h2>정말 그렇게 동작할까</h2></hgroup><article  id="--">
+
+<p><code>a{3}</code>은 <code>a</code>가 3개 연속하는 경우를 뜻합니다. 하지만 <code>aaaa</code>또한 3개 연속하는 경우가 그 안에 있기 때문에 조건을 만족하게 됩니다. 이렇기 때문에 항상 생각하는 대로 동작하는지 확인해야 합니다.</p>
+
+<pre class = 'prettyprint lang-r'>x &lt;- c(&quot;a&quot;,&quot;aa&quot;,&quot;aaa&quot;,&quot;aaaa&quot;,&quot;aaaaa&quot;)
+grep(&quot;a{3}&quot;, x)</pre>
+
+<pre >## [1] 3 4 5</pre>
+
+<pre class = 'prettyprint lang-r'>grep(&quot;^a{3}$&quot;, x)</pre>
+
+<pre >## [1] 3</pre>
+
+<pre class = 'prettyprint lang-r'>grep(&quot;a{3,}&quot;, x)</pre>
+
+<pre >## [1] 3 4 5</pre>
+
+<pre class = 'prettyprint lang-r'>grep(&quot;a{,3}&quot;, x)</pre>
+
+<pre >## [1] 1 2 3 4 5</pre>
+
+<pre class = 'prettyprint lang-r'>grep(&quot;a{2,3}&quot;, x)</pre>
+
+<pre >## [1] 2 3 4 5</pre>
+
+</article></slide><slide class=''><hgroup><h2>그룹화</h2></hgroup><article >
+
+<p>정규표현식에서는 글자 하나하나를 하나의 개체로 인식합니다. 예를 들어 <code>abcabcabc</code>같은 경우 지금 까지 배운 내용으로는 단순 매칭하는 방법밖에 없습니다. 이때 그룹을 사용하면 <code>(abc)+</code>이나 <code>(abc){3}</code>로 표현할 수 있습니다. <code>()</code>는 괄호 안에 있는 글자 전체를 하나의 글자로 인식할 수 있게 해줍니다.</p>
+
+</article></slide><slide class=''><hgroup><h2>함께 사용하는 함수</h2></hgroup><article  id="--">
+
+<p>grep : 찾고자 하는 패턴이 있는 벡터의 <code>위치</code>를 결과로 줌</p>
+
+<p>grepl : 찾고자 하는 패턴 인지를 TRUE, FALSE 벡터로 표현</p>
+
+<p>sub : 찾고자 하는 첫번째 패턴을 두번째 인자로 바꿈</p>
+
+<p>gsub : 찾고자 하는 모든 패턴을 두번째 인자로 바꿈</p>
+
+<p>dir : 찾고자 하는 패턴의 파일 이름을 결과로 줌</p>
+
+<p>strsplit: 자르고자 하는 패턴으로 글자 데이터를 자름</p>
+
+<p>apropos : Environment에 보여주지 않는 기본 객체들을 보여줌</p>
+
+<ul>
+<li>find : 객체가 어디에 포함되어있는지 보여줌</li>
+</ul></article></slide>
 
 
   <slide class="backdrop"></slide>
