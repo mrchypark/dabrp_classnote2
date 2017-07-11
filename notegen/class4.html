@@ -148,9 +148,29 @@
 </ul></li>
 </ul>
 
+</article></slide><slide class=''><hgroup><h2>유용한 페이지</h2></hgroup><article  id="-">
+
+<p><a href='http://www.nextree.co.kr/p4327/' title=''>정규표현식 설명</a></p>
+
+<p><a href='https://regexper.com/' title=''>정규표현식 시각화</a></p>
+
+<p><a href='http://r4ds.had.co.nz/strings.html' title=''>R for data science#strings</a></p>
+
+<p><a href='https://statkclee.github.io/ds-authoring/regex-r.html' title=''>정규표현식의 R에서 사용(한글)</a></p>
+
 </article></slide><slide class=''><hgroup><h2>메타문자</h2></hgroup><article >
 
-<p>-<code>^</code> : 문자열의 시작<br/>-<code>$</code> : 문자열의 종료<br/>-<code>.</code> : 어떤 문자던 한 개를 표현<br/>-<code>[]</code>: 문자클래스로서 괄호안에 조건에 해당하는 글자 한 개를 표현<br/>-<code>?</code> : 앞에 있는 문자가 없거나 하나<br/>-<code>+</code> : 앞에 있는 문자가 하나 이상<br/>-<code>*</code> : 앞에 있는 문자가 없거나 하나 이상<br/>-<code>{n,m}</code> : 앞 문자가 n개 이상 m개 이하<br/>-<code>()</code> : 하나의 그룹으로 지정하고 글자처럼 취급하며 이후에  등으로 사용 가능</p>
+<ul>
+<li><code>^</code> : 문자열의 시작<br/></li>
+<li><code>$</code> : 문자열의 종료<br/></li>
+<li><code>.</code> : 어떤 문자던 한 개를 표현<br/></li>
+<li><code>[]</code>: 문자클래스로서 괄호안에 조건에 해당하는 글자 한 개를 표현<br/></li>
+<li><code>?</code> : 앞에 있는 문자가 없거나 하나<br/></li>
+<li><code>+</code> : 앞에 있는 문자가 하나 이상<br/></li>
+<li><code>*</code> : 앞에 있는 문자가 없거나 하나 이상<br/></li>
+<li><code>{n,m}</code> : 앞 문자가 n개 이상 m개 이하<br/></li>
+<li><code>()</code> : 하나의 그룹으로 지정하고 글자처럼 취급하며 이후에  등으로 사용 가능</li>
+</ul>
 
 </article></slide><slide class=''><hgroup><h2>단순 매칭</h2></hgroup><article  id="-">
 
@@ -208,6 +228,25 @@ grep(&quot;banana&quot;, data)</pre>
 
 <pre >## [1] 2</pre>
 
+</article></slide><slide class=''><hgroup><h2>사용해 보기</h2></hgroup><article  id="-">
+
+<ul>
+<li>nycflights13 패키지의 airports 데이터에 이름에 <code>New</code>가 <code>포함</code>되는 데이터는 몇 개 인가?</li>
+<li>nycflights13 패키지의 airports 데이터에 이름이 <code>New</code>로 <code>시작</code>하는 데이터는 몇 개 인가?</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>if (!require(nycflights13)) install.packages(&quot;nycflights13&quot;)
+library(nycflights13)
+head(airports, 3)</pre>
+
+<pre >## # A tibble: 3 x 8
+##     faa                          name      lat       lon   alt    tz   dst
+##   &lt;chr&gt;                         &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;
+## 1   04G             Lansdowne Airport 41.13047 -80.61958  1044    -5     A
+## 2   06A Moton Field Municipal Airport 32.46057 -85.68003   264    -6     A
+## 3   06C           Schaumburg Regional 41.98934 -88.10124   801    -6     A
+## # ... with 1 more variables: tzone &lt;chr&gt;</pre>
+
 </article></slide><slide class=''><hgroup><h2>임의의 글자 한 개</h2></hgroup><article  id="---">
 
 <p><code>.</code> 은 정규표현식에서 무엇이든 한 개의 글자를 의미합니다.</p>
@@ -216,6 +255,19 @@ grep(&quot;banana&quot;, data)</pre>
 grep(&quot;.a.&quot;, x)</pre>
 
 <pre >## [1] 2 3</pre>
+
+</article></slide><slide class=''><hgroup><h2>메타문자를 글자그대로</h2></hgroup><article  id="-">
+
+<p><code>\</code>를 메타문자 앞에 쓰면 메타문자로서가 아니라 글자 그대로로 인식합니다. 그런데 <code>\</code> 또한 메타문자로서 동작하기 때문에 <code>\\</code>를 작성해주어야 합니다.</p>
+
+<pre class = 'prettyprint lang-r'>x &lt;- c(&quot;apple&quot;, &quot;banana&quot;, &quot;pear&quot;, &quot;.apple&quot;)
+grep(&quot;\\.a.&quot;, x)</pre>
+
+<pre >## [1] 4</pre>
+
+<pre class = 'prettyprint lang-r'>grep(&quot;\.a.&quot;, x)</pre>
+
+<pre >Error: &#39;\.&#39; is an unrecognized escape in character string starting &quot;&quot;\.&quot;</pre>
 
 </article></slide><slide class=''><hgroup><h2>문자 클래스</h2></hgroup><article  id="-">
 
@@ -244,6 +296,24 @@ grep(&quot;[^02468]&quot;, x)</pre>
 <p>[[:ascii:]] ASCII 문자(모두 128)<br/>[[:alpha:]] 알파벳 문자(영문자)<br/>[[:digit:]] 숫자<br/>[[:alnum:]] 영문자와 숫자<br/>[[:blank:]] 빈 문자(스페이스, 탭 등 전체)<br/>[[:space:]] 공백 문자<br/>[[:lower:]] 소문자<br/>[[:upper:]] 대문자</p>
 
 <p><a href='https://opentutorials.org/course/730/4570' title=''>기타 문자클래스</a></p>
+
+</article></slide><slide class=''><hgroup><h2>사용해 보기</h2></hgroup><article  id="--1">
+
+<ul>
+<li>nycflights13 패키지의 airports 데이터에 이름이 숫자로 끝나는 데이터는 몇 개 인가? (2가지)</li>
+</ul>
+
+<pre class = 'prettyprint lang-r'>if (!require(nycflights13)) install.packages(&quot;nycflights13&quot;)
+library(nycflights13)
+head(airports, 3)</pre>
+
+<pre >## # A tibble: 3 x 8
+##     faa                          name      lat       lon   alt    tz   dst
+##   &lt;chr&gt;                         &lt;chr&gt;    &lt;dbl&gt;     &lt;dbl&gt; &lt;int&gt; &lt;dbl&gt; &lt;chr&gt;
+## 1   04G             Lansdowne Airport 41.13047 -80.61958  1044    -5     A
+## 2   06A Moton Field Municipal Airport 32.46057 -85.68003   264    -6     A
+## 3   06C           Schaumburg Regional 41.98934 -88.10124   801    -6     A
+## # ... with 1 more variables: tzone &lt;chr&gt;</pre>
 
 </article></slide><slide class=''><hgroup><h2>앞의 글자가 없거나 하나</h2></hgroup><article  id="---">
 
@@ -307,29 +377,179 @@ grep(&quot;a{3}&quot;, x)</pre>
 
 <pre >## [1] 2 3 4 5</pre>
 
-</article></slide><slide class=''><hgroup><h2>그룹화</h2></hgroup><article >
+</article></slide><slide class=''><hgroup><h2><code>?</code>를 활용한 조절</h2></hgroup><article  id="--">
+
+<p>일반적으로 갯수가 더 많은 갯수의 결과를 보여주는데, 갯수를 의미하는 메타문자 뒤에 <code>?</code>를 붙이면 더 적은 갯수의 결과를 보여주는 것으로 변경됩니다.</p>
+
+<p>?? : 0 또는 1개를 뜻하는데 0을 선호</p>
+
+<p>+? : 1개 또는 이상을 뜻하는데 가능한 적은 갯수를 선호</p>
+
+<p>*? : 0개 또는 이상을 뜻하는데 가능한 적은 갯수를 선호</p>
+
+<p>{n,}? : n개 또는 이상을 뜻하는데 가능한 적은 갯수를 선호</p>
+
+<p>{n,m}?: n개에서 m개 사이를 뜻하는데 가능한 적은 갯수를 선호</p>
+
+</article></slide><slide class=''><hgroup><h2><code>?</code>를 활용한 조절의 사용예</h2></hgroup><article  id="---">
+
+아무 글자(<code>.</code>)가 모든 갯수가 가능한(<code>*</code>) 구성이
+
+<p>
+
+와
+
+</p>
+
+<p>사이에 있는 경우입니다. <code>.*</code>과 <code>.*?</code>가 어떻게 다르게 동작하는지 확인해 보세요.</p>
+
+<pre class = 'prettyprint lang-r'>stri&lt;-&quot;&lt;p&gt; &lt;em&gt;안녕&lt;/em&gt;하세요 &lt;/p&gt;&lt;p&gt;테스트입니다.&lt;/p&gt;&quot;
+sub(&quot;&lt;p&gt;.*&lt;/p&gt;&quot;,&quot;tar&quot;,stri)</pre>
+
+<pre >## [1] &quot;tar&quot;</pre>
+
+<pre class = 'prettyprint lang-r'>sub(&quot;&lt;p&gt;.*?&lt;/p&gt;&quot;,&quot;tar&quot;,stri)</pre>
+
+<pre >## [1] &quot;tar&lt;p&gt;테스트입니다.&lt;/p&gt;&quot;</pre>
+
+</article></slide><slide class=''><hgroup><h2>그룹</h2></hgroup><article >
 
 <p>정규표현식에서는 글자 하나하나를 하나의 개체로 인식합니다. 예를 들어 <code>abcabcabc</code>같은 경우 지금 까지 배운 내용으로는 단순 매칭하는 방법밖에 없습니다. 이때 그룹을 사용하면 <code>(abc)+</code>이나 <code>(abc){3}</code>로 표현할 수 있습니다. <code>()</code>는 괄호 안에 있는 글자 전체를 하나의 글자로 인식할 수 있게 해줍니다.</p>
 
+<pre class = 'prettyprint lang-r'>x &lt;- c(&quot;abc&quot;,&quot;abcabc&quot;,&quot;abcabcadc&quot;,&quot;abcabcabc&quot;,&quot;adcabcabcabc&quot;)
+grep(&quot;(abc){3}&quot;, x)</pre>
+
+<pre >## [1] 4 5</pre>
+
+</article></slide><slide class=''><hgroup><h2>그룹의 캡쳐 및 사용</h2></hgroup><article  id="---">
+
+<p>그룹은 <code>sub</code>등 치환 기능을 사용할 때 더욱 빛을 발합니다. 찾는 패턴에서 그룹을 지어둔 내용은 순서대로 <code>\\1</code>, <code>\\2</code>의 방법으로 바꿀 패턴에서 사용할 수 있습니다.</p>
+
+<pre class = 'prettyprint lang-r'>x &lt;- c(&quot;^ab&quot;, &quot;ab&quot;, &quot;abc&quot;, &quot;ab 12&quot;)
+gsub(&quot;(ab) 12&quot;, &quot;\\1 34&quot;, x)</pre>
+
+<pre >## [1] &quot;^ab&quot;   &quot;ab&quot;    &quot;abc&quot;   &quot;ab 34&quot;</pre>
+
+</article></slide><slide class=''><hgroup><h2><code>또는</code>의 사용</h2></hgroup><article  id="-">
+
+<p><code>|</code>는 <code>or</code>의 뜻으로 사용하는 글자입니다. 우선 단순 매칭에서 사용하는 경우입니다. <code>()</code>과 함께 사용할 수도 있습니다.</p>
+
+<pre class = 'prettyprint lang-r'>x &lt;- c(&quot;^ab&quot;, &quot;ab&quot;, &quot;ac&quot;, &quot;abc&quot;, &quot;abd&quot;, &quot;abe&quot;, &quot;ab 12&quot;)
+grep(&quot;abc|abd&quot;, x)</pre>
+
+<pre >## [1] 4 5</pre>
+
+<pre class = 'prettyprint lang-r'>grep(&quot;a(c|bd)&quot;, x)</pre>
+
+<pre >## [1] 3 5</pre>
+
 </article></slide><slide class=''><hgroup><h2>함께 사용하는 함수</h2></hgroup><article  id="--">
 
-<p>grep : 찾고자 하는 패턴이 있는 벡터의 <code>위치</code>를 결과로 줌</p>
+<p>grep : 찾고자 하는 패턴이 있는 벡터의 위치를 결과로 줌<br/>grepl : 찾고자 하는 패턴 인지를 TRUE, FALSE 벡터로 표현</p>
 
-<p>grepl : 찾고자 하는 패턴 인지를 TRUE, FALSE 벡터로 표현</p>
+<p>sub : 찾고자 하는 첫번째 패턴을 두번째 인자로 바꿈<br/>gsub : 찾고자 하는 모든 패턴을 두번째 인자로 바꿈</p>
 
-<p>sub : 찾고자 하는 첫번째 패턴을 두번째 인자로 바꿈</p>
-
-<p>gsub : 찾고자 하는 모든 패턴을 두번째 인자로 바꿈</p>
+<p>regexpr : 찾고자 하는 패턴의 글자내 시작점을 결과로 줌<br/>gregexpr: 찾고자 하는 패턴의 글자내 위치를 모두 결과로 줌</p>
 
 <p>dir : 찾고자 하는 패턴의 파일 이름을 결과로 줌</p>
 
 <p>strsplit: 자르고자 하는 패턴으로 글자 데이터를 자름</p>
 
-<p>apropos : Environment에 보여주지 않는 기본 객체들을 보여줌</p>
+<p>apropos : Environment에 보여주지 않는 기본 객체들을 보여줌<br/>* find : 객체가 어디에 포함되어있는지 보여줌</p>
+
+</article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>주요 사용예</h2></hgroup><article  id="-">
+
+</article></slide><slide class=''><hgroup><h2>우편번호</h2></hgroup><article >
+
+<p>우리나라는 새로운 방식인 &quot;12345&quot;와 &quot;123-456&quot;의 두 가지 방식으로 우편번호를 사용하고 있습니다.</p>
+
+<pre class = 'prettyprint lang-r'>^[0-9]{3}([0-9]{2}|-[0-9]{3})&amp;</pre>
+
+<p><a href='https://regexper.com/#%5E%5B0-9%5D%7B3%7D(%5B0-9%5D%7B2%7D%7C-%5B0-9%5D%7B3%7D)%26' title=''>시각화 보러가기</a></p>
+
+</article></slide><slide class=''><hgroup><h2>주민등록번호</h2></hgroup><article >
+
+<p>주민등록번호 또한 많이 사용하는 데이터입니다. 조건에 부합하는 데이터가 얼마나 되는지 확인하는데 유용합니다.</p>
+
+<pre class = 'prettyprint lang-r'>^([0-9]{2}(0[1-9]|1[0-2])(0[1-9]|[12][0-9]|3[01]))-[1-4][0-9]{6}$</pre>
+
+<p><a href='https://regexper.com/#%5E(%5B0-9%5D%7B2%7D(0%5B1-9%5D%7C1%5B0-2%5D)(0%5B1-9%5D%7C%5B12%5D%5B0-9%5D%7C3%5B01%5D))-%5B1-4%5D%5B0-9%5D%7B6%7D%24' title=''>시각화 보러가기</a></p>
+
+</article></slide><slide class=''><hgroup><h2>전화번호</h2></hgroup><article >
+
+<p>다양한 입력방식의 전화번호를 전화번호로 인지하는 방법을 알아보겠습니다.</p>
+
+<pre class = 'prettyprint lang-r'>^\\(?[0-9]{2,3}\\)?[-. ]?[0-9]{3,4}[-. ]?[0-9]{4}$</pre>
+
+<p><a href='https://regexper.com/#%5E%5C(%3F%5B0-9%5D%7B2%2C3%7D%5C)%3F%5B-.%20%5D%3F%5B0-9%5D%7B3%2C4%7D%5B-.%20%5D%3F%5B0-9%5D%7B4%7D%24' title=''>시각화 보러가기</a></p>
+
+<p>그룹과 <code>gsub</code>로 양식을 통일시킬 수도 있습니다.</p>
+
+<pre class = 'prettyprint lang-r'>gsub(&quot;^\\(?([0-9]{2,3})\\)?[-. ]?([0-9]{3,4})[-. ]?([0-9]{4})$&quot;,
+      &quot;(\\1) \\2-\\3&quot;,data)</pre>
+
+</article></slide><slide class=''><hgroup><h2>이메일 주소</h2></hgroup><article  id="-">
+
+<p>이메일은 중간에 <code>@</code>표시가 있으며 뒤에 서비스명 주소는 <code>.com</code>등 <code>.</code>을 포함하고 짧은 문자열로 구성되어 있습니다. <code>co.kr</code>같은 경우도 고려해야 합니다.</p>
+
+<pre class = 'prettyprint lang-r'>/^([a-z0-9_\\.-]+)@([0-9a-z\\.-]+)\.([a-z\\.]{2,6})$/</pre>
+
+<p><a href='https://regexper.com/#%2F%5E(%5Ba-z0-9_%5C%5C.-%5D%2B)%40(%5B0-9a-z%5C%5C.-%5D%2B)%5C.(%5Ba-z%5C%5C.%5D%7B2%2C6%7D)%24%2F' title=''>시각화 보러가기</a></p>
+
+</article></slide><slide class=''><hgroup><h2>인터넷 주소</h2></hgroup><article  id="-">
+
+<p>인터넷 주소 또한 다양한 방법이 있습니다.</p>
+
+<pre class = 'prettyprint lang-r'>/^(https?:\\/\\/)?([\\da-z\\.-]+)\\.([a-z\\.]{2,6})([\\/[[:word:]]_\\.-]*)*\\/?$/</pre>
+
+<p><a href='https://regexper.com/#%2F%5E(https%3F%3A%5C%2F%5C%2F)%3F(%5B0-9a-z%5C.-%5D%2B)%5C.(%5Ba-z%5C.%5D%7B2%2C6%7D)(%5B%5C%2F%5Cw_%5C.-%5D*)*%5C%2F%3F%24%2F' title=''>시각화 보러가기</a></p>
+
+</article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>stringr</h2></hgroup><article  id="stringr">
+
+</article></slide><slide class=''><hgroup><h2>소개</h2></hgroup><article >
+
+<p>stringr은 tidyverse 패키지에 포함되어 있는 글자 조작용 패키지로 <a href='http://site.icu-project.org/' title=''>ICU</a>라고 불리는 C library의 wrapper인 <a href='https://github.com/gagolews/stringi' title=''>stringi</a> 패키지를 기반으로 하고 있습니다.</p>
+
+<p>총 패턴 매칭, 공백 관리, 지역 문자, 헬퍼의 4가지 카테고리의 함수를 제공합니다.</p>
+
+</article></slide><slide class=''><hgroup><h2>패턴 매칭</h2></hgroup><article  id="-">
+
+<p>str_count : 찾고자 하는 패턴이 몇 개가 있는지 셈<br/>str_detect : 찾고자 하는 패턴이 있는지 TRUE/FALSE로 반환<br/>str_extract str_extract_all : 찾는 패턴을 뽑아서 출력<br/>str_locate str_locate_all : 찾는 패턴의 글자내 시작점과 끝점을 출력<br/>str_match str_match_all : 찾는 패턴을 뽑아주는데 캡쳐 그룹도 같이 제공<br/>str_replace str_replace_all : 찾는 패턴을 다른 내용으로 바꿈<br/>str_split str_split_fixed : 지정한 패턴으로 글자를 나눔<br/>str_subset : 찾는 패턴이 있는 위치의 데이터를 출력<br/>str_which : 찾는 패턴이 있는 데이터의 위치를 출력<br/>str_view str_view_all : html로 매칭된 내용을 출력<br/>fixed : 글자 그대로를 매칭할 것인지를 결정<br/>boundary : 글자 경계의 종류를 결정 c(&quot;character&quot;, &quot;line_break&quot;,&quot;sentence&quot;,&quot;word&quot;)</p>
+
+</article></slide><slide class=''><hgroup><h2>공백 관리</h2></hgroup><article  id="-">
+
+<p>str_pad : 글자의 좌, 우 혹은 양쪽에 띄어쓰기를 추가<br/>str_trim : 글자의 좌, 우 혹은 양쪽에 있는 공백문자를 제거</p>
+
+</article></slide><slide class=''><hgroup><h2>지역 문자</h2></hgroup><article  id="-">
+
+<p>str_order str_sort : 순서를 정렬<br/>str_to_upper str_to_lower str_to_title : 알파벳의 경우 변경</p>
+
+</article></slide><slide class=''><hgroup><h2>헬퍼</h2></hgroup><article >
+
+<p>str_c : 글자 벡터를 하나의 글자 데이터로 합침<br/>str_conv : 글자의 인코딩을 조절<br/>str_dup : 글자들을 반복하여 합침<br/>str_length : 글자의 길이를 셈<br/>str_replace_na : 자료형 NA를 글자 NA로 변경<br/>str_trunc : 일정 글자 길이 이후를 줄임표로 자름<br/>str_sub : 글자의 시작점과 끝점을 지정하여 추출</p>
+
+</article></slide><slide class=''><hgroup><h2>예시</h2></hgroup><article >
+
+<p><a href='https://github.com/mrchypark/dabrp_classnote2/blob/master/codeForClass4.R' title=''>예시 코드</a></p>
+
+</article></slide><slide class=''><hgroup><h2>과제</h2></hgroup><article >
+
+<ol>
+<li>recomen의 item.csv 파일을 불러와주세요.
 
 <ul>
-<li>find : 객체가 어디에 포함되어있는지 보여줌</li>
-</ul></article></slide>
+<li>cate_3_name 이 &quot;립&quot;으로 시작하는 제품은 어느 파트너사에서 판매하나요?</li>
+<li>cate_3_name 이 &quot;소스&quot;로 끝나는 제품은 무엇이 있나요?</li>
+<li>&quot;/&quot; 로 합쳐져 있는 cate_3_name를 모두 잘라서 유일한 제품명만 세면 모두 몇개 인가요?</li>
+</ul></li>
+<li>아래 조건에 해당하는 정규표현식 패턴을 작성해주세요.
+
+<ul>
+<li>김경수, 김찬수, 김갑수 중 하나 이상 포함되어 있는지 확인</li>
+<li></li>
+<li></li>
+</ul></li>
+</ol></article></slide>
 
 
   <slide class="backdrop"></slide>
