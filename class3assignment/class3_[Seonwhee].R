@@ -106,6 +106,7 @@ stores <- unique(tran$storeCode)
 Dates <- unique(tran$date)
 favorite_goods = c()
 i = 1
+#### too much time spending !!!!! more than 3 hours ###########
 for(cus in cusIDs){
  for(sto in stores){
    for(dat in Dates){
