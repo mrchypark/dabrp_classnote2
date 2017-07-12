@@ -149,13 +149,43 @@ cust[cusID==comp[,.N,by=.(cusID)][N==max(N),cusID]]
 ## 한번에 3개 이상 구매한 경우에 가장 많이 구매에 포함된 제품 카테고리(cate_3)는 무엇입니까?
 
 # dplyr tidyr 답
-# 오래 걸려서 포기 ㅠ_
-tran %>% 
+devtools::install_github("tidyverse/dbplyr")
+library(dplyr)
+library(bigrquery)
+
+con <- DBI::dbConnect(dbi_driver(),
+  project = "konlper-168808",
+  dataset = "recom",
+  billing = "konlper-168808"
+)
+
+DBI::dbListTables(con)
+
+tran <- con %>% tbl("tran")
+tran
+
+tem<-tran %>% 
   group_by(receiptNum) %>%
-  summarise(n())
+  summarise(total = n()) %>%
+  filter(total>2) %>%
+  select(receiptNum)
+
+tar<-tran %>%
+  semi_join(tem)
+
+cid<-tar %>%
+  group_by(cate_3) %>%
+  summarise(total = n()) %>%
+  arrange(total) %>%
+  filter(1) %>%
+  select(cate_3)
+
+item[cate_3==cid]
 
 # data.table 답
 tem<-tran[,.N,by=.(receiptNum)]
 tar<-tran[receiptNum %in% tem[N>2,receiptNum]]
 cid<-tar[,.N,by=.(cate_3)][order(N, decreasing = T)][1,cate_3]
 item[cate_3==cid]
+
+
