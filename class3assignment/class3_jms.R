@@ -77,12 +77,14 @@ Problom_2 #106988인 Mobile/App
 
 Problom_4 <- tran %>%
   mutate(month = paste0(substr(date,1,4),'-',substr(date,5,6))) %>%
-  group_by(month) %>%
-  summarize(monthly_sum = sum(amount)) %>%
-  filter(monthly_sum == max(monthly_sum))
+  filter(month == '2015-03') %>%
+  group_by(storeCode) %>%
+  summarize(monthly_sum = sum(amount))
          
-Problom_4 #106988인 Mobile/App
+Problom_4  %>%
+  filter(monthly_sum == max(Problom_4$monthly_sum, na.rm = TRUE))
 
+Problom_4 #storeCode 1
 
 #5.경쟁사의 이용기록이 가장 많은 사용자의 성별은 무엇입니까? (competitor 데이터에서 1row가 1건이라고 가정)
 
