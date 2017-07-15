@@ -15,7 +15,11 @@ Receipt_6998419 = filter(tran, receiptNum==6998419)
 answer1 = sum(Receipt_6998419$amount)
 answer1
 ####################
-
+tran %>%
+  filter(receiptNum=="6998419") %>%
+  select(amount) %>%
+  sum
+####################
 library(DBI)
 library(RSQLite)
 con <- dbConnect(RSQLite::SQLite(), dbname="./class3assignment/class3assignment.sqlite")
