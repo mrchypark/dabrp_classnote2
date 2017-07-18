@@ -14,11 +14,18 @@ if (!require(nycflights13)) install.packages("nycflights13")
 # db set
 library(DBI)
 library(RSQLite)
+library(RMySQL)
 library(nycflights13)
-con <- dbConnect(RSQLite::SQLite(),
+con <- dbConnect(SQLite(),
                  dbname="class3.sqlite")
 
+
+con <- DBI::dbConnect(SQLite(),
+               dbname="class3.sqlite")
+
 # write tables
+
+dbWriteTable(con, "customer", fread("./recomen/customer.csv",encoding = "UTF-8"), overwrite=T)
 dbWriteTable(con, "flights", flights, overwrite=T)
 dbWriteTable(con, "airlines", airlines, overwrite=T)
 dbWriteTable(con, "airports", airports, overwrite=T)
@@ -29,7 +36,8 @@ dbWriteTable(con, "weather", weather, overwrite=T)
 dbListTables(con)
 
 # select from 
-dbGetQuery(con, "select * from planes limit 10")
+dbGetQuery(con, "select * from planes
+           limit 10")
 
 # select from where
 dbGetQuery(con, "select * from planes where year > 2000")
