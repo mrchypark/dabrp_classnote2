@@ -3,7 +3,7 @@
 ## devtools::로 devtools내의 함수를 직접 사용
 
 if (!require(devtools)) install.packages("devtools") 
-if (!require(DBI)) devtools::install_github("rstats-db/DBI")
+if (!require(DBI)) devtools::install_github("rstats-db/DBI")  # different from CRAN repository 
 if (!require(RSQLite)) devtools::install_github("rstats-db/RSQLite")
 if (!require(RMySQL)) devtools::install_github("rstats-db/RMySQL")
 if (!require(bigrquery)) devtools::install_github("rstats-db/bigrquery")
@@ -35,7 +35,7 @@ identical(dbReadTable(con,"mtcars"),mtcars) ##That two files are same -> "True"
 
 # get table data
 dbReadTable(con, "mtcars")
-
+identical(dbReadTable(con, "mtcars"),mtcars)
 
 # remove
 dbRemoveTable(con,"mtcars")
@@ -109,6 +109,9 @@ summary(tran)
 ## get data structure
 
 str(chennel)
+chennel2 <- read.csv("./recomen/chennel.csv")
+str(chennel2)
+rm(chennel2)
 str(competitor)
 str(customer)
 str(item)
@@ -120,6 +123,13 @@ str(tran)
 # ctrl + shift + c : 주석처리를 한번에 할 수있는 단축
 
 # user<-"root"
+<<<<<<< HEAD
+# pw<-""
+# host<-''
+# rm(pw)
+# rm(host)
+# save(user,pw,host,file ="./gsql.RData")
+
 # pw<-"XXXXXXXXXXXXXXXXX"
 # host<-'XXX.XXX.XXX.XXX'
 #rm(pw)
@@ -133,7 +143,7 @@ con <- dbConnect(MySQL(),
                  user = user,
                  password = pw,
                  host = host,
-                 dbname = "recom")
+                 dbname = "fctestp")
 dbListTables(conn = con)
 dbWriteTable(conn = con, name = 'chennel', value = "./recomen/chennel.csv")
 dbReadTable(conn = con, name = "Test")
