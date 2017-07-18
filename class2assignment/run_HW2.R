@@ -1,6 +1,8 @@
 library(nycflights13)
 library(DBI)
 library(RSQLite)
+data(package="nycflights13")
+ls('package:nycflights13')
 
 View(airlines)
 View(airports)
