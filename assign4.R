@@ -135,7 +135,7 @@ dat1[grep("^01[16789]-[0-9]{3,4}-[0-9]{4}$",dat1)]
 
 ## 과제 다음장 1.2
 # html 주석
-
+library(stringr)
 dat2[grep("<!--.*?-->",dat2)]
 
 dat2 <- GET("https://onoffmix.com/") %>%
