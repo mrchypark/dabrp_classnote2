@@ -20,8 +20,8 @@ knitr::opts_chunk$set(cache = T)
       - 변수와 함수
   - 모델을 위한 전처리
       - 문제 해결이란
-      - 회귀 모델
       - 군집 알고리즘
+      - 회귀 모델
       - 연관 분석
 
 
@@ -405,7 +405,22 @@ predict(fit, test)
   
  대표적인 비지도 학습이며 위의 3가지 개념을 바탕으로 계산한 결과를 사람이 판단하는 방식입니다. 빈도에 의존하기 때문에 데이터가 많을 수록 실제하는 패턴을 찾기가 좋아집니다.
 
-## 데이터 준비
+## apriori 알고리즘
+
+```
+rule <- apriori(data = transactionsData, 
+                parameter = list(support = n, 
+                                 confidence = m, 
+                                 minlen = l))
+
+```
+
+  - `apriori`  : 연관 분석을 실행하는 함수의 이름입니다.
+  - `data`     : 분석 대상 데이터로 `transactions`라는 자료형을 입력으로 받습니다.
+  - `parameter`: `supoort`, `confidence`등의 기준값을 제시하는 인자로, 입력한 값보다 큰 결과들만 계산합니다.
+  - `rule`     : 계산된 결과로 연관 규칙에 대한 정보를 담고 있습니다.
+  
+## 자료형 소개
 
 ```{r}
 if (!require(arules)) install.packages("arules") 
@@ -427,21 +442,23 @@ summary(Groceries)
 그렇기 때문에 가지고 있는 데이터를 `transactions` 자료형으로 변경하는 것이 중요합니다. 
 
 ```{}
-tem<-read.csv("./data/groceries.csv", header=F)
-head(tem)
-groc<-read.transactions("./data/groceries.csv")
-str(groc)
+dvdread<-read.csv("./data/dvdtrans.csv")
+head(dvdread)
+dvdtran<-read.transactions("./data/dvdtrans.csv")
+inspect(dvdtran[1:10,])
 ```
-
-## 데이터 설명
-
-`groceries` 데이터는 
-
-
 
 ## 실습
 
+1. `dvdtrans` 데이터를 본래 `transactions` 자료형에 맞게 입력해 보세요. 아래 데이터처럼 나와야 됩니다.
 
+```
+load("./data/dvdTranSample.RData")
+inspect(dvdTranSample)
+```
+1. `Groceries` 데이터를 사용해서 `apriori` 함수로 연관규칙을 만들어 보세요. support는 0.01, confidence는 0.2, minle은 2로 작성합니다.
 
 # 과제
+
+1. `./data/tran.csv` 데이터를 `transactions` 자료형에 맞게 입력해보세요.
 
