@@ -240,6 +240,19 @@ x$num
 
 평가가 적절히 이루어 지려면 학습 데이터 중에 테스트 데이터가 겹치는 것이 있지 않는 것이 좋습니다.
 
+## 군집 알고리즘
+
+군집 알고리즘에서 가장 유명한 것이 `k-means` 입니다. 거리가 가까운 것을 기준으로 `k`개의 군집을 만들어 줍니다. 거리를 기준으로 하기 때문에 변수들이 모두 같은 단위이거나 해야 합니다.
+
+함수는 `kmeans`를 사용하며 수행한 결과에 
+
+```
+km <- kmeans(trainData, centers = n, iter.max = m)
+km$cluster
+```
+
+## 실습
+
 ## 회귀 모델
 
 회귀 모델을 사용하는 함수는 대표적으로 `lm`이 있습니다. 이외에 `glm`이나 `rlm` 등이 있습니다. 데이터가 준비되었다면, 모델을 세우고 평가하는 코드가 짧은 편입니다.
@@ -283,10 +296,47 @@ X(=독립변수=데이터=요인=특성=인풋-=...)에 해당하는 변수 또�
 
 ## 실습
 
+```{r}
+library(MASS)
+data(birthwt)
+str(birthwt)
+```
 
+## 데이터 설명
 
+birthwt: 1986년 미국의 Messachusetts 주 Springfield에 있는 Baystate Medical Center에서 수집한 189명에 대한 출산 관련 정보 [codebook](https://artax.karlin.mff.cuni.cz/r-help/library/rpartOrdinal/html/lowbwt.html)
 
-## 군집 알고리즘
+  - low  : 2.5.kg보다 작게 태어났으면 1, 아니면 0
+  - age  : 출산 당시 어머니의 나이
+  - lwt  : 마지막 생리 기간 중 어머니의 몸무게(pounds)
+  - race : 어머니의 인종. 백인 1, 흑인 2, 그외 3
+  - smoke: 임신중 흡연 여부
+  - ptl  : 과거 조산 횟수
+  - ht   : 고혈압의 발병 이력
+  - ui   : uterine irritability 여부
+  - ftv  : 첫번째 임신기간중 의사 방문 횟수
+  - bwt  : 아기의 몸무게(grams)
+  
+## 실습
+
+1. 데이터를 보고 각 컬럼의 자료형을 파악하세요.
+1. 변수 설명과 의미에 따라 더미 변수로 사용해야 하는 것을 파악하세요.
+1. `fit<-lm(수식, data=birthwt)` 에서 수식을 완성하세요
+1. `summary(fit)`을 확인해 보세요.
+
+## 예측 이라면
+
+```
+set.seed(1234)
+tar   <- sample(1:nrow(birthwt),round(nrow(birthwt)*0.7))
+train <- birthwt[tar, ]
+test  <- birthwt[-tar, ]
+fit<-lm(수식, data=train)
+predict(fit, test) 
+```
+  - `predict`: 학습에 결과로 만들어진 수식을 새로운 데이터에 적용해서 결과를 만드는 함수입니다.
+  - `fit`    : 기 학습된 결과물을 저장한 객체입니다.
+  - `test`   : 테스트로 사용할 새로운 데이터입니다.
 
 ## 연관 분석
 
@@ -294,3 +344,8 @@ X(=독립변수=데이터=요인=특성=인풋-=...)에 해당하는 변수 또�
 
 # 과제
 
+## 
+
+1. 자신이 가지고 있는 데이터로 연관 분석을 수행해 보세요.
+
+## 
