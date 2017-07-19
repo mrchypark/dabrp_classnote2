@@ -58,6 +58,12 @@ tran[,date:=as.Date(as.character(date), format="%Y%m%d")]
 ## receiptNum가 "6998419"인 구매기록의 가격(amout)의 합은 얼마인가요?
 sum(tran[receiptNum=="6998419",amount])
 
+tran %>%
+  filter(receiptNum=="6998419") %>%
+  select(amount) %>%
+  sum
+
+
 # #가장 비싼 item은 무엇인가요?
 
 # "select b.partner, b.cate_3, b.amount 
@@ -92,7 +98,8 @@ item %>%
 tar<-tran[amount==max(tran$amount),.(partner,cate_3)]
 item[partner==tar$partner&cate_3==tar$cate_3]
 
-## 사용자들이 가장 많이 사용한 체널은 mobile/app과 onlinemall 중에 무엇입니까?
+## 사용자들이 가장 많이 사용한 체널은 mobile/app과 
+## onlinemall 중에 무엇입니까?
 
 # sql 답
 # 조건을 줘서 각각 따로 계산함
@@ -113,6 +120,7 @@ chen %>%
 chen[,che:=ifelse(grepl("APP",chennel),"mob","online")]
 chen[,sum(useCnt),by=.(che)]
 chen[,che:=NULL]
+
 
 ## 월매출이 2015년 03월 가장 높은 매장의 storeCode는 무엇인가요?
 
@@ -144,18 +152,62 @@ tar <-
 cust[cusID==tar,]
 
 # data.table 답
-cust[cusID==comp[,.N,by=.(cusID)][N==max(N),cusID]]
+tar<-comp[,.N,by=.(cusID)][N==max(N),cusID]
+cust[ cusID== tar]
 
-## 한번에 3개 이상 구매한 경우에 가장 많이 구매에 포함된 제품 카테고리(cate_3)는 무엇입니까?
+## 한번에 3개 이상 구매한 경우에 가장 많이 구매에 
+## 포함된 제품 카테고리(cate_3)는 무엇입니까?
 
 # dplyr tidyr 답
-# 오래 걸려서 포기 ㅠ_
-tran %>% 
+devtools::install_github("tidyverse/dbplyr")
+library(dplyr)
+library(bigrquery)
+
+con <- DBI::dbConnect(dbi_driver(),
+  project = "konlper-168808",
+  dataset = "recom",
+  billing = "konlper-168808"
+)
+
+DBI::dbListTables(con)
+
+tran <- con %>% tbl("tran")
+tran
+
+tem<-tran %>% 
   group_by(receiptNum) %>%
-  summarise(n())
+  summarise(total = n()) %>%
+  filter(total>2) %>%
+  select(receiptNum)
+
+tar<-tran %>%
+  semi_join(tem)
+
+cid<-tar %>%
+  group_by(cate_3) %>%
+  summarise(total = n()) %>%
+  arrange(total) %>%
+  filter(1) %>%
+  select(cate_3)
+
+item[cate_3==cid]
 
 # data.table 답
 tem<-tran[,.N,by=.(receiptNum)]
 tar<-tran[receiptNum %in% tem[N>2,receiptNum]]
 cid<-tar[,.N,by=.(cate_3)][order(N, decreasing = T)][1,cate_3]
 item[cate_3==cid]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
