@@ -142,24 +142,15 @@
 
 <p>R에서 논리형은 <code>logical</code>이라고 표현하고, 모두 대문자인 <code>TRUE</code>와 <code>FALSE</code>가 각각의 의미를 지닙니다. 약어로써 <code>T</code>와 <code>F</code> 또한 사용합니다.</p>
 
-<pre class = 'prettyprint lang-r'>TRUE</pre>
+</article></slide><slide class=''><hgroup><h2></h2></hgroup><article  id="section">
+
+<pre class = 'prettyprint lang-r'>TRUE; F</pre>
 
 <pre >## [1] TRUE</pre>
 
-<pre class = 'prettyprint lang-r'>FALSE</pre>
-
 <pre >## [1] FALSE</pre>
 
-<pre class = 'prettyprint lang-r'>T</pre>
-
-<pre >## [1] TRUE</pre>
-
-<pre class = 'prettyprint lang-r'>F</pre>
-
-<pre >## [1] FALSE</pre>
-
-<pre class = 'prettyprint lang-r'>x&lt;-T
-x</pre>
+<pre class = 'prettyprint lang-r'>(x&lt;-T)</pre>
 
 <pre >## [1] TRUE</pre>
 
@@ -171,12 +162,11 @@ x</pre>
 
 <p>R에서 실수형은 <code>numeric</code>이라고 표현하고, 기본으로 동작하는 숫자 자료형입니다. <code>num</code>이라고 줄여서 작성하기도 합니다. 다른 언어에서는 <code>float</code>이나 <code>double</code>이라고도 합니다.</p>
 
-<pre class = 'prettyprint lang-r'>1</pre>
+</article></slide><slide class=''><hgroup><h2></h2></hgroup><article  id="section-1">
+
+<pre class = 'prettyprint lang-r'>1; (x&lt;-1)</pre>
 
 <pre >## [1] 1</pre>
-
-<pre class = 'prettyprint lang-r'>x&lt;-1
-x</pre>
 
 <pre >## [1] 1</pre>
 
@@ -184,8 +174,7 @@ x</pre>
 
 <pre >## [1] &quot;numeric&quot;</pre>
 
-<pre class = 'prettyprint lang-r'>y&lt;-1.4
-y</pre>
+<pre class = 'prettyprint lang-r'>(y&lt;-1.4)</pre>
 
 <pre >## [1] 1.4</pre>
 
@@ -209,6 +198,10 @@ y</pre>
 
 <p>R에서 문자형은 <code>character</code>이라고 표현하고, <code>&quot;</code>나 <code>&#39;</code>로 감싸서 다른 객체와 구분하여 표현합니다. <code>chr</code>이나 <code>char</code>라고 줄여서 작성하기도 합니다.</p>
 
+</article></slide><slide class=''><hgroup><h2></h2></hgroup><article  id="section-2">
+
+<p><code>logical</code>글자와 같은 모양의 <code>character</code>를 확인하세요.</p>
+
 <pre class = 'prettyprint lang-r'>class(TRUE)</pre>
 
 <pre >## [1] &quot;logical&quot;</pre>
@@ -217,6 +210,10 @@ y</pre>
 
 <pre >## [1] &quot;character&quot;</pre>
 
+</article></slide><slide class=''><hgroup><h2></h2></hgroup><article  id="section-3">
+
+<p>함수와 같은 모양의 <code>character</code>를 확인하세요.</p>
+
 <pre class = 'prettyprint lang-r'>class(mean)</pre>
 
 <pre >## [1] &quot;function&quot;</pre>
@@ -224,6 +221,10 @@ y</pre>
 <pre class = 'prettyprint lang-r'>class(&quot;mean&quot;)</pre>
 
 <pre >## [1] &quot;character&quot;</pre>
+
+</article></slide><slide class=''><hgroup><h2></h2></hgroup><article  id="section-4">
+
+<p>데이터 객체와 같은 모양의 <code>character</code>를 확인하세요.</p>
 
 <pre class = 'prettyprint lang-r'>x&lt;-data.frame(1)
 class(x)</pre>
@@ -247,6 +248,8 @@ class(x)</pre>
 
 <p>벡터는 1차원 배열과 같습니다. 보통 <code>c()</code>함수로 만들어 집니다. 숫자의 연속인 형태의 벡터는 <code>from:to</code> 양식으로 만들기도 합니다. 데이터가 1개인 경우도 벡터이기 때문에 자료형을 확인하기 위해서 <code>class</code>나 <code>is.vector</code>를 사용할 때 의식하고 있어야 합니다. <code>[]</code>를 이용하여 일부만 가져올 수 있습니다.</p>
 
+</article></slide><slide class=''><hgroup><h2></h2></hgroup><article  id="section-5">
+
 <pre class = 'prettyprint lang-r'>class(c(1,2,3,4))</pre>
 
 <pre >## [1] &quot;numeric&quot;</pre>
@@ -265,21 +268,196 @@ class(x)</pre>
 
 </article></slide><slide class=''><hgroup><h2>매트릭스</h2></hgroup><article >
 
-<p>매트릭스는 2차원 배열로 사람이 가장 익숙한 자료형이며 <code>matrix()</code>함수로 만들 수 있습니다. 벡터의 제한된 형태라고 할 수 있습니다.</p>
+<p>매트릭스는 2차원 배열로 사람이 가장 익숙한 자료형이며 <code>matrix()</code>함수로 만들 수 있습니다. 1차원의 벡터를 2차원으로 제한한 형태라고 할 수 있습니다. 그렇기 때문에 방향에 따라 벡터의 <code>subset</code>문법도 사용할 수 있습니다. 차원은 <code>,</code>로 구분합니다.</p>
+
+<pre class = 'prettyprint lang-r'>(x&lt;-matrix(1:6, nrow=2))</pre>
+
+<pre >##      [,1] [,2] [,3]
+## [1,]    1    3    5
+## [2,]    2    4    6</pre>
+
+<pre class = 'prettyprint lang-r'>x[1,2]</pre>
+
+<pre >## [1] 3</pre>
+
+<pre class = 'prettyprint lang-r'>x[3]</pre>
+
+<pre >## [1] 3</pre>
+
+</article></slide><slide class=''><hgroup><h2></h2></hgroup><article  id="section-6">
+
+<p><code>벡터</code>와 <code>메트릭스</code>는 각 위치의 문법을 표시해주기도 합니다.</p>
+
+<pre class = 'prettyprint lang-r'>x&lt;-matrix(1:6, nrow=2)
+x[1,]</pre>
+
+<pre >## [1] 1 3 5</pre>
+
+<pre class = 'prettyprint lang-r'>x[,3]</pre>
+
+<pre >## [1] 5 6</pre>
 
 </article></slide><slide class=''><hgroup><h2>리스트</h2></hgroup><article >
 
+<p><code>리스트</code>는 여러 테이블을 가진 하나의 데이터베이스와 비슷합니다. 여러 독립적인 벡터들을 모아놓은 자료형을 <code>리스트</code>라고 합니다. 독립적이기 때문에 리스트 내에서 자료형이나 데이터의 길이가 같을 필요가 없습니다.</p>
+
+<pre class = 'prettyprint lang-r'>(x&lt;-list(1:6, c(T,F),&quot;play&quot;,list(c(&quot;A&quot;,&quot;b&quot;))))</pre>
+
+<pre >## [[1]]
+## [1] 1 2 3 4 5 6
+## 
+## [[2]]
+## [1]  TRUE FALSE
+## 
+## [[3]]
+## [1] &quot;play&quot;
+## 
+## [[4]]
+## [[4]][[1]]
+## [1] &quot;A&quot; &quot;b&quot;</pre>
+
+</article></slide><slide class=''><hgroup><h2></h2></hgroup><article  id="section-7">
+
+<p><code>리스트</code> 안에 <code>리스트</code>를 가질 수도 있습니다.</p>
+
+<pre class = 'prettyprint lang-r'>x&lt;-list(1:6, c(T,F),&quot;play&quot;,list(c(&quot;A&quot;,&quot;b&quot;)))
+str(x)</pre>
+
+<pre >## List of 4
+##  $ : int [1:6] 1 2 3 4 5 6
+##  $ : logi [1:2] TRUE FALSE
+##  $ : chr &quot;play&quot;
+##  $ :List of 1
+##   ..$ : chr [1:2] &quot;A&quot; &quot;b&quot;</pre>
+
+</article></slide><slide class=''><hgroup><h2></h2></hgroup><article  id="section-8">
+
+<p><code>리스트</code>는 대괄호를 두 개(<code>[[</code>, <code>]]</code>) 사용함으로써 <code>벡터</code>와 구분하여 <code>subset</code>을 합니다. 각 리스트의 이름이 있으면 <code>데이터$리스트의이름</code> 형태로 사용할 수도 있습니다.</p>
+
+<pre class = 'prettyprint lang-r'>x&lt;-list(num=1:6, c(T,F),&quot;play&quot;,list(c(&quot;A&quot;,&quot;b&quot;)))
+x[[1]]</pre>
+
+<pre >## [1] 1 2 3 4 5 6</pre>
+
+<pre class = 'prettyprint lang-r'>x$num</pre>
+
+<pre >## [1] 1 2 3 4 5 6</pre>
+
+</article></slide><slide class=''><hgroup><h2>데이터프레임</h2></hgroup><article >
+
+<p><code>데이터프레임</code>은 앞서 확인한 <code>리스트</code>가 너무 자유도가 높아 사용하기 불편한 점을 개선하기 위해 기능을 제한한 <code>리스트</code>라고 할 수 있습니다. <code>리스트</code>내의 각 <code>리스트</code>함를 구성하는 <code>벡터</code>로 <code>컬럼</code>을 구성하고 길이가 같아야 합니다.</p>
+
+<ul>
+<li>각 <code>컬럼</code>은 <code>벡터</code>로 구성
+
+<ul>
+<li>다른 자료형은 사용하지 못함</li>
+</ul></li>
+<li><code>컬럼</code>의 길이가 모두 같아야 함</li>
+<li>subset은 메트릭스와 같이 <code>[</code>를 1개만 사용</li>
+<li>리스트와 같이 <code>$</code>을 사용하나 <code>[</code>를 2개를 사용하지 않음</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2></h2></hgroup><article  id="section-9">
+
+<p><code>data.frame</code>으로 데이터를 만듭니다.</p>
+
+<pre class = 'prettyprint lang-r'>(x&lt;-data.frame(A=1:3,b=letters[1:3],c=c(T,F,T),d=&quot;play&quot;))</pre>
+
+<pre >##   A b     c    d
+## 1 1 a  TRUE play
+## 2 2 b FALSE play
+## 3 3 c  TRUE play</pre>
+
 </article></slide><slide class=''><hgroup><h2>변수와 함수</h2></hgroup><article  id="-">
+
+<p><code>R</code>은 전부 객체로 메모리에 저장합니다. 객체로 저장하여 활용하는 대표적인 예가 <code>변수</code>와 <code>함수</code>인데 <code>변수</code>는 데이터 혹은 데이터의 이름을 뜻합니다.</p>
+
+<p><code>함수</code>는 특별한 형태의 <code>변수</code>인데, 코드의 묶음을 데이터로 보고 특별한 문법 <code>()</code>을 사용함으로써 내부의 코드를 실행하는 형태로 사용할 수 있습니다.</p>
+
+<img src='http://yuml.me/2d639c3d' title='fig:'/>
+
+</article></slide><slide class=''><hgroup><h2>함수</h2></hgroup><article >
+
+<p>함수는 <code>()</code> 안에 사용하는 <code>인자</code>를 정의하고 정의된 대로 사용해야 합니다. 괄호 안에는 필수와 필수가 아닌 인자들이 있고 필수가 아닌 인자들은 기본값을 가집니다.</p>
+
+<p>필수인자가 없는 함수도 있고, 많은 것도 있으며 함수를 만든 사람마다 규칙이 다르기도 합니다.</p>
+
+<ul>
+<li><code>?함수이름</code> : 함수의 설명을 보여줍니다.</li>
+<li><code>함수이름</code> : 함수의 코드 구성을 직접 출력합니다.</li>
+<li><code>함수이름()</code> : 함수의 기능을 동작하게 합니다.</li>
+</ul>
 
 </article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>모델을 위한 전처리</h2></hgroup><article  id="--">
 
 </article></slide><slide class=''><hgroup><h2>문제 해결이란</h2></hgroup><article  id="-">
 
+<p>통계 분석이나 기계학습은 문제를 <code>정의</code>하고, 데이터를 기반으로 <code>해결책</code>을 찾고, <code>결과</code>를 공유하는 과정을 거칩니다.</p>
+
+<p>해결책을 찾는 과정에서 적절한 <code>데이터</code>를 구하고, 문제에 적합한 알고리즘을 선정하거나 개발하여 <code>모델</code>로써 학습하고, 학습한 결과를 <code>평가</code>함으로써 결과를 검증하는 3단계를 계속적으로 수행합니다.</p>
+
+<p>보통은 데이터를 구하고 정제하는데 많은 시간을 사용합니다.</p>
+
+<img src='http://yuml.me/7c1b5d75' title='fig:'/>
+
+</article></slide><slide class=''><hgroup><h2>머신 러닝의 종류</h2></hgroup><article  id="--">
+
+<img src='http://quantdare.com/wp-content/uploads/2016/03/MLAlgorithms-e1456930214606-642x467.png' title='fig:'/>
+
+</article></slide><slide class=''><hgroup><h2>평가하기</h2></hgroup><article >
+
+<p>평가를 위해서는 평가를 위한 데이터를 따로 준비해야 합니다. 하지만 데이터를 확보하는데 한계가 있기 때문에 전체 데이터를 일정 부분 남겨두는 방식을 많이 취합니다.</p>
+
+<p>보통 <code>학습 데이터:테스트 데이터</code>의 비율을 <code>7:3</code> 정도로 사용하는 편입니다.</p>
+
+<p>평가가 적절히 이루어 지려면 학습 데이터 중에 테스트 데이터가 겹치는 것이 있지 않는 것이 좋습니다.</p>
+
 </article></slide><slide class=''><hgroup><h2>회귀 모델</h2></hgroup><article  id="-">
+
+<p>회귀 모델을 사용하는 함수는 대표적으로 <code>lm</code>이 있습니다. 이외에 <code>glm</code>이나 <code>rlm</code> 등이 있습니다. 데이터가 준비되었다면, 모델을 세우고 평가하는 코드가 짧은 편입니다.</p>
+
+<pre >fit &lt;- lm(y ~ x1 + x2 + x3, data=mydata)
+summary(fit)
+predict(fit, testData, interval=&quot;predict&quot;) </pre>
+
+</article></slide><slide class=''><hgroup><h2>모델 학습</h2></hgroup><article  id="-">
+
+<pre >fit &lt;- lm(y ~ x1 + x2 + x3, data=mydata)</pre>
+
+<ul>
+<li><code>lm</code>: linear model의 약어이며 모델을 학습하는 함수입니다.</li>
+<li><code>~</code> : 첫번째 인자인 식을 작성하는 방식으로 <code>~</code>을 사용합니다.</li>
+<li><code>data</code>: 사용하는 데이터를 지정합니다. 지정하면 앞에 식을 작성할 때 컬럼 이름만 으로 작성하는 등의 문법적 혜택이 있습니다.</li>
+</ul>
+
+<pre >fit &lt;- lm(y ~ . , data=mydata)</pre>
+
+<ul>
+<li><code>.</code> : mydata의 컬럼 중에 y를 제외하고 모두 x로 사용하고 싶으면 남은 변수 모두라는 의미로 사용합니다.</li>
+</ul>
+
+</article></slide><slide class=''><hgroup><h2>데이터</h2></hgroup><article >
+
+<p>일반적인 회귀 모델은 입력 변수들을 바탕으로 연속형 숫자가 결과로 나오는 모델입니다. 그렇기 때문에 Y(=종속변수=결과=정답=라벨=아웃풋=&#8230;)에 해당하는 변수가 <code>numeric</code>이어야 합니다.</p>
+
+<p>X(=독립변수=데이터=요인=특성=인풋-=&#8230;)에 해당하는 변수 또한 <code>numeric</code>이어야 합니다. 하지만 <code>dummy</code> 변수라는 방법으로 명목형 데이터를 사용할 수 있습니다.</p>
+
+</article></slide><slide class=''><hgroup><h2>더미 변수란</h2></hgroup><article  id="-">
+
+<p><a href='https://cran.r-project.org/web/packages/googlesheets/vignettes/basic-usage.html' title=''>더미 변수</a>란 <code>0</code>과 <code>1</code>을 값으로 가지는 변수를 의미합니다. 회귀 모델에서 명목형 데이터를 X로 사용하는 방법은 하나의 명목형 데이터를 여러 더미 변수로 변경하여 사용하는 것입니다.</p>
+
+<p>회귀식에서 더미 변수의 의미는 0일 때 해당 변수가 적용되지 않음, 1일때 적용됨을 뜻합니다.</p>
+
+<p><code>R</code>에서는 명목형 데이터를 <code>character</code>로 두지 않고 <code>factor</code>를 만듬으로써 쉽게 적용할 수 있습니다.</p>
+
+</article></slide><slide class=''><hgroup><h2></h2></hgroup><article  id="section-10">
 
 </article></slide><slide class=''><hgroup><h2>군집 알고리즘</h2></hgroup><article  id="-">
 
 </article></slide><slide class=''><hgroup><h2>연관 분석</h2></hgroup><article  id="-">
+
+</article></slide><slide class=''><hgroup><h2>실습</h2></hgroup><article >
 
 </article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>과제</h2></hgroup><article ></article></slide>
 
