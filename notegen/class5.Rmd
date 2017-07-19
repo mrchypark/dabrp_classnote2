@@ -395,6 +395,18 @@ predict(fit, test)
 
 ## 연관 분석
 
+연관 분석은 장바구니 분석이라고도 하며 동시에 랜덤 갯수의 아이템이 같이 소비된 데이터를 바탕으로 어떤 아이템들이 같이 소비되었는지를 분석하는 방법입니다.
+
+연관 분석에서는 3가지 개념을 소개하고 있습니다.
+
+  - `지지도(support)`   : 전체 데이터에서 아이템이 나타난 확율. 빈도의 의미이기 때문에 지지도가 높은 제품을 우선 분석해보는데 기준이 됩니다.
+  - `신뢰도(confidence)`: 기준 아이템이 나타났을 때 대상 아이템이 나타난 조건부 확율. 신뢰도가 높을 수록 유용한 규칙이라는 것을 알 수 있습니다.
+  - `향상도(lift)`      :  `신뢰도 / 지지도` 로써 1보다 클수록 우연적이지 않다는 뜻이 됩니다.
+  
+ 대표적인 비지도 학습이며 위의 3가지 개념을 바탕으로 계산한 결과를 사람이 판단하는 방식입니다. 빈도에 의존하기 때문에 데이터가 많을 수록 실제하는 패턴을 찾기가 좋아집니다.
+
+## 데이터 준비
+
 ```{r}
 if (!require(arules)) install.packages("arules") 
 library(arules)
@@ -404,13 +416,28 @@ str(Groceries)
 
 ##
 
+연관분석에서 사용하는 `transactions` 자료형은 특별히 `arules` 패키지에서 사용하기 위해 고안되었습니다.
+
 ```{r}
-tem<-readLines("./data/groceries.csv")
+summary(Groceries)
+```
+
+##
+
+그렇기 때문에 가지고 있는 데이터를 `transactions` 자료형으로 변경하는 것이 중요합니다. 
+
+```{}
+tem<-read.csv("./data/groceries.csv", header=F)
 head(tem)
-close(tem)
 groc<-read.transactions("./data/groceries.csv")
 str(groc)
 ```
+
+## 데이터 설명
+
+`groceries` 데이터는 
+
+
 
 ## 실습
 
