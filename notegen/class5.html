@@ -619,24 +619,8 @@ predict(fit, test) </pre>
 
 </article></slide><slide class=''><hgroup><h2>자료형 소개</h2></hgroup><article  id="-">
 
-<pre class = 'prettyprint lang-r'>if (!require(arules)) install.packages(&quot;arules&quot;) </pre>
-
-<pre >## Loading required package: arules</pre>
-
-<pre >## Warning: package &#39;arules&#39; was built under R version 3.4.1</pre>
-
-<pre >## Loading required package: Matrix</pre>
-
-<pre >## 
-## Attaching package: &#39;arules&#39;</pre>
-
-<pre >## The following objects are masked from &#39;package:base&#39;:
-## 
-##     abbreviate, write</pre>
-
-<pre class = 'prettyprint lang-r'>library(arules)
-data(Groceries)
-str(Groceries)</pre>
+<pre class = 'prettyprint lang-r'>if (!require(arules)) install.packages(&quot;arules&quot;, verbose = F) 
+library(arules);data(Groceries);str(Groceries)</pre>
 
 <pre >## Formal class &#39;transactions&#39; [package &quot;arules&quot;] with 3 slots
 ##   ..@ data       :Formal class &#39;ngCMatrix&#39; [package &quot;Matrix&quot;] with 5 slots
@@ -707,10 +691,27 @@ inspect(dvdTranSample)</pre>
 <li><code>Groceries</code> 데이터를 사용해서 <code>apriori</code> 함수로 연관규칙을 만들어 보세요. support는 0.01, confidence는 0.2, minle은 2로 작성합니다.</li>
 </ol>
 
-</article></slide><slide class='segue dark nobackground level1'><hgroup class = 'auto-fadein'><h2>과제</h2></hgroup><article >
+</article></slide><slide class=''><hgroup><h2>과제</h2></hgroup><article >
 
 <ol>
-<li><code>./data/tran.csv</code> 데이터를 <code>transactions</code> 자료형에 맞게 입력해보세요.</li>
+<li><p><code>recomen</code> 폴더에 있는 데이터로 고객을 <code>k-means</code> 클러스터링을 해야 하는데, 사용할 수 있는 변수를 선정하고 이유룰 설명해 주세요.</p></li>
+<li><code>recomen</code> 폴더에 있는 데이터로 회귀 분석을 진행하려고 합니다.
+
+<ol>
+<li>각 고객의 2015년 1월 간 구매 횟수를 Y로 하는 회귀 모델을 작성하세요.</li>
+<li>각 고객의 2015년 1월 간 구매한 아이템의 종류를 Y로 하는 회귀 모델을 작성하세요.</li>
+</ol>
+
+<ul>
+<li>위에 두 문제 모두 X에 대해서 선정하고 그 이유를 설명해 주세요.</li>
+</ul></li>
+<li><code>./recomen/tran.csv</code> 데이터를 <code>transactions</code> 자료형에 맞게 입력해보세요.
+
+<ul>
+<li>tran를 불러오고 1:10000개 까지만 사용하세요.</li>
+<li>전체를 하는 방법을 고민해보셔도 좋습니다.</li>
+<li>개인적으로 사용할 수 있는 데이터가 있으면 시도해 보세요.</li>
+</ul></li>
 </ol></article></slide>
 
 

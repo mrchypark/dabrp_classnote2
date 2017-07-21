@@ -55,12 +55,12 @@ elev
 ## 과제 2.1
 
 elev %>% 
-  filter(grepl("\\(주\\).*빌딩",`건물명`)) %>%
+  filter(grepl("\\(주\\).*빌딩$",`건물명`)) %>%
   group_by(`지역`,`건물명`,`건물용도(대)`) %>%
   summarise(n()) %>%
   nrow
   
-elev[grepl("\\(주\\).*빌딩",`건물명`)][,.N,by=.(`지역`,`건물명`,`건물용도(대)`)] %>% nrow
+elev[grepl("\\(주\\).*빌딩$",`건물명`)][,.N,by=.(`지역`,`건물명`,`건물용도(대)`)] %>% nrow
 
 ## 과제 2.2
 
@@ -72,7 +72,7 @@ elev %>%
   select(tar) %>%
   unique
 
-tem<-elev[grep(" .{2}시",`지역`),`지역`]
+tem<-elev[grep(" .{2}시",`지역`),`지역`] %>% unique
 lapply(strsplit(tem, " "), function(x) x[1]) %>%
   unlist %>% unique
 
@@ -88,7 +88,7 @@ elev[!grepl("용$",`승강기종류`),`승강기종류`] %>% unique
 ## 과제 다음장 1 샘플 데이터 준비
 
 # 휴대폰 번호 생성 함수 작성
-genNum <- function(){
+elev <- function(){
   result <- paste0(sample(0:9,1,prob=c(0.5,replicate(9,0.5/9))),"1",sample(0:9,1),"-",
                    sample(2:9,1), paste0(sample(0:9,sample(2:3,1),replace = T),collapse=""),"-",
                    paste0(sample(0:9,4,replace = T),collapse=""))
