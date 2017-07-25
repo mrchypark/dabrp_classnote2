@@ -26,6 +26,20 @@ class: center, middle, inverse, title-slide
     - kmeans
     - 회귀분석
     - 연관분석
+    
+1. ggplot2
+    - + 연산자
+    - 그림을 그리는 구조
+    - 요소별 
+        - geom
+        - 
+        
+1. ggplot2+extra
+---
+
+## 과제 확인
+
+[과제 확인](https://github.com/mrchypark/dabrp_classnote2/blob/master/assign5.R)
 
 ---
 class: center, middle
@@ -35,492 +49,401 @@ class: center, middle
 
 ---
 
-# ggplot2란
+## ggplot2란
 
-[The Grammar of Graphics](http://www.springer.com/us/book/9780387245447)를 따르는 방식으로 차트를 출력물 수준으로 만들 수 있게 보조해주는 패키지. 패키지의 작성 방식은 [여기](http://vita.had.co.nz/papers/layered-grammar.pdf)를 참고하세요.
+[The Grammar of Graphics](http://www.springer.com/us/book/9780387245447)를 따르는 방식으로 차트를 출력물 수준으로 만들 수 있게 보조해주는 패키지. 그래서 `GG`plot 이라고 이름을 지은 것이고, 상세한 동작방식은 [여기](http://vita.had.co.nz/papers/layered-grammar.pdf)를 참고하세요. 데이터를 기하 객체(geometric object)의 미적 속성(aesthetic attributes)에 연결하는 방법을 사용합니다.
 
 .pull-left[
-```
+
+```r
 library(ggplot2)
-ggplot(mpg, aes(displ, hwy, colour = class)) + 
+ggplot(data=mpg) + 
+  geom_point(aes(displ, hwy, colour = class))
+```
+]
+--
+.pull-right[
+![](class6_files/figure-html/unnamed-chunk-2-1.png)&lt;!-- --&gt;
+]
+---
+
+## 용어 설명
+
+- 기하 객체(geometric object) : 차트를 구성할 수 있는 그림의 형태들. bar, dot, line 등이 있음. geom_*() 형태의 함수로 layer를 구성함.
+- 미적 속성(aesthetic attributes) : 각 기하 객체들의 모양을 결정하기 위한 요소들. 공통적으로 x, y, color 등이 있음.
+- 연결(mapping) : 데이터의 컬럼을 필요한 미적 속성에 해당함을 명시적으로 작성하는 것.
+- ggplot 자료형 : ggplot()함수로 생성하는 R 객체로 그림을 그리기 위한 정보를 포함하고 있음.
+- 계층(layer) : 제공된 데이터와 연결 정보를 바탕으로 그려진 그림. + 연산자를 통해 계층을 추가하여 겹쳐서 그리는 것이 가능.
+- `+` 연산자 : 계층을 추가할 때 데이터와 연결 정보, 지금까지 작성된 계층 정보를 전달하는 연산자. 파이프 연산자(`%&gt;%`)와 비슷함.
+- 좌표계(coordinate system) : 대표적인 x-y 좌표계를 사용하며 극좌표계(polar) 등으로 파이차트를 작성할 수 있음.
+- 축척(scale) : 데이터를 표시하는 방식으로 연속형 자료형에서 고려함.
+
+---
+
+## ggplot 객체
+
+`ggplot`은 그림 그리는 정보를 가지는 layer들을 겹쳐서 차트를 그리는 방식을 이용합니다. 대부분은 자동으로 지정을 해주고, 필수로 작성해야 하는 layer의 요소는 데이터, 연결정보, 기하 객체 입니다.
+
+```
+layer = ggplot(data, aes(&lt;mapping&gt;)) + geom_*
+```
+--
+여러 layer를 겹칠 때 데이터와 연결정보 중에 공통으로 사용하는 것은 ggplot()함수로 작성하여 geom_요소만 `+` 연산자로 연결하여 layer를 겹치는 방식을 사용합니다.
+
+```
+ggplot(data, aes(&lt;mapping&gt;) ) +  # 공통 정보
+  geom_요소1 +                   # 레이어 1의 구성
+  geom_요소2                     # 레이어 2의 구성
+
+```
+
+---
+
+## gapminder 데이터 소개
+
+gapminder는 [움직이는 버블 차트](http://www.gapminder.org/tools/#_locale_id=en;&amp;chart-type=bubbles)로 유명한 데이터셋입니다. [코드북](https://github.com/jennybc/gapminder)과 `str`을 확인하면서 데이터를 확인하겠습니다.
+
+
+```r
+if (!require("gapminder")){install.packages("gapminder")}
+```
+
+```
+## Loading required package: gapminder
+```
+
+```r
+library(gapminder)
+str(gapminder)
+```
+
+```
+## Classes 'tbl_df', 'tbl' and 'data.frame':	1704 obs. of  6 variables:
+##  $ country  : Factor w/ 142 levels "Afghanistan",..: 1 1 1 1 1 1 1 1 1 1 ...
+##  $ continent: Factor w/ 5 levels "Africa","Americas",..: 3 3 3 3 3 3 3 3 3 3 ...
+##  $ year     : int  1952 1957 1962 1967 1972 1977 1982 1987 1992 1997 ...
+##  $ lifeExp  : num  28.8 30.3 32 34 36.1 ...
+##  $ pop      : int  8425333 9240934 10267083 11537966 13079460 14880372 12881816 13867957 16317921 22227415 ...
+##  $ gdpPercap: num  779 821 853 836 740 ...
+```
+
+
+---
+
+## ggplot 객체 만들기
+
+.pull-left[
+
+```r
+p &lt;-ggplot(gapminder, 
+           aes(x = gdpPercap, y = lifeExp))
+p
+```
+
+![](class6_files/figure-html/unnamed-chunk-4-1.png)&lt;!-- --&gt;
+]
+.pull-right[
+
+```r
+summary(p)
+```
+
+```
+## data: country, continent, year, lifeExp, pop, gdpPercap [1704x6]
+## mapping:  x = gdpPercap, y = lifeExp
+## faceting: &lt;ggproto object: Class FacetNull, Facet&gt;
+##     compute_layout: function
+##     draw_back: function
+##     draw_front: function
+##     draw_labels: function
+##     draw_panels: function
+##     finish_data: function
+##     init_scales: function
+##     map: function
+##     map_data: function
+##     params: list
+##     render_back: function
+##     render_front: function
+##     render_panels: function
+##     setup_data: function
+##     setup_params: function
+##     shrink: TRUE
+##     train: function
+##     train_positions: function
+##     train_scales: function
+##     vars: function
+##     super:  &lt;ggproto object: Class FacetNull, Facet&gt;
+```
+]
+
+---
+
+## geom 추가 하기 point
+
+.pull-left[
+
+```r
+p_point &lt;- p + geom_point()
+p_point
+```
+
+![](class6_files/figure-html/unnamed-chunk-6-1.png)&lt;!-- --&gt;
+]
+
+--
+.pull-right[
+
+`summary(p_point)`를 이용해 `summary(p)`와 어떻게 달라졌는지 확인해 보세요.
+
+]
+
+---
+
+## 실습 1
+.pull-left[
+1. `gapminder`에서 `country`가 `Afghanistan`인 데이터만 뽑아서 `gap_af`로 저장하세요.
+1. `gap_af`를 x축은 year, y축은 lifeExp로 line 차트를 그리세요.
+]
+
+.pull-right[
+
+![](class6_files/figure-html/unnamed-chunk-7-1.png)&lt;!-- --&gt;
+]
+
+---
+
+## ggplot 내장 함수 사용시 장점
+
+ ggplot은 매우 많은 함수를 제공하고 있으며 대부분 자동으로 지원하지만 명시적으로 필요한 부분을 수정할 수 있습니다. `+` 연산자로 수정하고자 하는 부분을 추가하는 방식이며 추가된 함수가 자동으로 작성된 것보다 우선 하는 방식으로 적용됩니다.
+ 
+ 이 때 몇 가지 장점이 있는데,
+ 
+    1. 데이터 + 연결 정보를 가진 ggplot 객체를 수정 없이 재사용할 수 있음
+    1. 코드를 재사용함으로써 작성량을 줄일 수 있음
+    1. 파이프 연산자와 같이 가독성이 높아짐
+
+---
+
+## scale 변경하기 
+.pull-left[
+
+```r
+p_point
+```
+
+![](class6_files/figure-html/unnamed-chunk-8-1.png)&lt;!-- --&gt;
+]
+
+
+.pull-right[
+
+```r
+ggplot(gapminder, aes(x = log10(gdpPercap), y = lifeExp)) +
   geom_point()
 ```
-]
---
-.pull-right[
-![](class6_files/figure-html/unnamed-chunk-1-1.png)&lt;!-- --&gt;
-]
----
 
-# EDA에서 차트란
-
-사람은 70~80%의 감각을 시각에 의존하기 때문에 그 어떤 것보다 시각적인 정보를 예민하게 받아 들입니다. 그렇기 때문에 `summary`나 `str` 같은 데이터를 파악하는 함수 보다 차트를 그려봄으로써 얻을 수 있는 정보가 매우 많습니다.
-
---
-
-
-
-
----
-
-
-
-
-
----
-class: inverse, center, middle
-
-# Get Started
-
----
-
-# Hello World
-
-Install the **xaringan** package from [Github](https://github.com/yihui/xaringan):
-
-
-```r
-devtools::install_github("yihui/xaringan")
-```
-
---
-
-You are recommended to use the [RStudio IDE](https://www.rstudio.com/products/rstudio/), but you do not have to.
-
-- Create a new R Markdown document from the menu `File -&gt; New File -&gt; R Markdown -&gt; From Template -&gt; Ninja Presentation`;&lt;sup&gt;1&lt;/sup&gt;
-
---
-
-- Click the `Knit` button to compile it;
-
---
-
-- or use the [RStudio Addin](https://rstudio.github.io/rstudioaddins/)&lt;sup&gt;2&lt;/sup&gt; "Infinite Moon Reader" to live preview the slides (every time you update and save the Rmd document, the slides will be automatically reloaded in RStudio Viewer.
-
-.footnote[
-[1] 中文用户请看[这份教程](http://slides.yihui.name/xaringan/zh-CN.html)
-
-[2] See [#2](https://github.com/yihui/xaringan/issues/2) if you do not see the template or addin in RStudio.
+![](class6_files/figure-html/unnamed-chunk-9-1.png)&lt;!-- --&gt;
 ]
 
 ---
-background-image: url(https://github.com/yihui/xaringan/releases/download/v0.0.2/karl-moustache.jpg)
-background-position: 50% 50%
-class: center, bottom, inverse
 
-# You only live once!
-
----
-
-# Hello Ninja
-
-As a presentation ninja, you certainly should not be satisfied by the "Hello World" example. You need to understand more about two things:
-
-1. The [remark.js](https://remarkjs.com) library;
-
-1. The **xaringan** package;
-
-Basically **xaringan** injected the chakra of R Markdown (minus Pandoc) into **remark.js**. The slides are rendered by remark.js in the web browser, and the Markdown source needed by remark.js is generated from R Markdown (**knitr**).
-
----
-
-# remark.js
-
-You can see an introduction of remark.js from [its homepage](https://remarkjs.com). You should read the [remark.js Wiki](https://github.com/gnab/remark/wiki) at least once to know how to
-
-- create a new slide (Markdown syntax&lt;sup&gt;*&lt;/sup&gt; and slide properties);
-
-- format a slide (e.g. text alignment);
-
-- configure the slideshow;
-
-- and use the presentation (keyboard shortcuts).
-
-It is important to be familiar with remark.js before you can understand the options in **xaringan**.
-
-.footnote[[*] It is different with Pandoc's Markdown! It is limited but should be enough for presentation purporses. Come on... You do not need a slide for the Table of Contents! Well, the Markdown support in remark.js [may be improved](https://github.com/gnab/remark/issues/142) in the future.]
-
----
-background-image: url(https://github.com/yihui/xaringan/releases/download/v0.0.2/karl-moustache.jpg)
-background-size: cover
-class: center, bottom, inverse
-
-# I was so happy to have discovered remark.js!
-
----
-class: inverse, middle, center
-
-# Using xaringan
-
----
-
-# xaringan
-
-Provides an R Markdown output format `xaringan::moon_reader` as a wrapper for remark.js, and you can use it in the YAML metadata, e.g.
-
-```yaml
----
-title: "A Cool Presentation"
-output:
-  xaringan::moon_reader
-    yolo: true
-    nature:
-      autoplay: 30000
----
-```
-
-See the help page `?xaringan::moon_reader` for all possible options that you can use.
-
----
-
-# remark.js vs xaringan
-
-Some differences between using remark.js (left) and using **xaringan** (right):
+## scale_* 함수로 변경하기
 
 .pull-left[
-1. Start with a boilerplate HTML file;
 
-1. Plain Markdown;
+```r
+p_point
+```
 
-1. Write JavaScript to autoplay slides;
-
-1. Manually configure MathJax;
-
-1. Highlight code with `*`;
-
-1. Edit Markdown source and refresh browser to see updated slides;
+![](class6_files/figure-html/unnamed-chunk-10-1.png)&lt;!-- --&gt;
 ]
+
 
 .pull-right[
-1. Start with an R Markdown document;
 
-1. R Markdown (can embed R/other code chunks);
+```r
+(p_point_log10 &lt;- p_point + scale_x_log10())
+```
 
-1. Provide an option `autoplay`;
-
-1. MathJax just works;&lt;sup&gt;*&lt;/sup&gt;
-
-1. Highlight code with `{{}}`;
-
-1. The RStudio addin "Infinite Moon Reader" automatically refreshes slides on changes;
+![](class6_files/figure-html/unnamed-chunk-11-1.png)&lt;!-- --&gt;
 ]
 
-.footnote[[*] Not really. See next page.]
 
 ---
 
-# Math Expressions
+## aes의 공통 정보
 
-You can write LaTeX math expressions inside a pair of dollar signs, e.g. &amp;#36;\alpha+\beta$ renders `\(\alpha+\beta\)`. You can use the display style with double dollar signs:
+ggplot [cheatsheet](https://www.rstudio.com/wp-content/uploads/2016/11/ggplot2-cheatsheet-2.1.pdf)에 보면 각 geom에 따른 aes를 설명하고 있습니다. 그 중 많이 보이는 몇 가지를 소개합니다.
 
-```
-$$\bar{X}=\frac{1}{n}\sum_{i=1}^nX_i$$
-```
-
-`$$\bar{X}=\frac{1}{n}\sum_{i=1}^nX_i$$`
-
-Limitations:
-
-1. The source code of a LaTeX math expression must be in one line, unless it is inside a pair of double dollar signs, in which case the starting `$$` must appear in the very beginning of a line, followed immediately by a non-space character, and the ending `$$` must be at the end of a line, led by a non-space character;
-
-1. There should not be spaces after the opening `$` or before the closing `$`.
+- x: x-y 좌표계에서 x축으로 표시할 데이터를 뜻합니다.
+- y: x-y 좌표계에서 y축으로 표시할 데이터를 뜻합니다.
+- color: 색 정보로써 각 기하 객체가 가질 색을 구분하는데 사용합니다. 보통 명목형 데이터가 사용됩니다.
+- group: color의 하위 호환 aes로 데이터는 묶어서 표시하지만 색으로 추가 구분하지는 않습니다.
+- alpha: 투명도를 뜻하며 기하 객체의 투명도를 연속형 데이터 표시로 추가 사용하기도 합니다.
+- size : 크기를 뜻하며 기하 객체의 크기를 연속형 데이터 표시로 추가 사용하기도 합니다.
 
 ---
 
-# R Code
-
-
-```r
-# a boring regression
-fit = lm(dist ~ 1 + speed, data = cars)
-coef(summary(fit))
-```
-
-```
-#               Estimate Std. Error   t value     Pr(&gt;|t|)
-# (Intercept) -17.579095  6.7584402 -2.601058 1.231882e-02
-# speed         3.932409  0.4155128  9.463990 1.489836e-12
-```
-
-```r
-dojutsu = c('地爆天星', '天照', '加具土命', '神威', '須佐能乎', '無限月読')
-grep('天', dojutsu, value = TRUE)
-```
-
-```
-# [1] "地爆天星" "天照"
-```
-
----
-
-# R Plots
-
-
-```r
-par(mar = c(4, 4, 1, .1))
-plot(cars, pch = 19, col = 'darkgray', las = 1)
-abline(fit, lwd = 2)
-```
-
-![](class6_files/figure-html/cars-1.svg)&lt;!-- --&gt;
-
----
-
-# HTML Widgets
-
-I have not thoroughly tested HTML widgets against **xaringan**. Some may work well, and some may not. It is a little tricky.
-
-Similarly, the Shiny mode (`runtime: shiny`) does not work. I might get these issues fixed in the future, but these are not of high priority to me. I never turn my presentation into a Shiny app. When I need to demonstrate more complicated examples, I just launch them separately. It is convenient to share slides with other people when they are plain HTML/JS applications.
-
-See the next page for two HTML widgets.
-
----
-
-
-```r
-library(leaflet)
-leaflet() %&gt;% addTiles() %&gt;% setView(-93.65, 42.0285, zoom = 17)
-```
-
----
-
-
-```r
-DT::datatable(
-  head(iris, 10),
-  fillContainer = FALSE, options = list(pageLength = 8)
-)
-```
-
----
-
-# Some Tips
-
-- When you use the "Infinite Moon Reader" addin in RStudio, your R session will be blocked by default. You can click the red button on the right of the console to stop serving the slides, or use the _daemonized_ mode so that it does not block your R session. To do the latter, you can set the option
-
-    ```r
-    options(servr.daemon = TRUE)
-    ```
-    
-    in your current R session, or in `~/.Rprofile` so that it is applied to all future R sessions. I do the latter by myself.
-    
-    To know more about the web server, see the [**servr**](https://github.com/yihui/servr) package.
-
---
-
-- Do not forget to try the `yolo` option of `xaringan::moon_reader`.
-
-    ```yaml
-    output:
-      xaringan::moon_reader:
-        yolo: true
-    ```
-
----
-
-# Some Tips
-
-- Slides can be automatically played if you set the `autoplay` option under `nature`, e.g. go to the next slide every 30 seconds in a lightning talk:
-
-    ```yaml
-    output:
-      xaringan::moon_reader:
-        nature:
-          autoplay: 30000
-    ```
-
---
-
-- A countdown timer can be added to every page of the slides using the `countdown` option under `nature`, e.g. if you want to spend one minute on every page when you give the talk, you can set:
-
-    ```yaml
-    output:
-      xaringan::moon_reader:
-        nature:
-          countdown: 60000
-    ```
-
-    Then you will see a timer counting down from `01:00`, to `00:59`, `00:58`, ... When the time is out, the timer will continue but the time turns red.
-
----
-
-# Some Tips
-
-- The option `highlightLines: true` of `nature` will highlight code lines that start with `*` or are wrapped in `{{ }}`;
-
-    ```yaml
-    output:
-      xaringan::moon_reader:
-        nature:
-          highlightLines: true
-    ```
-
-    See examples on the next page.
-
----
-
-# Some Tips
-
+## color 정보를 aes를 이용해서 mapping 하기
 
 .pull-left[
-An example using a leading `*`:
 
-    ```r
-    if (TRUE) {
-    ** message("Very important!")
-    }
-    ```
-Output:
 ```r
-if (TRUE) {
-* message("Very important!")
-}
+(p_point_color &lt;- p + 
+  geom_point(aes(color = continent)))
 ```
 
-This is invalid R code, so it is a plain fenced code block that is not executed.
+![](class6_files/figure-html/unnamed-chunk-12-1.png)&lt;!-- --&gt;
 ]
 
 .pull-right[
-An example using `{{}}`:
+`summary(p_point_color)`로 색 정보가 추가 된것을 확인해 보세요.
+]
 
-    ```{r tidy=FALSE}
-    if (TRUE) {
-    *{{ message("Very important!") }}
-    }
-    ```
-Output:
+---
+## geom 특징 조절하기
+.pull-left[
+
+기하 객체의 각 특징은 굳이 데이터에 매핑 될 필요없이 조절할 수 도 있습니다.
+
+아래 두 `summary`를 확인해서 어떻게 정보가 다른지 확인해 보세요.
+
+```
+summary(p + geom_point(alpha = (1/3), size = 3 ))
+summary(p + geom_point(aes(alpha = (1/3), size = 3) ))
+```
+]
+.pull-right[
 
 ```r
-if (TRUE) {
-* message("Very important!") 
-}
+p + geom_point(alpha = (1/3), size = 3)
 ```
 
-```
-## Very important!
+![](class6_files/figure-html/unnamed-chunk-13-1.png)&lt;!-- --&gt;
+]
+---
+## stat_*() 함수로 layer 추가하기
+
+`stat_*()` 함수는 `geom_*()` 함수의 특별한 형태로써 통계적인 기능들이 추가되어 동작합니다. `geom_*()` 함수 내에서도 통계 함수들을 사용하여 구현할 수도 있습니다.
+
+
+`stat_*()` 함수의 [공식 설명서](http://ggplot2.tidyverse.org/reference/index.html#section-layer-stats)를 참고하세요.
+
+---
+
+## stat_smooth로 간단히 추세선 추가하기
+.pull-left[
+
+```r
+p_point
 ```
 
-It is valid R code so you can run it.
+![](class6_files/figure-html/unnamed-chunk-14-1.png)&lt;!-- --&gt;
+]
+
+.pull-right[
+
+```r
+p_point + stat_smooth()
+```
+
+![](class6_files/figure-html/unnamed-chunk-15-1.png)&lt;!-- --&gt;
 ]
 
 ---
+## method를 lm(선형회귀)로 변경
+.pull-left[
 
-# Some Tips
-
-- To make slides work offline, you need to download a copy of remark.js in advance, because **xaringan** uses the online version by default (see the help page `?xaringan::moon_reader`).
-
-- You can use `xaringan::summon_remark()` to download the latest or a specified version of remark.js. By default, it is downloaded to `libs/remark-latest.min.js`.
-
-- Then change the `chakra` option in YAML to point to this file, e.g.
-
-    ```yaml
-    output:
-      xaringan::moon_reader:
-        chakra: libs/remark-latest.min.js
-    ```
-
-- If you used Google fonts in slides (the default theme uses _Yanone Kaffeesatz_, _Droid Serif_, and _Source Code Pro_), they won't work offline unless you download or install them locally. The Heroku app [google-webfonts-helper](https://google-webfonts-helper.herokuapp.com/fonts) can help you download fonts and generate the necessary CSS.
-
-
----
-
-# CSS
-
-Among all options in `xaringan::moon_reader`, the most challenging but perhaps also the most rewarding one is `css`, because it allows you to customize the appearance of your slides using any CSS rules or hacks you know.
-
-You can see the default CSS file [here](https://github.com/yihui/xaringan/blob/master/inst/rmarkdown/templates/xaringan/resources/example.css). You can completely replace it with your own CSS files, or define new rules to override the default.
-
----
-
-# CSS
-
-For example, suppose you want to change the font for code from the default "Source Code Pro" to "Ubuntu Mono". You can create a CSS file named, say, `ubuntu-mono.css`:
-
-```css
-@import url(https://fonts.googleapis.com/css?family=Ubuntu+Mono:400,700,400italic);
-
-.remark-code, .remark-inline-code { font-family: 'Ubuntu Mono'; }
+```r
+p_point + stat_smooth()
 ```
 
-Then set the `css` option in the YAML metadata:
-
-```yaml
-output:
-  xaringan::moon_reader:
-    css: ["default", "ubuntu-mono.css"]
+```
+## `geom_smooth()` using method = 'gam'
 ```
 
-Here I assume `ubuntu-mono.css` is under the same directory as your Rmd.
+![](class6_files/figure-html/unnamed-chunk-16-1.png)&lt;!-- --&gt;
+]
+.pull-right[
 
+```r
+p_point + geom_smooth(lwd = 2, se = FALSE, method = "lm")
+```
+
+![](class6_files/figure-html/unnamed-chunk-17-1.png)&lt;!-- --&gt;
+]
 ---
-class: inverse, middle, center
-background-image: url(https://upload.wikimedia.org/wikipedia/commons/3/39/Naruto_Shiki_Fujin.svg)
-background-size: contain
+## 색정보를 전체에 반형하기
 
-# Naruto
+layer를 추가할 때 작성한 mapping 정보는 이후에 더해지는 layer에는 반영되지 않습니다. 그렇기 때문에 공통으로 사용하는 mapping 정보는 최초 `ggplot` 객체 생성시 `aes()` 함수로 반영해야 합니다.
 
+.pull-left[
+
+```r
+p_point_color + geom_smooth(lwd = 2, se = FALSE)
+```
+
+```
+## `geom_smooth()` using method = 'gam'
+```
+
+![](class6_files/figure-html/unnamed-chunk-18-1.png)&lt;!-- --&gt;
+]
+.pull-left[
+
+```r
+p + aes(color = continent) + geom_point() + geom_smooth(lwd = 1, se = FALSE)
+```
+
+```
+## `geom_smooth()` using method = 'loess'
+```
+
+![](class6_files/figure-html/unnamed-chunk-19-1.png)&lt;!-- --&gt;
+]
 ---
-background-image: url(https://upload.wikimedia.org/wikipedia/commons/b/be/Sharingan_triple.svg)
-background-size: 100px
-background-position: 90% 8%
+## group 과 color
 
-# Sharingan
+group과 color가 어떻게 다르게 동작하는지 확인하세요.
 
-The R package name **xaringan** was derived&lt;sup&gt;1&lt;/sup&gt; from **Sharingan**, a dōjutsu in the Japanese anime _Naruto_ with two abilities:
+.pull-left[
 
-- the "Eye of Insight"
+```r
+p + aes(color = continent) + geom_point() + geom_smooth(lwd = 2, se = FALSE)
+```
 
-- the "Eye of Hypnotism"
+```
+## `geom_smooth()` using method = 'loess'
+```
 
-I think a presentation is basically a way to communicate insights to the audience, and a great presentation may even "hypnotize" the audience.&lt;sup&gt;2,3&lt;/sup&gt;
+![](class6_files/figure-html/unnamed-chunk-20-1.png)&lt;!-- --&gt;
+]
+.pull-left[
 
-.footnote[
-[1] In Chinese, the pronounciation of _X_ is _Sh_ /ʃ/ (as in _shrimp_). Now you should have a better idea of how to pronounce my last name _Xie_.
+```r
+p + aes(group = continent)+ geom_point() + geom_smooth(lwd = 2, se = FALSE)
+```
 
-[2] By comparison, bad presentations only put the audience to sleep.
+```
+## `geom_smooth()` using method = 'loess'
+```
 
-[3] Personally I find that setting background images for slides is a killer feature of remark.js. It is an effective way to bring visual impact into your presentations.
+![](class6_files/figure-html/unnamed-chunk-21-1.png)&lt;!-- --&gt;
+]
+---
+
+## 실습 2
+.pull-left[
+1. `gapminder`에서 `pop`의 히스토그램(histogram)을 그리세요.
+1. `continent`를 x축, `lifeExp`를 y축으로 하는 바이올린차트(violin)를 그리세요.
+1. 위의 그림에 평균 점을 파란색으로 추가하세요.
+1. Canada, Rwanda, Cambodia, Mexico 4 나라만 사용하여 x축은 year, y축은 lifeExp로 line 차트를 각 년도에 점을 추가하여 그리세요.
 ]
 
----
+.pull-right[
 
-# Naruto terminology
-
-The **xaringan** package borrowed a few terms from Naruto, such as
-
-- [Sharingan](http://naruto.wikia.com/wiki/Sharingan) (写輪眼; the package name)
-
-- The [moon reader](http://naruto.wikia.com/wiki/Moon_Reader) (月読; an attractive R Markdown output format)
-
-- [Chakra](http://naruto.wikia.com/wiki/Chakra) (查克拉; the path to the remark.js library, which is the power to drive the presentation)
-
-- [Nature transformation](http://naruto.wikia.com/wiki/Nature_Transformation) (性質変化; transform the chakra by setting different options)
-
-- The [infinite moon reader](http://naruto.wikia.com/wiki/Infinite_Tsukuyomi) (無限月読; start a local web server to continuously serve your slides)
-
-- The [summoning technique](http://naruto.wikia.com/wiki/Summoning_Technique) (download remark.js from the web)
-
-You can click the links to know more about them if you want. The jutsu "Moon Reader" may seem a little evil, but that does not mean your slides are evil.
-
----
-
-class: center
-
-# Hand seals (印)
-
-Press `h` or `?` to see the possible ninjutsu you can use in remark.js.
-
-![](https://upload.wikimedia.org/wikipedia/commons/7/7e/Mudra-Naruto-KageBunshin.svg)
-
----
-
-class: center, middle
-
-# Thanks!
-
-Slides created via the R package [**xaringan**](https://github.com/yihui/xaringan).
-
-The chakra comes from [remark.js](https://remarkjs.com), [**knitr**](http://yihui.name/knitr), and [R Markdown](https://rmarkdown.rstudio.com).
+![](class6_files/figure-html/unnamed-chunk-22-1.png)&lt;!-- --&gt;
+]
     </textarea>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
