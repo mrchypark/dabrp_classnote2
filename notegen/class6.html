@@ -537,6 +537,35 @@ class: center, middle
 
 추가로 [좌표계에 대한 설명](https://mrchypark.wordpress.com/2014/10/23/%EC%A2%8C%ED%91%9C%EA%B3%84-%EB%B3%80%ED%99%98-proj4-%EB%9D%BC%EC%9D%B4%EB%B8%8C%EB%9F%AC%EB%A6%AC/)을 참고해주세요.
 
+---
+
+## ggmap
+
+[ggmap](https://www.nceas.ucsb.edu/~frazier/RSpatialGuides/ggmap/ggmapCheatsheet.pdf)은 구글 지도를 배경으로 ggplot을 사용할 수 있게 해주는 패키지로 내부적으로 모두 ggplot의 함수를 사용해서 문법이 호환됩니다.
+
+.pull-left[
+
+```r
+if (!require("ggmap"))
+  {devtools::install_github("dkahle/ggmap")}
+library(ggmap)
+# for mac
+loc&lt;-"서울"
+tar&lt;-"서울시청"
+# for windows
+loc&lt;-URLencode(enc2utf8("서울"))
+tar&lt;-URLencode(enc2utf8("서울시청"))
+geocityhall&lt;-geocode(tar)
+```
+]
+.pull-right[
+
+```r
+get_googlemap(loc, maptype = "roadmap",markers = geocityhall) %&gt;% ggmap()
+```
+
+![](class6_files/figure-html/unnamed-chunk-28-1.png)&lt;!-- --&gt;
+]
 
 ---
 
@@ -546,26 +575,8 @@ class: center, middle
 [Kormaps](https://rpubs.com/cardiomoon/222145)은 행정구역에 대한 `polygon` 정보를 미리 패키지화 한 것으로 인터렉티브 시각화를 지원하는 함수도 함께 제공하고 있습니다.
 ]
 .pull-right[
-![](https://raw.githubusercontent.com/mrchypark/dabrp_classnote2/master/notegen/img/kormap.png) 
+![](https://github.com/mrchypark/dabrp_classnote2/blob/master/notegen/img/kormaps.png?raw=true) 
 ]
-
----
-
-# ggmap
-# https://www.nceas.ucsb.edu/~frazier/RSpatialGuides/ggmap/ggmapCheatsheet.pdf
-devtools::install_github("dkahle/ggmap")
-library(ggmap)
-# for mac
-loc&lt;-"서울"
-tar&lt;-"서울시청"
-# for windows
-loc&lt;-URLencode(enc2utf8("서울"))
-tar&lt;-URLencode(enc2utf8("서울시청"))
-# output = c("latlon", "latlona", "more", "all")
-# 위경도만 / +주소 / +나라,우편번호등 추가 / + api 정보 전체
-geocityhall&lt;-geocode(tar)
-get_googlemap(loc,maptype = "roadmap",markers = geocityhall) %&gt;% ggmap()
-
 ---
 
 ## extra
@@ -605,7 +616,7 @@ p2_aaas = p2 + scale_fill_aaas()
 grid.arrange(p1_aaas, p2_aaas, ncol = 2)
 ```
 
-![](class6_files/figure-html/unnamed-chunk-28-1.png)&lt;!-- --&gt;
+![](class6_files/figure-html/unnamed-chunk-30-1.png)&lt;!-- --&gt;
 
 ---
 
@@ -631,7 +642,7 @@ p2_th2&lt;-p2 + theme_hc(bgcolor = "darkunica") +
 grid.arrange(p1_th1, p2_th2, ncol = 2)
 ```
 
-![](class6_files/figure-html/unnamed-chunk-30-1.png)&lt;!-- --&gt;
+![](class6_files/figure-html/unnamed-chunk-32-1.png)&lt;!-- --&gt;
 ]
 ---
 
@@ -657,7 +668,7 @@ ggplot(mtcars) +
   theme_classic(base_size = 16)
 ```
 
-![](class6_files/figure-html/unnamed-chunk-32-1.png)&lt;!-- --&gt;
+![](class6_files/figure-html/unnamed-chunk-34-1.png)&lt;!-- --&gt;
 ]
 .pull-right[
 
@@ -668,7 +679,7 @@ ggplot(mtcars) +
   theme_classic(base_size = 16)
 ```
 
-![](class6_files/figure-html/unnamed-chunk-33-1.png)&lt;!-- --&gt;
+![](class6_files/figure-html/unnamed-chunk-35-1.png)&lt;!-- --&gt;
 ]
 
 ---
