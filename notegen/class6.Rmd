@@ -715,10 +715,19 @@ ggedit(p)
     - [링크](https://cran.r-project.org/web/packages/ggfortify/vignettes/plot_lm.html)를 참고해서 `fit` 객체를 시각화해주세요. 링크의 2번째 그림을 따라하면 됩니다.
 ]
 .pull-right[
-```{r warning=F, message=F, echo=F}
-p <- ggplot(gapminder)
-
-# grid.arrange(plot1, plot2, plot3, plot4, nrow=2, ncol=2)
+```{r warning=F, message=F, echo=F, fig.height=3}
+library(ggfortify)
+library(data.table)
+chen<-fread("../recomen/chennel.csv")
+comp<-fread("../recomen/competitor.csv")
+comp$useDate <- comp$useDate %>% paste0(.,"01") %>% as.Date(format="%Y%m%d")
+p1 <- chen[,sum(useCnt),by=(chennel)] %>% ggplot(aes(chennel, V1)) + geom_bar(stat = "identity")
+p2 <- ggplot(comp[,.N,by=(useDate)], aes(x=useDate, y=N)) + geom_line() + scale_x_date(date_breaks="6 months")
+p3 <- ggplot(comp[,.N,by=.(useDate,partner)], aes(x=useDate, y=N, color=partner)) + geom_line() + scale_x_date(date_breaks="6 months") + theme(legend.position = "top")
+m <- lm(Petal.Width ~ ., data = iris)
+p4 <- autoplot(m, which = 1:6, ncol = 3, label.size = 3)
+grid.arrange(p1, p2, p3, ncol=3)
+p4
 ```
 ]
 
