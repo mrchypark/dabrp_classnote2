@@ -51,7 +51,7 @@ class: center, middle
 
 ## ggplot2란
 
-[The Grammar of Graphics](http://www.springer.com/us/book/9780387245447)를 따르는 방식으로 차트를 출력물 수준으로 만들 수 있게 보조해주는 패키지. 그래서 `GG`plot 이라고 이름을 지은 것이고, 상세한 동작방식은 [여기](http://vita.had.co.nz/papers/layered-grammar.pdf)를 참고하세요. 데이터를 기하 객체(geometric object)의 미적 속성(aesthetic attributes)에 연결하는 방법을 사용합니다.
+[The Grammar of Graphics](http://www.springer.com/us/book/9780387245447)를 따르는 방식으로 차트를 출력물 수준으로 만들 수 있게 보조해주는 패키지. 그래서 `GG`plot 이라고 이름을 지은 것이고, 상세한 동작방식은 [여기](http://vita.had.co.nz/papers/layered-grammar.pdf)를 참고하세요. 데이터를 기하 객체(geometric object)의 미적 속성(aesthetic attributes)에 연결하는 방법을 사용합니다. 
 
 .pull-left[
 
@@ -66,7 +66,15 @@ ggplot(data=mpg) +
 ![](class6_files/figure-html/unnamed-chunk-2-1.png)&lt;!-- --&gt;
 ]
 ---
+## 공부 자료
 
+- [패키지 공식문서](http://ggplot2.tidyverse.org/reference/index.html)
+- [cheat sheet](https://www.rstudio.com/wp-content/uploads/2016/11/ggplot2-cheatsheet-2.1.pdf)
+- [R for data science](http://r4ds.had.co.nz/data-visualisation.html#introduction-1)
+- [한글 자료 1](https://statkclee.github.io/R-ecology-lesson/kr/05-visualization-ggplot2.html)
+- [한글 자료 2](http://freesearch.pe.kr/archives/3134)
+
+---
 ## 용어 설명
 
 - 기하 객체(geometric object) : 차트를 구성할 수 있는 그림의 형태들. bar, dot, line 등이 있음. geom_*() 형태의 함수로 layer를 구성함.
@@ -418,7 +426,7 @@ p + aes(color = continent) + geom_point() + geom_smooth(lwd = 2, se = FALSE)
 
 ![](class6_files/figure-html/unnamed-chunk-20-1.png)&lt;!-- --&gt;
 ]
-.pull-left[
+.pull-right[
 
 ```r
 p + aes(group = continent)+ geom_point() + geom_smooth(lwd = 2, se = FALSE)
@@ -432,18 +440,46 @@ p + aes(group = continent)+ geom_point() + geom_smooth(lwd = 2, se = FALSE)
 ]
 ---
 
+## group으로 차트 나누어 그리기
+
+대륙을 기준으로 차트를 그룹지어 나누어 그릴 수 있습니다. `facet_*()` 함수를 참고하세요.
+
+.pull-left[
+
+```r
+(lp &lt;- ggplot(gapminder, aes(x = year, y = lifeExp)) + geom_point())
+```
+
+![](class6_files/figure-html/unnamed-chunk-22-1.png)&lt;!-- --&gt;
+]
+.pull-right[
+
+```r
+lp + facet_wrap(~ continent)
+```
+
+![](class6_files/figure-html/unnamed-chunk-23-1.png)&lt;!-- --&gt;
+]
+
+---
 ## 실습 2
 .pull-left[
 1. `gapminder`에서 `pop`의 히스토그램(histogram)을 그리세요.
-1. `continent`를 x축, `lifeExp`를 y축으로 하는 바이올린차트(violin)를 그리세요.
-1. 위의 그림에 평균 점을 파란색으로 추가하세요.
+1. `continent`를 x축, `lifeExp`를 y축으로 하는 바이올린차트(violin)를 그리고 평균을 파란색 점으로 추가하세요. 
+1. 각 `continent`별로 총 몇 개의 데이터가 있는지 세어 continent_freq를 만들고, bar 차트를 그리세요.
 1. Canada, Rwanda, Cambodia, Mexico 4 나라만 사용하여 x축은 year, y축은 lifeExp로 line 차트를 각 년도에 점을 추가하여 그리세요.
 ]
 
 .pull-right[
 
-![](class6_files/figure-html/unnamed-chunk-22-1.png)&lt;!-- --&gt;
+![](class6_files/figure-html/unnamed-chunk-24-1.png)&lt;!-- --&gt;
 ]
+
+---
+
+## extra
+
+[extra](https://www.ggplot2-exts.org/)는 ggplot2의 인기에 힘입어 다양한 추가 패키지가 개발되면서 관련 정보를 모아서 보여주는 곳입니다.
     </textarea>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
