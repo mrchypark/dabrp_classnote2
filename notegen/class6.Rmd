@@ -743,8 +743,29 @@ p4
 ]
 .pull-right[
 ```{r warning=F, message=F, echo=F}
+wifi<-fread("../data/wifi.csv")
+sw <- wifi[grep("^서울",`소재지도로명주소`), ]
+tar <- sw[,`설치시군구명`] %>% unique %>% paste0("서울특별시 ",.)
+latlon<-c()
+for (i in 1:length(tar)){
+  latlon<-rbind(latlon, geocode(tar[i]))
+}
 
-p <- ggplot(gapminder)
+sw<-sw[,.N,by=(`설치시군구명`)]
+tar<-cbind(tar,latlon) %>%
+  separate(tar, into=c("city","tar", sep=" ")) %>%
+  select(tar, lon, lat)
+
+names(sw)<-c("tar", "N")
+sw <- sw %>% left_join(tar)
+loc<-URLencode(enc2utf8("서울"))
+
+pg <- get_googlemap(loc, maptype = "roadmap", zoom = 11) %>% ggmap()
+p1 <- pg + goem_point(sw, aes(x=lat, y=lon, size=N))
+
+
+  
+
 
 # grid.arrange(plot1, plot2, plot3, plot4, nrow=2, ncol=2)
 ```
