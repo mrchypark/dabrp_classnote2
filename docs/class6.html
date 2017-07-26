@@ -225,6 +225,14 @@ p_point
 ![](class6_files/figure-html/unnamed-chunk-7-1.png)&lt;!-- --&gt;
 ]
 
+
+---
+
+## 실습 1의 코드 예
+
+```
+ ggplot(gapminder[gapminder$country=="Afghanistan",], aes(x=year, y=lifeExp)) + geom_line()
+```
 ---
 
 ## ggplot 내장 함수 사용시 장점
@@ -495,6 +503,28 @@ lp + facet_wrap(~ continent)
 
 ---
 
+## 실습 2의 코드 예
+
+```
+library(gridExtra)
+library(dplyr)
+
+p &lt;- ggplot(gapminder)
+
+plot1 &lt;- p + aes(x=pop) + geom_histogram()
+plot2 &lt;- p + aes(x=continent, y=lifeExp) + geom_violin() + stat_summary(color="blue")
+continent_freq &lt;- gapminder %&gt;% count(continent)
+plot3 &lt;- ggplot(continent_freq, aes(x = continent, y = n)) + geom_bar(stat = "identity")
+
+jCountries &lt;- c("Canada", "Rwanda", "Cambodia", "Mexico")
+plot4 &lt;- gapminder %&gt;% filter(country %in% jCountries) %&gt;%
+  ggplot(aes(x = year, y = lifeExp, color = country)) +
+  geom_line() + geom_point()
+
+grid.arrange(plot1, plot2, plot3, plot4, nrow=2, ncol=2)
+```
+
+---
 ## 만든 그래프 저장하기
 
 ggplot2을 이용해 출력한 차트는 2가지 방식으로 저장할 수 있습니다. 하나는 rstudio에서 제공하는 `GUI`방식이고, 다른 하나는 패키지에서 지원하는 `ggsave`함수를 사용하는 방식입니다.
@@ -634,6 +664,22 @@ get_googlemap(loc, maptype = "roadmap") %&gt;%
 .pull-right[
 ![](class6_files/figure-html/unnamed-chunk-30-1.png)&lt;!-- --&gt;
 ]
+
+---
+
+## 실습 3의 코드 예
+
+```
+library(data.table)
+wifi&lt;-fread("../data/wifi.csv")
+sw&lt;-wifi[grep("서울", 소재지도로명주소),.(관리기관명,위도,경도)]
+sw&lt;-unique(sw)
+names(sw)&lt;-c("ser","lat","lon")
+sw&lt;-data.frame(sw)
+
+get_googlemap(loc, maptype = "roadmap", zoom = 11) %&gt;% ggmap() + 
+  geom_point(data=sw, aes(x=lon, y=lat, color=ser)) + theme(legend.position="none")
+```
 
 ---
 ## 한국 `polygon` 지도 패키지 Kormaps
@@ -807,7 +853,7 @@ ggedit(p)
     - [링크](https://cran.r-project.org/web/packages/ggfortify/vignettes/plot_lm.html)를 참고해서 `fit` 객체를 시각화해주세요. 링크의 2번째 그림을 따라하면 됩니다.
 ]
 .pull-right[
-
+![](class6_files/figure-html/unnamed-chunk-38-1.png)&lt;!-- --&gt;![](class6_files/figure-html/unnamed-chunk-38-2.png)&lt;!-- --&gt;
 ]
 
 ---
