@@ -22,7 +22,7 @@ tran %>%
 ####################
 library(DBI)
 library(RSQLite)
-con <- dbConnect(RSQLite::SQLite(), dbname="./class3assignment/class3assignment.sqlite")
+con <- dbConnect(RSQLite::SQLite(), dbname="./recomen_data.sqlite")
 dbWriteTable(con, "tran", tran, overwrite=T)
 #### Problem 2 #####
 item<-fread("./recomen/item.csv", encoding = "UTF-8")
