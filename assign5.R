@@ -1,4 +1,4 @@
-if (!require(tidyverse)) install.packages("tidyverse") 
+ if (!require(tidyverse)) install.packages("tidyverse") 
 if (!require(data.table)) install.packages("data.table") 
 if (!require(arules)) install.packages("arules") 
 library(tidyverse)
@@ -32,7 +32,7 @@ tran
 
 # 3. transactions
 
-tem <- as.data.frame(tran[1:100000, ])
+tem <- as.data.frame(tran[1:1000, ])
 te <- as(split(tem[,"cate_3"], tem[,c("receiptNum")]), "transactions")
 te <- as(split(tran[,"cate_3"], tran[,c("receiptNum")]), "transactions")
 
