@@ -1,0 +1,20 @@
+library(nycflights13)
+library(DBI)
+library(RSQLite)
+data(package="nycflights13")
+ls('package:nycflights13')
+
+View(airlines)
+View(airports)
+View(flights)
+View(planes)
+View(weather)
+
+con <- dbConnect(RSQLite::SQLite(), dbname="sql_HW2.db")
+dbWriteTable(con, "airlines", airlines, overwrite=T)
+dbWriteTable(con, "airports", airports, overwrite=T)
+dbWriteTable(con, "flights", flights, overwrite=T)
+dbWriteTable(con, "planes", planes, overwrite=T)
+dbWriteTable(con, "weather", weather, overwrite=T)
+
+dbListTables(con)

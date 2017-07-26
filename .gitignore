@@ -4,5 +4,14 @@
 .Ruserdata
 recomen/tran.csv
 gsql.RData
+<<<<<<< HEAD
 *cache*
 .httr-oauth
+=======
+recomen/chennel.csv
+run_sam.R
+*cache*
+.httr-oauth
+assign6.R
+*ggsave*
+>>>>>>> 3a81adc8ae62e18ea6c0ac782027ba64c12bfe7e
