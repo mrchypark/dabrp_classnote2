@@ -4,6 +4,7 @@ author: "박찬엽"
 date: "2017년 7월 26일"
 output:
   xaringan::moon_reader:
+    seal: FALSE
     css: ["default", "class6.css"]
     lib_dir: libs
     nature:
@@ -11,13 +12,23 @@ output:
       highlightLines: true
       countIncrementalSlides: false
       ratio: '16:9'
-      navigation: click
+
 ---
 
 ```{r setup, include=FALSE}
 options(htmltools.dir.version = FALSE)
 knitr::opts_chunk$set(cache = T, fig.height = 5)
 ```
+
+class: center, middle, title-slide
+
+# 데이터 시각화와 전처리
+
+### 박찬엽
+
+### 2017년 7월 26일
+---
+
 
 목차
 
@@ -59,7 +70,8 @@ class: center, middle
 ```{r, eval=FALSE, message=FALSE, warning=FALSE, include=T}
 library(ggplot2)
 ggplot(data=mpg) + 
-  geom_point(aes(displ, hwy, colour = class))
+  geom_point(aes(displ, hwy, 
+                 colour = class))
 ```
 ]
 --
@@ -198,8 +210,9 @@ p_point
 
 .pull-right[
 ```{r}
-ggplot(gapminder, aes(x = log10(gdpPercap), y = lifeExp)) +
-  geom_point()
+ggplot(gapminder) +
+  geom_point(aes(x = log10(gdpPercap),
+                 y = lifeExp))
 ```
 ]
 
@@ -299,7 +312,9 @@ p_point + stat_smooth()
 ]
 .pull-right[
 ```{r}
-p_point + geom_smooth(lwd = 2, se = FALSE, method = "lm")
+p_point + geom_smooth(lwd = 2, 
+                      se = FALSE, 
+                      method = "lm")
 ```
 ]
 ---
@@ -308,13 +323,16 @@ p_point + geom_smooth(lwd = 2, se = FALSE, method = "lm")
 layer를 추가할 때 작성한 mapping 정보는 이후에 더해지는 layer에는 반영되지 않습니다. 그렇기 때문에 공통으로 사용하는 mapping 정보는 최초 `ggplot` 객체 생성시 `aes()` 함수로 반영해야 합니다.
 
 .pull-left[
-```{r}
-p_point_color + geom_smooth(lwd = 2, se = FALSE)
+```{r fig.height=3}
+p_point_color + 
+  geom_smooth(lwd = 2, se = FALSE)
 ```
 ]
 .pull-left[
-```{r}
-p + aes(color = continent) + geom_point() + geom_smooth(lwd = 1, se = FALSE)
+```{r fig.height=3}
+p + aes(color = continent) + 
+  geom_point() + 
+  geom_smooth(lwd = 1, se = FALSE)
 ```
 ]
 ---
@@ -323,13 +341,17 @@ p + aes(color = continent) + geom_point() + geom_smooth(lwd = 1, se = FALSE)
 group과 color가 어떻게 다르게 동작하는지 확인하세요.
 
 .pull-left[
-```{r}
-p + aes(color = continent) + geom_point() + geom_smooth(lwd = 2, se = FALSE)
+```{r fig.height=3}
+p + aes(color = continent) + 
+  geom_point() + 
+  geom_smooth(lwd = 2, se = FALSE)
 ```
 ]
 .pull-right[
-```{r}
-p + aes(group = continent)+ geom_point() + geom_smooth(lwd = 2, se = FALSE)
+```{r fig.height=3} 
+p + aes(group = continent) + 
+  geom_point() + 
+  geom_smooth(lwd = 2, se = FALSE)
 ```
 ]
 ---
@@ -340,7 +362,8 @@ p + aes(group = continent)+ geom_point() + geom_smooth(lwd = 2, se = FALSE)
 
 .pull-left[
 ```{r}
-(lp <- ggplot(gapminder, aes(x = year, y = lifeExp )) + geom_jitter())
+(lp <- ggplot(gapminder) + 
+   geom_jitter(aes(x = year, y = lifeExp )))
 ```
 ]
 .pull-right[
@@ -500,7 +523,10 @@ geocityhall<-geocode(tar)
 ]
 .pull-right[
 ```{r warning=F, message=F}
-(ggch <- get_googlemap(loc,maptype = "roadmap",markers = geocityhall) %>% ggmap())
+get_googlemap(loc,
+              maptype = "roadmap", 
+              markers = geocityhall) %>% 
+  ggmap()
 ```
 ]
 ---
@@ -589,12 +615,15 @@ grid.arrange(p1_aaas, p2_aaas, ncol = 2)
 .pull-left[
 ```{r}
 if (!require(ggthemes)){
-  devtools::install_github("jrnold/ggthemes")}
+devtools::install_github("jrnold/ggthemes")}
+
 library("ggthemes")
 
-p1_th1<-p1 + theme_hc() +
+p1_th1 <- p1 + 
+  theme_hc() +
   scale_colour_hc()
-p2_th2<-p2 + theme_hc(bgcolor = "darkunica") +
+p2_th2 <- p2 + 
+  theme_hc(bgcolor = "darkunica") +
   scale_fill_hc("darkunica")
 ```
 ]
@@ -621,7 +650,8 @@ library(ggrepel)
 ```{r}
 ggplot(mtcars) +
   geom_point(aes(wt, mpg), color = 'red') +
-  geom_text(aes(wt, mpg, label = rownames(mtcars))) +
+  geom_text(aes(wt, mpg, 
+                label = rownames(mtcars))) +
   theme_classic(base_size = 16)
 ```
 ]
@@ -629,7 +659,8 @@ ggplot(mtcars) +
 ```{r}
 ggplot(mtcars) +
   geom_point(aes(wt, mpg), color = 'red') +
-  geom_text_repel(aes(wt, mpg, label = rownames(mtcars))) +
+  geom_text_repel(aes(wt, mpg, 
+                label = rownames(mtcars))) +
   theme_classic(base_size = 16)
 ```
 ]
@@ -645,16 +676,16 @@ ggplot(mtcars) +
 ## ggally
 
 [ggally](http://ggobi.github.io/ggally/index.html) 또한 분석 결과 보고용 출력 수준 차트 생성 패키지로 ggfortify가 지원하지 않는 [network 분석](http://ggobi.github.io/ggally/index.html#example_us_airports)에 대해서 출력을 지원하고 있어서 소개합니다.
-
-![](http://ggobi.github.io/ggally/index_files/figure-html/ggnetworkmap-init-1.png)
+.pull-left[
+![](http://ggobi.github.io/ggally/index_files/figure-html/ggnetworkmap-init-1.png)]
 
 ---
 
 ## ggiraph
 
 [ggiraph](http://davidgohel.github.io/ggiraph/)는 javescript 기반 동적 차트 생성 패키지로 클릭이나 마우스 오버 등의 동작에서 인터렉티브한 동작을 작성할 수 있게 도와주는 기능이 있습니다. 
-
-![](https://github.com/mrchypark/dabrp_classnote2/blob/master/notegen/img/ggiraph.gif?raw=true)
+.pull-left[
+![](https://github.com/mrchypark/dabrp_classnote2/blob/master/notegen/img/ggiraph.gif?raw=true)]
 
 ---
 

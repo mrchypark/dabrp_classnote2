@@ -9,15 +9,18 @@
   </head>
   <body>
     <textarea id="source">
-class: center, middle, inverse, title-slide
+
+
+
+
+class: center, middle, title-slide
 
 # 데이터 시각화와 전처리
+
 ### 박찬엽
+
 ### 2017년 7월 26일
-
 ---
-
-
 
 
 목차
@@ -61,7 +64,8 @@ class: center, middle
 ```r
 library(ggplot2)
 ggplot(data=mpg) + 
-  geom_point(aes(displ, hwy, colour = class))
+  geom_point(aes(displ, hwy, 
+                 colour = class))
 ```
 ]
 --
@@ -249,8 +253,9 @@ p_point
 .pull-right[
 
 ```r
-ggplot(gapminder, aes(x = log10(gdpPercap), y = lifeExp)) +
-  geom_point()
+ggplot(gapminder) +
+  geom_point(aes(x = log10(gdpPercap),
+                 y = lifeExp))
 ```
 
 ![](class6_files/figure-html/unnamed-chunk-9-1.png)&lt;!-- --&gt;
@@ -378,7 +383,9 @@ p_point + stat_smooth()
 .pull-right[
 
 ```r
-p_point + geom_smooth(lwd = 2, se = FALSE, method = "lm")
+p_point + geom_smooth(lwd = 2, 
+                      se = FALSE, 
+                      method = "lm")
 ```
 
 ![](class6_files/figure-html/unnamed-chunk-17-1.png)&lt;!-- --&gt;
@@ -391,7 +398,8 @@ layer를 추가할 때 작성한 mapping 정보는 이후에 더해지는 layer�
 .pull-left[
 
 ```r
-p_point_color + geom_smooth(lwd = 2, se = FALSE)
+p_point_color + 
+  geom_smooth(lwd = 2, se = FALSE)
 ```
 
 ```
@@ -403,7 +411,9 @@ p_point_color + geom_smooth(lwd = 2, se = FALSE)
 .pull-left[
 
 ```r
-p + aes(color = continent) + geom_point() + geom_smooth(lwd = 1, se = FALSE)
+p + aes(color = continent) + 
+  geom_point() + 
+  geom_smooth(lwd = 1, se = FALSE)
 ```
 
 ```
@@ -420,7 +430,9 @@ group과 color가 어떻게 다르게 동작하는지 확인하세요.
 .pull-left[
 
 ```r
-p + aes(color = continent) + geom_point() + geom_smooth(lwd = 2, se = FALSE)
+p + aes(color = continent) + 
+  geom_point() + 
+  geom_smooth(lwd = 2, se = FALSE)
 ```
 
 ```
@@ -432,7 +444,9 @@ p + aes(color = continent) + geom_point() + geom_smooth(lwd = 2, se = FALSE)
 .pull-right[
 
 ```r
-p + aes(group = continent)+ geom_point() + geom_smooth(lwd = 2, se = FALSE)
+p + aes(group = continent) + 
+  geom_point() + 
+  geom_smooth(lwd = 2, se = FALSE)
 ```
 
 ```
@@ -450,7 +464,8 @@ p + aes(group = continent)+ geom_point() + geom_smooth(lwd = 2, se = FALSE)
 .pull-left[
 
 ```r
-(lp &lt;- ggplot(gapminder, aes(x = year, y = lifeExp )) + geom_jitter())
+(lp &lt;- ggplot(gapminder) + 
+   geom_jitter(aes(x = year, y = lifeExp )))
 ```
 
 ![](class6_files/figure-html/unnamed-chunk-22-1.png)&lt;!-- --&gt;
@@ -593,7 +608,10 @@ geocityhall&lt;-geocode(tar)
 .pull-right[
 
 ```r
-(ggch &lt;- get_googlemap(loc,maptype = "roadmap",markers = geocityhall) %&gt;% ggmap())
+get_googlemap(loc,
+              maptype = "roadmap", 
+              markers = geocityhall) %&gt;% 
+  ggmap()
 ```
 
 ![](class6_files/figure-html/unnamed-chunk-29-1.png)&lt;!-- --&gt;
@@ -679,12 +697,15 @@ grid.arrange(p1_aaas, p2_aaas, ncol = 2)
 
 ```r
 if (!require(ggthemes)){
-  devtools::install_github("jrnold/ggthemes")}
+devtools::install_github("jrnold/ggthemes")}
+
 library("ggthemes")
 
-p1_th1&lt;-p1 + theme_hc() +
+p1_th1 &lt;- p1 + 
+  theme_hc() +
   scale_colour_hc()
-p2_th2&lt;-p2 + theme_hc(bgcolor = "darkunica") +
+p2_th2 &lt;- p2 + 
+  theme_hc(bgcolor = "darkunica") +
   scale_fill_hc("darkunica")
 ```
 ]
@@ -716,7 +737,8 @@ library(ggrepel)
 ```r
 ggplot(mtcars) +
   geom_point(aes(wt, mpg), color = 'red') +
-  geom_text(aes(wt, mpg, label = rownames(mtcars))) +
+  geom_text(aes(wt, mpg, 
+                label = rownames(mtcars))) +
   theme_classic(base_size = 16)
 ```
 
@@ -727,7 +749,8 @@ ggplot(mtcars) +
 ```r
 ggplot(mtcars) +
   geom_point(aes(wt, mpg), color = 'red') +
-  geom_text_repel(aes(wt, mpg, label = rownames(mtcars))) +
+  geom_text_repel(aes(wt, mpg, 
+                label = rownames(mtcars))) +
   theme_classic(base_size = 16)
 ```
 
@@ -745,16 +768,16 @@ ggplot(mtcars) +
 ## ggally
 
 [ggally](http://ggobi.github.io/ggally/index.html) 또한 분석 결과 보고용 출력 수준 차트 생성 패키지로 ggfortify가 지원하지 않는 [network 분석](http://ggobi.github.io/ggally/index.html#example_us_airports)에 대해서 출력을 지원하고 있어서 소개합니다.
-
-![](http://ggobi.github.io/ggally/index_files/figure-html/ggnetworkmap-init-1.png)
+.pull-left[
+![](http://ggobi.github.io/ggally/index_files/figure-html/ggnetworkmap-init-1.png)]
 
 ---
 
 ## ggiraph
 
 [ggiraph](http://davidgohel.github.io/ggiraph/)는 javescript 기반 동적 차트 생성 패키지로 클릭이나 마우스 오버 등의 동작에서 인터렉티브한 동작을 작성할 수 있게 도와주는 기능이 있습니다. 
-
-![](https://github.com/mrchypark/dabrp_classnote2/blob/master/notegen/img/ggiraph.gif?raw=true)
+.pull-left[
+![](https://github.com/mrchypark/dabrp_classnote2/blob/master/notegen/img/ggiraph.gif?raw=true)]
 
 ---
 
@@ -806,8 +829,7 @@ ggedit(p)
 "highlightStyle": "github",
 "highlightLines": true,
 "countIncrementalSlides": false,
-"ratio": "16:9",
-"navigation": "click"
+"ratio": "16:9"
 });
 if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {window.dispatchEvent(new Event('resize'));});</script>
 
