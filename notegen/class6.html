@@ -23,18 +23,21 @@ class: center, middle, inverse, title-slide
 목차
 
 1. 과제 확인
-    - kmeans
-    - 회귀분석
-    - 연관분석
-    
+
 1. ggplot2
-    - + 연산자
     - 그림을 그리는 구조
-    - 요소별 
-        - geom
-        - 
-        
+    - gapminder
+    - layer 다루기
+    - 저장하기
+    - 실습
+
+1. 한국 지도 그리기
+    - 좌표계와 지도 데이터
+    - ggmap으로 배경 받기
+    - kormap으로 shp 데이터 경험하기
+
 1. ggplot2+extra
+1. 과제
 ---
 
 ## 과제 확인
@@ -381,7 +384,7 @@ p_point + geom_smooth(lwd = 2, se = FALSE, method = "lm")
 ![](class6_files/figure-html/unnamed-chunk-17-1.png)&lt;!-- --&gt;
 ]
 ---
-## 색정보를 전체에 반형하기
+## 색정보를 전체에 반영하기
 
 layer를 추가할 때 작성한 mapping 정보는 이후에 더해지는 layer에는 반영되지 않습니다. 그렇기 때문에 공통으로 사용하는 mapping 정보는 최초 `ggplot` 객체 생성시 `aes()` 함수로 반영해야 합니다.
 
@@ -543,7 +546,36 @@ class: center, middle
 
 [ggmap](https://www.nceas.ucsb.edu/~frazier/RSpatialGuides/ggmap/ggmapCheatsheet.pdf)은 구글 지도를 배경으로 ggplot을 사용할 수 있게 해주는 패키지로 내부적으로 모두 ggplot의 함수를 사용해서 문법이 호환됩니다.
 
+![](class6_files/figure-html/unnamed-chunk-27-1.png)&lt;!-- --&gt;
+
+---
+
+## geocoding
+
+[geocoding](http://lumiamitie.github.io/r/geocoding-with-r/) 이란 글자로 이루어져있는 주소를 위경도로 바꾸는 것을 뜻합니다. 반대로 반대로 위경도로 구성된 위치정보를 그 위치의 대표값(주소, 건물 이름 등)으로 바꾸는 것도 가능합니다.
+
+`ggmap`은 `geocode()` 함수를 제공하고 있습니다.
+
+
+
+--
+
+```
+geocode(location, output = "latlon", source = "google")
+```
+
+- location : 주소나 건물 이름에 해당하는 변환하고자 하는 값입니다.
+- output  : "latlon", "latlona", "more", "all"의 4가지 옵션이 있으며 뒤로 갈수록 정보가 상세합니다.
+- source : 구글의 공개된 API를 사용한다는 뜻으로 대량으로 사용하기 위해서는 api-key를 등록해야 하거나 돈을 지불해야 할 수 있습니다.
+
+---
+
+## ggmap으로 ggplot 객체로 만들기
+
 .pull-left[
+
+`get_googlemap()` 함수는 google 지도를 `ggmap 객체`로 가져오는 함수입니다. 그래서 추가적으로 `ggmap()`함수를 이용해서 `ggplot 객체`로 변환해야 합니다. windows는 인코딩 문제가 있어서 `URLencode(enc2utf8("장소"))`의 형태로 사용해야 합니다.
+
 
 ```r
 if (!require("ggmap"))
@@ -561,12 +593,11 @@ geocityhall&lt;-geocode(tar)
 .pull-right[
 
 ```r
-get_googlemap(loc,maptype = "roadmap",markers = geocityhall) %&gt;% ggmap()
+(ggch &lt;- get_googlemap(loc,maptype = "roadmap",markers = geocityhall) %&gt;% ggmap())
 ```
 
-![](class6_files/figure-html/unnamed-chunk-28-1.png)&lt;!-- --&gt;
+![](class6_files/figure-html/unnamed-chunk-29-1.png)&lt;!-- --&gt;
 ]
-
 ---
 
 ## 실습 3
@@ -583,7 +614,7 @@ get_googlemap(loc, maptype = "roadmap") %&gt;%
 ]
 
 .pull-right[
-![](class6_files/figure-html/unnamed-chunk-29-1.png)&lt;!-- --&gt;
+![](class6_files/figure-html/unnamed-chunk-30-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -637,7 +668,7 @@ p2_aaas = p2 + scale_fill_aaas()
 grid.arrange(p1_aaas, p2_aaas, ncol = 2)
 ```
 
-![](class6_files/figure-html/unnamed-chunk-31-1.png)&lt;!-- --&gt;
+![](class6_files/figure-html/unnamed-chunk-32-1.png)&lt;!-- --&gt;
 
 ---
 
@@ -663,7 +694,7 @@ p2_th2&lt;-p2 + theme_hc(bgcolor = "darkunica") +
 grid.arrange(p1_th1, p2_th2, ncol = 2)
 ```
 
-![](class6_files/figure-html/unnamed-chunk-33-1.png)&lt;!-- --&gt;
+![](class6_files/figure-html/unnamed-chunk-34-1.png)&lt;!-- --&gt;
 ]
 ---
 
@@ -689,7 +720,7 @@ ggplot(mtcars) +
   theme_classic(base_size = 16)
 ```
 
-![](class6_files/figure-html/unnamed-chunk-35-1.png)&lt;!-- --&gt;
+![](class6_files/figure-html/unnamed-chunk-36-1.png)&lt;!-- --&gt;
 ]
 .pull-right[
 
@@ -700,7 +731,7 @@ ggplot(mtcars) +
   theme_classic(base_size = 16)
 ```
 
-![](class6_files/figure-html/unnamed-chunk-36-1.png)&lt;!-- --&gt;
+![](class6_files/figure-html/unnamed-chunk-37-1.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -742,6 +773,33 @@ ggedit(p)
 ---
 
 ## 과제
+
+.pull-left[
+1. "./recomen" 폴더에 있는 데이터를 사용해 주세요.
+    - "chennel.csv"를 사용해서 x축은 `chennel`, y축은 각 체널별 사용량의 합으로 bar 차트를 그려주세요.
+    - "competitor.csv"를 사용해서 x축은 `useDate`, y축은 그 달의 데이터 수로 line 차트를 그려주세요
+    - 위와 같은 조건에서 `partner` 별로 라인과 색을 구분해서 그려주세요.
+    - 축 데이터가 날짜인 경우 `scale_x_date()` 함수를 참고하세요.
+1. `ggfortify` 패키지와 과제 5에서 진행한 회귀분석을 사용해 주세요.
+    - [링크](https://cran.r-project.org/web/packages/ggfortify/vignettes/plot_lm.html)를 참고해서 `fit` 객체를 시각화해주세요. 링크의 2번째 그림을 따라하면 됩니다.
+]
+.pull-right[
+
+]
+
+---
+
+## 과제 계속
+.pull-left[
+1. "./data/wifi.csv" 데이터를 사용해주세요.
+    - 서울중 각 구에 wifi가 몇개 잇는지 세고 각 구 이름으로 geocoding한 위치에 갯수를 size로 하는 버블 차트를 그려주세요.
+    - 시도를 기준으로 위와 같은 버블 차트를 그려주세요.
+    - 시도를 기준으로 wifi의 수가 기간에 따라 얼마나 늘어났는지 확인할 수 있는 라인 차트를 그려주세요.
+    - `서비스제공사명`을 기준으로 통신 3사가 아닌 제공사는 기타로 처리하고, 여러 개로 작성된 것은 각 개수 만큼 분리하여 독립 wifi로 처리하여 위의 차트를 `서비스제공사명`으로 그룹지어서 그려주세요. 총 4개 차트가 함께 나오면 됩니다.
+]
+.pull-right[
+
+]
     </textarea>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
 <script>var slideshow = remark.create({
