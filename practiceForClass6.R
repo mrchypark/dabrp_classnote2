@@ -50,3 +50,41 @@ p4
 p4 <- gapminder %>% filter(country %in% jCountries) %>%
   ggplot(aes(x=year, y=lifeExp, color = country)) + geom_line()+ geom_point()
 p4
+################################################################################
+
+dir.create("../ggsave", showWarnings = F)
+for(i in 1:length(unique(gapminder$country))){
+  gapminder %>% filter(country == gapminder$country[i]) %>%
+    ggplot(aes(x = year, y = lifeExp, color = country)) +
+    geom_line() + geom_point() +
+    ggsave(paste0("./ggsave/",gapminder$country[i],".png"))
+  # print(paste0(i," / ",length(unique(gapminder$country))))
+}
+###############################################################################
+
+if (!require("ggmap"))
+{devtools::install_github("dkahle/ggmap")}
+library(ggmap)
+# for mac
+loc<-"서울"
+tar<-"서울시청"
+# for windows
+loc<-URLencode(enc2utf8("서울"))
+tar<-URLencode(enc2utf8("서울시청"))
+geocityhall<-geocode(tar)
+get_googlemap(loc,maptype = "roadmap", markers = geocityhall) %>% 
+  ggmap()
+
+wifi <- fread("./data/wifi.csv")
+head(wifi)
+
+get_googlemap(loc,
+              maptype = "roadmap", 
+              markers = geocityhall) %>% ggmap()
+
+get_googlemap(center=loc, zoom = 11) %>% ggmap()
+
+get_googlemap(loc, maptype = "roadmap") %>% 
+  ggmap() + 
+  geom_point(data, aes(x=lon, y=lat))
+
