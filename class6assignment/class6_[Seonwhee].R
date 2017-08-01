@@ -30,6 +30,8 @@ Seoul = grep("(서울)+", wifi$소재지도로명주소)
 Seoul_wifi <- wifi[Seoul,]
 library(DBI)
 library(RSQLite)
+library(ggmap)
+loc<-"서울"
 con <- dbConnect(RSQLite::SQLite(), dbname="./wifi_data.sqlite")
 dbWriteTable(con, "wifi_Seoul", Seoul_wifi, overwrite=T)
 head(Seoul_wifi)
@@ -38,9 +40,19 @@ District <- unique(Seoul_wifi$설치시군구명)
 Seoul_wifi_district = data.frame()
 for(Gu in District){
   cc <- count(Seoul_wifi, vars=sprintf("%s", Gu))
+  District_office <-geocode(sprintf("%s", Gu), output = "latlon")
+  cc <- cbind(cc, District_office)
   Seoul_wifi_district = rbind(Seoul_wifi_district, cc)
+  
 }
-print(Seoul_wifi_district)
+print(cc)
+head(District_office)
+head(Seoul_wifi_district)
+dbWriteTable(con, "Seoul_wifi_district", Seoul_wifi_district, overwrite=T)
+geodata <- get_googlemap(loc,maptype = "roadmap") %>% 
+  ggmap() + geom_point(data=Seoul_wifi_district, aes(x=lon, y=lat))
+
+geodata  
 
 Cities <- unique(wifi$설치시도명)
 Cities
@@ -50,3 +62,5 @@ for(city in Cities){
   City_wifi = rbind(City_wifi, cc)
 }
 print(City_wifi)
+
+
