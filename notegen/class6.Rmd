@@ -5,14 +5,13 @@ date: "2017년 7월 26일"
 output:
   xaringan::moon_reader:
     seal: FALSE
-    css: ["default", "class6.css"]
+    css: ["default", "class.css"]
     lib_dir: libs
     nature:
       highlightStyle: github
       highlightLines: true
       countIncrementalSlides: false
       ratio: '16:9'
-
 ---
 
 ```{r setup, include=FALSE}

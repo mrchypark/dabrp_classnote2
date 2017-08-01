@@ -1,0 +1,77 @@
+---
+title: "R을 활용한 보고서 작성 및 자동화"
+author: "박찬엽"
+date: "2017년 8월 2일"
+output:
+  xaringan::moon_reader:
+    seal: FALSE
+    css: ["default", "class.css"]
+    lib_dir: libs
+    nature:
+      highlightStyle: github
+      highlightLines: true
+      countIncrementalSlides: false
+      ratio: '16:9'
+      
+---
+
+```{r setup, include=FALSE}
+options(htmltools.dir.version = FALSE)
+knitr::opts_chunk$set(cache = T, fig.height = 5)
+```
+
+class: center, middle, title-slide
+
+# R을 활용한 보고서 작성 및 자동화
+
+### 박찬엽
+
+### 2017년 8월 2일
+---
+
+
+목차
+
+1. 과제 확인
+
+1. rmarkdown
+    - rmarkdown 이란
+    - Markdown 문법
+    - Rmd에서 다른 점
+    - html 문서 만들기
+    - 인터넷에 공유하기
+    - word 문서로 만들기
+    - pdf 문서로 만들기
+
+1. 스케줄러
+
+1. 과제
+---
+
+## 과제 확인
+
+[과제 확인](https://github.com/mrchypark/dabrp_classnote2/blob/master/assign6.R)
+
+---
+class: center, middle
+
+<iframe width="100%" height="100%" src="http://rmarkdown.rstudio.com/"> 실패 </iframe>
+
+---
+
+## rmarkdown 이란
+
+`rmarkdown` 패키지는 `Rmd` 양식의 문서를 `knitr`과 `pandoc`으로 다양한 문서양식으로 생성해주는 패키지입니다. `knitr` 역시 `Rmd`양식의 문서를 `md`양식의 문서로 바꿔주는 패키지이며, `pandoc` 생태계에 의지해 `md`양식을 다양한 양식 문서로 만들 수 있게 되었습니다.
+
+![](http://rmarkdown.rstudio.com/lesson-images/RMarkdownFlow.png)
+
+`knitr`은 `rmd`양식의 문서 중 R엔진의 처리가 필요한 계산과 이미지 생성등의 작업을 자동화하여 md의 문법과 위치에 맞게 md문서를 생성해 줍니다. 그리고 pandoc이 YAML양식의 해더 정보를 바탕으로 다른 포멧의 저작물로 변환해주는 것입니다. 변환 가능한 저작물로는 notebook, html, pdf, word, odt등의 문서와 ioslides, reveal.js, Slidy, Beamer의 슬라이드, 대쉬보드, 웹페이지, 책 등 입니다.
+
+---
+
+## md와 rmd
+
+`markdown`은 
+
+![](https://upload.wikimedia.org/wikipedia/commons/thumb/4/48/Markdown-mark.svg/1200px-Markdown-mark.svg.png)
+
