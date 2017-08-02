@@ -34,7 +34,6 @@ library(DBI)
 library(RSQLite)
 library(ggmap)
 
-
 Geo_wifi <- function(DATA, NAME, loc, SCALE){
   wifi_district <- data.frame()
   labels = unique(NAME)

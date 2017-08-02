@@ -1,0 +1,59 @@
+---
+title: "Untitled"
+author: "Seonwhee"
+date: "August 2, 2017"
+output: 
+  html_document:
+    theme: yeti
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## R Markdown
+
+This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
+
+When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
+
+```{r cars}
+summary(cars)
+```
+
+## Including Plots
+
+You can also embed plots, for example:
+
+```{r pressure, echo=FALSE}
+library(tidyverse)
+library(data.table)
+library(arules)
+library(ggmap)
+wifi <- fread("./data/wifi.csv")
+Seoul = grep("^(서울)+", wifi$소재지도로명주소)
+Seoul_wifi <- wifi[Seoul,]
+library(DBI)
+library(RSQLite)
+library(ggmap)
+
+Geo_wifi <- function(DATA, NAME, loc, SCALE){
+  wifi_district <- data.frame()
+  labels = unique(NAME)
+  for(label in labels){
+    ct <- count(DATA, vars=sprintf("%s", label))
+    #ct <- NAME[,.N, by=(sprintf("%s", label))]
+    geo <-geocode(sprintf("%s", label), output = "latlon")
+    ct <- cbind(ct, geo)
+    wifi_district = rbind(wifi_district, ct)
+  }
+  get_googlemap(loc, zoom = SCALE, maptype = "roadmap") %>% 
+    ggmap() + geom_point(data=wifi_district, aes(x=lon, y=lat, color=vars, size=n))
+}
+```
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+
+```{r show, echo=FALSE}
+Geo_wifi(Seoul_wifi, Seoul_wifi$설치시군구명, "서울", 11)
+```
