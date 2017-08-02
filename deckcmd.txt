@@ -1,0 +1,1 @@
+system("./decktape-1.0.0/phantomjs ./decktape-1.0.0/decktape.js ./docs/class7.html ./Metarials/class7.pdf")

@@ -22,6 +22,7 @@ knitr::opts_chunk$set(cache = T, fig.height = 5)
 class: center, middle, title-slide
 
 # 데이터 시각화와 전처리
+### https://mrchypark.github.io/dabrp_classnote2/class6
 
 ### 박찬엽
 
@@ -575,8 +576,8 @@ get_googlemap(loc, maptype = "roadmap") %>%
 .pull-right[
 ```{r warning=F, message=F, echo=F}
 library(data.table)
-wifi<-fread("../data/wifi.csv")
-sw<-wifi[grep("서울", 소재지도로명주소),.(관리기관명,위도,경도)]
+wifi<-fread("../data/wifi.csv", encoding = "UTF-8")
+sw<-wifi[grep("서울", `소재지도로명주소`),.(`관리기관명`,`위도`,`경도`)]
 sw<-unique(sw)
 names(sw)<-c("ser","lat","lon")
 sw<-data.frame(sw)

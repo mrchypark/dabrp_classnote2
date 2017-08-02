@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="author" content="박찬엽" />
     <link href="libs/remark-css/example.css" rel="stylesheet" />
-    <link rel="stylesheet" href="class6.css" type="text/css" />
+    <link rel="stylesheet" href="class.css" type="text/css" />
   </head>
   <body>
     <textarea id="source">
@@ -16,6 +16,7 @@
 class: center, middle, title-slide
 
 # 데이터 시각화와 전처리
+### https://mrchypark.github.io/dabrp_classnote2/class6
 
 ### 박찬엽
 
@@ -51,7 +52,6 @@ class: center, middle, title-slide
 class: center, middle
 
 ![](https://github.com/tidyverse/ggplot2/blob/master/man/figures/logo.png?raw=true)
-
 
 ---
 
@@ -125,6 +125,10 @@ if (!require("gapminder")){install.packages("gapminder")}
 
 ```
 ## Loading required package: gapminder
+```
+
+```
+## Warning: package 'gapminder' was built under R version 3.4.1
 ```
 
 ```r
@@ -708,6 +712,39 @@ Kormaps는 설치 및 사용이 까다로워서 함께 진행하도록 하겠습
 
 ```r
 if (!require(ggsci)) devtools::install_github("road2stat/ggsci")
+```
+
+```
+## Loading required package: ggsci
+```
+
+```
+## Warning in library(package, lib.loc = lib.loc, character.only = TRUE,
+## logical.return = TRUE, : there is no package called 'ggsci'
+```
+
+```
+## Downloading GitHub repo road2stat/ggsci@master
+## from URL https://api.github.com/repos/road2stat/ggsci/zipball/master
+```
+
+```
+## Installing ggsci
+```
+
+```
+## "C:/PROGRA~1/R/R-34~1.0/bin/x64/R" --no-site-file --no-environ --no-save  \
+##   --no-restore --quiet CMD INSTALL  \
+##   "C:/Users/mrchypark/AppData/Local/Temp/RtmpUbq3OO/devtoolseb431343eee/road2stat-ggsci-e92209e"  \
+##   --library="C:/Users/mrchypark/Documents/R/win-library/3.4"  \
+##   --install-tests
+```
+
+```
+## 
+```
+
+```r
 library(ggsci)
 library(gridExtra)
 data("diamonds")
@@ -744,7 +781,39 @@ grid.arrange(p1_aaas, p2_aaas, ncol = 2)
 ```r
 if (!require(ggthemes)){
 devtools::install_github("jrnold/ggthemes")}
+```
 
+```
+## Loading required package: ggthemes
+```
+
+```
+## Warning in library(package, lib.loc = lib.loc, character.only = TRUE,
+## logical.return = TRUE, : there is no package called 'ggthemes'
+```
+
+```
+## Downloading GitHub repo jrnold/ggthemes@master
+## from URL https://api.github.com/repos/jrnold/ggthemes/zipball/master
+```
+
+```
+## Installing ggthemes
+```
+
+```
+## "C:/PROGRA~1/R/R-34~1.0/bin/x64/R" --no-site-file --no-environ --no-save  \
+##   --no-restore --quiet CMD INSTALL  \
+##   "C:/Users/mrchypark/AppData/Local/Temp/RtmpUbq3OO/devtoolseb4673d7784/jrnold-ggthemes-6ff7f15"  \
+##   --library="C:/Users/mrchypark/Documents/R/win-library/3.4"  \
+##   --install-tests
+```
+
+```
+## 
+```
+
+```r
 library("ggthemes")
 
 p1_th1 &lt;- p1 + 
@@ -773,6 +842,39 @@ grid.arrange(p1_th1, p2_th2, ncol = 2)
 ```r
 if (!require(ggrepel)){
   devtools::install_github("slowkow/ggrepel")}
+```
+
+```
+## Loading required package: ggrepel
+```
+
+```
+## Warning in library(package, lib.loc = lib.loc, character.only = TRUE,
+## logical.return = TRUE, : there is no package called 'ggrepel'
+```
+
+```
+## Downloading GitHub repo slowkow/ggrepel@master
+## from URL https://api.github.com/repos/slowkow/ggrepel/zipball/master
+```
+
+```
+## Installing ggrepel
+```
+
+```
+## "C:/PROGRA~1/R/R-34~1.0/bin/x64/R" --no-site-file --no-environ --no-save  \
+##   --no-restore --quiet CMD INSTALL  \
+##   "C:/Users/mrchypark/AppData/Local/Temp/RtmpUbq3OO/devtoolseb464b648f1/slowkow-ggrepel-fd15d0a"  \
+##   --library="C:/Users/mrchypark/Documents/R/win-library/3.4"  \
+##   --install-tests
+```
+
+```
+## 
+```
+
+```r
 library(ggrepel)
 ```
 
