@@ -31,36 +31,30 @@ Seoul_wifi <- wifi[Seoul,]
 library(DBI)
 library(RSQLite)
 library(ggmap)
-loc<-"서울"
+
+Geo_wifi <- function(DATA, NAME, loc, SCALE){
+  wifi_district <- data.frame()
+  labels = unique(NAME)
+  for(label in labels){
+    ct <- count(DATA, vars=sprintf("%s", label))
+    geo <-geocode(sprintf("%s", label), output = "latlon")
+    ct <- cbind(ct, geo)
+    wifi_district = rbind(wifi_district, ct)
+  }
+  get_googlemap(loc, scale = SCALE, maptype = "roadmap") %>% 
+    ggmap() + geom_point(data=wifi_district, aes(x=lon, y=lat, color=vars, size=n))
+}
+
 con <- dbConnect(RSQLite::SQLite(), dbname="./wifi_data.sqlite")
 dbWriteTable(con, "wifi_Seoul", Seoul_wifi, overwrite=T)
-head(Seoul_wifi)
-District <- unique(Seoul_wifi$설치시군구명)
 
-Seoul_wifi_district = data.frame()
-for(Gu in District){
-  cc <- count(Seoul_wifi, vars=sprintf("%s", Gu))
-  District_office <-geocode(sprintf("%s", Gu), output = "latlon")
-  cc <- cbind(cc, District_office)
-  Seoul_wifi_district = rbind(Seoul_wifi_district, cc)
-  
-}
-print(cc)
-head(District_office)
-head(Seoul_wifi_district)
-dbWriteTable(con, "Seoul_wifi_district", Seoul_wifi_district, overwrite=T)
-geodata <- get_googlemap(loc,maptype = "roadmap") %>% 
-  ggmap() + geom_point(data=Seoul_wifi_district, aes(x=lon, y=lat))
-
-geodata  
-
-Cities <- unique(wifi$설치시도명)
-Cities
-City_wifi <- data.frame()
-for(city in Cities){
-  cc <- count(wifi, vars=sprintf("%s", city))
-  City_wifi = rbind(City_wifi, cc)
-}
-print(City_wifi)
+#서울중 각 구에 wifi가 몇개 잇는지 세고 각 구 이름으로 geocoding한 위치에 갯수를 size로 하는 버블 차트를 그려주세요.
+#시도를 기준으로 위와 같은 버블 차트를 그려주세요.
+Geo_wifi(Seoul_wifi, Seoul_wifi$설치시군구명, "서울", 2)
+Geo_wifi(wifi, wifi$설치시도명, "대한민국", 1)
 
 
+#시도를 기준으로 wifi의 수가 기간에 따라 얼마나 늘어났는지 확인할 수 있는 라인 차트를 그려주세요.
+unique(wifi$설치년월)
+
+#서비스제공사명을 기준으로 통신 3사가 아닌 제공사는 기타로 처리하고, 여러 개로 작성된 것은 각 개수 만큼 분리하여 독립 wifi로 처리하여 위의 차트를 서비스제공사명으로 그룹지어서 그려주세요. 총 4개 차트가 함께 나오면 됩니다.
