@@ -9,6 +9,7 @@ run_sam.R
 *cache*
 .httr-oauth
 <<<<<<< HEAD
+<<<<<<< HEAD
 assign5.R
 *sqlite
 =======
@@ -27,3 +28,10 @@ assign6.R
 *.html
 *.svg
 *.gif
+=======
+assign7.R
+*ggsave*
+>>>>>>> 850aed63263ea3b791a7cd2ea9682d40821f6a4a
+docs
+decktape*
+class7sample
