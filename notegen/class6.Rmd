@@ -58,7 +58,6 @@ class: center, middle
 
 ![](https://github.com/tidyverse/ggplot2/blob/master/man/figures/logo.png?raw=true)
 
-
 ---
 
 ## ggplot2란
