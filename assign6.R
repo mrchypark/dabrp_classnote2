@@ -118,8 +118,6 @@ swc %>%
   geom_line(aes(y = cumsum(N)))
 
 ## 과제 계속 1.4
-if (!require(stringr)) install.packages("stringr")
-library(stingr)
 
 sw<-wifi
 dat<-sw$서비스제공사명 %>% unique
