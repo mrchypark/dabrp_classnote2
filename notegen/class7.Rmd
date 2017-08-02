@@ -49,7 +49,7 @@ class: center, middle, title-slide
 
 ## 과제 확인
 
-[과제 확인](https://github.com/mrchypark/dabrp_classnote2/blob/master/assign6.R)
+[과제 확인](http://github.com/mrchypark/dabrp_classnote2/blob/master/assign6.R)
 
 ---
 class: center, middle
