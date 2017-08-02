@@ -1,1 +1,1 @@
-system("./decktape-1.0.0/phantomjs ./decktape-1.0.0/decktape.js ./notegen/class7.html ./Metarials/class7.pdf")
+ ./phantomjs decktape.js ../notegen/class7.html ../Materials/class7.pdf

@@ -23,6 +23,7 @@ knitr::opts_chunk$set(cache = T, fig.height = 5)
 class: center, middle, title-slide
 
 # R을 활용한 보고서 작성 및 자동화
+### <https://mrchypark.github.io/dabrp_classnote2/class7>
 
 ## 박찬엽
 
@@ -49,7 +50,7 @@ class: center, middle, title-slide
 
 ## 과제 확인
 
-[과제 확인](http://github.com/mrchypark/dabrp_classnote2/blob/master/assign6.R)
+[과제 확인](https://github.com/mrchypark/dabrp_classnote2/blob/master/assign6.R)
 
 ---
 class: center, middle
