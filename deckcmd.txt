@@ -1,1 +1,1 @@
- ./phantomjs decktape.js ../notegen/class7.html ../Materials/class7.pdf
+ ./phantomjs decktape.js ../notegen/class6.html ../Materials/class6.pdf

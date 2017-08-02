@@ -7,8 +7,6 @@ library(data.table)
 library(ggfortify)
 library(ggmap)
 
-
-
 # 과제 1
 
 ## 데이터 불러오기
@@ -88,7 +86,6 @@ pg <- get_googlemap(loc, maptype = "roadmap", zoom = 7) %>% ggmap()
 pg + geom_point(data=sw, aes(x=lon, y=lat, size=N), color="blue", alpha=0.3)
 
 ## 과제 계속 1.3
-
 library(lubridate)
 
 sw<-wifi
