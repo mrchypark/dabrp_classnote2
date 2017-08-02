@@ -1,0 +1,36 @@
+---
+title: "워드스타일생성용"
+author: "박찬엽"
+date: "2017년 5월 25일"
+output: word_document
+bibliography: ref.bib
+scl: nature.csl
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+# 제목 단계    
+## 제목 단계    
+### 제목 단계    
+#### 제목 단계    
+##### 제목 단계    
+###### 제목 단계    
+
+<https://rstudio-pubs-static.s3.amazonaws.com/212277_e850d43731b04fb5b9e8e4014f4879ef.html> R markdown의 모든 예시가 있는 파일입니다.
+
+
+여기는 내용입니다. <http://rmarkdown.rstudio.com> 하이퍼 링크도 있습니다.
+
+인용은 이런식[@Nobody06]으로 작성한다. 맨 아래에 참고문헌이 있다. 
+
+```
+블록은 여기입니다.
+```
+
+그래프는 아래를 사용합니다.:
+
+```{r pressure, echo=FALSE}
+plot(pressure)
+```
