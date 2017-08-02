@@ -5,14 +5,13 @@ date: "2017년 7월 26일"
 output:
   xaringan::moon_reader:
     seal: FALSE
-    css: ["default", "class6.css"]
+    css: ["default", "class.css"]
     lib_dir: libs
     nature:
       highlightStyle: github
       highlightLines: true
       countIncrementalSlides: false
       ratio: '16:9'
-
 ---
 
 ```{r setup, include=FALSE}
@@ -58,7 +57,6 @@ class: center, middle, title-slide
 class: center, middle
 
 ![](https://github.com/tidyverse/ggplot2/blob/master/man/figures/logo.png?raw=true)
-
 
 ---
 
@@ -186,6 +184,14 @@ p_point
 ```
 ]
 
+
+---
+
+## 실습 1의 코드 예
+
+```
+ ggplot(gapminder[gapminder$country=="Afghanistan",], aes(x=year, y=lifeExp)) + geom_line()
+```
 ---
 
 ## ggplot 내장 함수 사용시 장점
@@ -405,6 +411,28 @@ grid.arrange(plot1, plot2, plot3, plot4, nrow=2, ncol=2)
 
 ---
 
+## 실습 2의 코드 예
+
+```
+library(gridExtra)
+library(dplyr)
+
+p <- ggplot(gapminder)
+
+plot1 <- p + aes(x=pop) + geom_histogram()
+plot2 <- p + aes(x=continent, y=lifeExp) + geom_violin() + stat_summary(color="blue")
+continent_freq <- gapminder %>% count(continent)
+plot3 <- ggplot(continent_freq, aes(x = continent, y = n)) + geom_bar(stat = "identity")
+
+jCountries <- c("Canada", "Rwanda", "Cambodia", "Mexico")
+plot4 <- gapminder %>% filter(country %in% jCountries) %>%
+  ggplot(aes(x = year, y = lifeExp, color = country)) +
+  geom_line() + geom_point()
+
+grid.arrange(plot1, plot2, plot3, plot4, nrow=2, ncol=2)
+```
+
+---
 ## 만든 그래프 저장하기
 
 ggplot2을 이용해 출력한 차트는 2가지 방식으로 저장할 수 있습니다. 하나는 rstudio에서 제공하는 `GUI`방식이고, 다른 하나는 패키지에서 지원하는 `ggsave`함수를 사용하는 방식입니다.
@@ -547,6 +575,23 @@ get_googlemap(loc, maptype = "roadmap") %>%
 .pull-right[
 ```{r warning=F, message=F, echo=F}
 library(data.table)
+wifi<-fread("../data/wifi.csv", encoding = "UTF-8")
+sw<-wifi[grep("서울", `소재지도로명주소`),.(`관리기관명`,`위도`,`경도`)]
+sw<-unique(sw)
+names(sw)<-c("ser","lat","lon")
+sw<-data.frame(sw)
+
+get_googlemap(loc, maptype = "roadmap", zoom = 11) %>% ggmap() + 
+  geom_point(data=sw, aes(x=lon, y=lat, color=ser)) + theme(legend.position="none")
+```
+]
+
+---
+
+## 실습 3의 코드 예
+
+```
+library(data.table)
 wifi<-fread("../data/wifi.csv")
 sw<-wifi[grep("서울", 소재지도로명주소),.(관리기관명,위도,경도)]
 sw<-unique(sw)
@@ -556,7 +601,6 @@ sw<-data.frame(sw)
 get_googlemap(loc, maptype = "roadmap", zoom = 11) %>% ggmap() + 
   geom_point(data=sw, aes(x=lon, y=lat, color=ser)) + theme(legend.position="none")
 ```
-]
 
 ---
 ## 한국 `polygon` 지도 패키지 Kormaps
@@ -715,10 +759,19 @@ ggedit(p)
     - [링크](https://cran.r-project.org/web/packages/ggfortify/vignettes/plot_lm.html)를 참고해서 `fit` 객체를 시각화해주세요. 링크의 2번째 그림을 따라하면 됩니다.
 ]
 .pull-right[
-```{r warning=F, message=F, echo=F}
-p <- ggplot(gapminder)
-
-# grid.arrange(plot1, plot2, plot3, plot4, nrow=2, ncol=2)
+```{r warning=F, message=F, echo=F, fig.height=3}
+library(ggfortify)
+library(data.table)
+chen<-fread("../recomen/chennel.csv")
+comp<-fread("../recomen/competitor.csv")
+comp$useDate <- comp$useDate %>% paste0(.,"01") %>% as.Date(format="%Y%m%d")
+p1 <- chen[,sum(useCnt),by=(chennel)] %>% ggplot(aes(chennel, V1)) + geom_bar(stat = "identity")
+p2 <- ggplot(comp[,.N,by=(useDate)], aes(x=useDate, y=N)) + geom_line() + scale_x_date(date_breaks="6 months")
+p3 <- ggplot(comp[,.N,by=.(useDate,partner)], aes(x=useDate, y=N, color=partner)) + geom_line() + scale_x_date(date_breaks="6 months") + theme(legend.position = "top")
+m <- lm(Petal.Width ~ ., data = iris)
+p4 <- autoplot(m, which = 1:6, ncol = 3, label.size = 3)
+grid.arrange(p1, p2, p3, ncol=3)
+p4
 ```
 ]
 
@@ -733,10 +786,120 @@ p <- ggplot(gapminder)
     - `서비스제공사명`을 기준으로 통신 3사가 아닌 제공사는 기타로 처리하고, 여러 개로 작성된 것은 각 개수 만큼 분리하여 독립 wifi로 처리하여 위의 차트를 `서비스제공사명`으로 그룹지어서 그려주세요. 총 4개 차트가 함께 나오면 됩니다.
 ]
 .pull-right[
-```{r warning=F, message=F, echo=F}
+```{r warning=F, message=F, echo=F, fig.height=6}
+library(gridExtra)
+library(tidyverse)
+wifi<-fread("../data/wifi.csv", encoding="UTF-8")
 
-p <- ggplot(gapminder)
+sw <- wifi[grep("^서울",`소재지도로명주소`), ]
+tar <- sw[,`설치시군구명`] %>% unique %>% paste0("서울특별시 ",.)
+latlon<-c()
+for (i in 1:length(tar)){
+  latlon<-rbind(latlon, geocode(tar[i]))
+}
 
-# grid.arrange(plot1, plot2, plot3, plot4, nrow=2, ncol=2)
+sw<-sw[,.N,by=(`설치시군구명`)]
+tar<-cbind(tar,latlon) %>%
+  separate(tar, into=c("city","tar", sep=" ")) %>%
+  select(tar, lon, lat)
+
+names(sw)<-c("tar", "N")
+sw <- sw %>% left_join(tar)
+loc<-URLencode(enc2utf8("서울"))
+
+pg <- get_googlemap(loc, maptype = "roadmap", zoom = 11) %>% ggmap()
+p1<-pg + geom_point(data=sw, aes(x=lon, y=lat, size=N), color="blue", alpha=0.3)
+
+
+sw <- wifi
+sw[`설치시도명`=="겅상남도",`설치시도명`:="경상남도"]
+tar <- sw[,`설치시도명`] %>% unique
+latlon<-c()
+for (i in 1:length(tar)){
+  latlon<-rbind(latlon, geocode(tar[i]))
+}
+
+sw<-sw %>% 
+  group_by(`설치시도명`) %>%
+  summarise(N=n())
+tar<-cbind(tar,latlon)
+
+names(sw)<-c("tar", "N")
+sw <- sw %>% left_join(tar)
+loc<-URLencode(enc2utf8("대한민국"))
+
+pg <- get_googlemap(loc, maptype = "roadmap", zoom = 7) %>% ggmap()
+p2<-pg + geom_point(data=sw, aes(x=lon, y=lat, size=N), color="blue", alpha=0.3)
+
+library(lubridate)
+
+sw<-wifi
+dat<-sw$설치년월 %>% unique
+da<-dat
+da[nchar(da)==7]<-paste0(da[nchar(da)==7],"-01")
+da[nchar(da)==10]<-gsub("\\.","-",da[nchar(da)==10])
+da[da=="190001"]<-""
+da[nchar(da)==4]<-paste0(da[nchar(da)==4],"-01-01")
+da[nchar(da)==6 & grepl("^[[:digit:]]*$",da)]<-paste0(da[nchar(da)==6 & grepl("^[[:digit:]]*$",da)],"01")
+da[nchar(da)==6& grepl("[a-z]$",da)]<-paste0(da[nchar(da)==6& grepl("[a-z]$",da)],"-01")
+da[nchar(da)==6]<-paste0(substr(da[nchar(da)==6],5,6),"-",substr(da[nchar(da)==6],1,3),"-01")
+da[da=="2013-Sep"]<-"2013-Sep-01"
+da <- data.frame(ori=dat,tar=ymd(da))
+
+swc <- sw %>% left_join(da,by=c(`설치년월`="ori"))
+swc <- swc[!is.na(swc$tar),]
+
+p3<-swc %>%
+  select(`설치시도명`,tar) %>%
+  mutate(ym=paste0(year(tar),sprintf("%02d",month(tar)))) %>%
+  group_by(`설치시도명`,ym) %>%
+  summarise(N=n()) %>%
+  mutate(ym=as.Date(paste0(ym,"01"),format="%Y%m%d")) %>%
+  as.data.frame() %>%
+  ggplot(aes(x=ym, y=N, color=`설치시도명`)) +
+  geom_line(aes(y = cumsum(N))) 
+
+
+sw<-wifi
+dat<-sw$서비스제공사명 %>% unique
+dac<-dat
+dac<-data.frame(ori=dat,tar=dac,sk=NA,kt=NA,lg=NA,etc=NA)
+dac$tar<-tolower(dac$tar)
+dac$tar<-gsub("skt","skcom",dac$tar)
+dac[grep("sk",dac$tar),"sk"]<-T
+dac[grep("kt|케이티",dac$tar),"kt"]<-T
+dac[grep("lg|u\\+|엘지",dac$tar),"lg"]<-T
+dac[is.na(dac$sk)&is.na(dac$kt)&is.na(dac$lg),"etc"]<-T
+
+swc <- sw %>% left_join(dac[,-2],by=c(`서비스제공사명`="ori"))
+
+tem<-swc %>%
+  select(`설치시도명`,
+         `와이파이SSID`,
+         `설치년월`,
+         sk:etc) %>%
+  gather(key="comp",
+         value="TF",
+         -c(`설치년월`,
+            `설치시도명`,
+            `와이파이SSID`))
+
+tem<-tem[!is.na(tem$TF),]
+
+temc <- tem %>% 
+  left_join(da,by=c(`설치년월`="ori"))
+
+p4<-temc %>%
+  select(`설치시도명`,tar,comp) %>%
+  mutate(ym=paste0(year(tar),sprintf("%02d",month(tar)))) %>%
+  group_by(`설치시도명`,comp,ym) %>%
+  summarise(N=n()) %>%
+  mutate(ym=as.Date(paste0(ym,"01"),format="%Y%m%d")) %>%
+  as.data.frame() %>%
+  ggplot(aes(x=ym, y=N, color=`설치시도명`)) +
+  geom_line(aes(y = cumsum(N))) +
+  facet_wrap(~ comp)
+
+grid.arrange(p1, p2, p3, p4, nrow=2, ncol=2)
 ```
 ]

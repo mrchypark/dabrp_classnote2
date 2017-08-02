@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta name="author" content="박찬엽" />
     <link href="libs/remark-css/example.css" rel="stylesheet" />
-    <link rel="stylesheet" href="class6.css" type="text/css" />
+    <link rel="stylesheet" href="class.css" type="text/css" />
   </head>
   <body>
     <textarea id="source">
@@ -51,7 +51,6 @@ class: center, middle, title-slide
 class: center, middle
 
 ![](https://github.com/tidyverse/ggplot2/blob/master/man/figures/logo.png?raw=true)
-
 
 ---
 
@@ -125,6 +124,10 @@ if (!require("gapminder")){install.packages("gapminder")}
 
 ```
 ## Loading required package: gapminder
+```
+
+```
+## Warning: package 'gapminder' was built under R version 3.4.1
 ```
 
 ```r
@@ -225,6 +228,14 @@ p_point
 ![](class6_files/figure-html/unnamed-chunk-7-1.png)&lt;!-- --&gt;
 ]
 
+
+---
+
+## 실습 1의 코드 예
+
+```
+ ggplot(gapminder[gapminder$country=="Afghanistan",], aes(x=year, y=lifeExp)) + geom_line()
+```
 ---
 
 ## ggplot 내장 함수 사용시 장점
@@ -495,6 +506,28 @@ lp + facet_wrap(~ continent)
 
 ---
 
+## 실습 2의 코드 예
+
+```
+library(gridExtra)
+library(dplyr)
+
+p &lt;- ggplot(gapminder)
+
+plot1 &lt;- p + aes(x=pop) + geom_histogram()
+plot2 &lt;- p + aes(x=continent, y=lifeExp) + geom_violin() + stat_summary(color="blue")
+continent_freq &lt;- gapminder %&gt;% count(continent)
+plot3 &lt;- ggplot(continent_freq, aes(x = continent, y = n)) + geom_bar(stat = "identity")
+
+jCountries &lt;- c("Canada", "Rwanda", "Cambodia", "Mexico")
+plot4 &lt;- gapminder %&gt;% filter(country %in% jCountries) %&gt;%
+  ggplot(aes(x = year, y = lifeExp, color = country)) +
+  geom_line() + geom_point()
+
+grid.arrange(plot1, plot2, plot3, plot4, nrow=2, ncol=2)
+```
+
+---
 ## 만든 그래프 저장하기
 
 ggplot2을 이용해 출력한 차트는 2가지 방식으로 저장할 수 있습니다. 하나는 rstudio에서 제공하는 `GUI`방식이고, 다른 하나는 패키지에서 지원하는 `ggsave`함수를 사용하는 방식입니다.
@@ -636,6 +669,22 @@ get_googlemap(loc, maptype = "roadmap") %&gt;%
 ]
 
 ---
+
+## 실습 3의 코드 예
+
+```
+library(data.table)
+wifi&lt;-fread("../data/wifi.csv")
+sw&lt;-wifi[grep("서울", 소재지도로명주소),.(관리기관명,위도,경도)]
+sw&lt;-unique(sw)
+names(sw)&lt;-c("ser","lat","lon")
+sw&lt;-data.frame(sw)
+
+get_googlemap(loc, maptype = "roadmap", zoom = 11) %&gt;% ggmap() + 
+  geom_point(data=sw, aes(x=lon, y=lat, color=ser)) + theme(legend.position="none")
+```
+
+---
 ## 한국 `polygon` 지도 패키지 Kormaps
 
 .pull-left[
@@ -662,6 +711,39 @@ Kormaps는 설치 및 사용이 까다로워서 함께 진행하도록 하겠습
 
 ```r
 if (!require(ggsci)) devtools::install_github("road2stat/ggsci")
+```
+
+```
+## Loading required package: ggsci
+```
+
+```
+## Warning in library(package, lib.loc = lib.loc, character.only = TRUE,
+## logical.return = TRUE, : there is no package called 'ggsci'
+```
+
+```
+## Downloading GitHub repo road2stat/ggsci@master
+## from URL https://api.github.com/repos/road2stat/ggsci/zipball/master
+```
+
+```
+## Installing ggsci
+```
+
+```
+## "C:/PROGRA~1/R/R-34~1.0/bin/x64/R" --no-site-file --no-environ --no-save  \
+##   --no-restore --quiet CMD INSTALL  \
+##   "C:/Users/mrchypark/AppData/Local/Temp/RtmpUbq3OO/devtoolseb431343eee/road2stat-ggsci-e92209e"  \
+##   --library="C:/Users/mrchypark/Documents/R/win-library/3.4"  \
+##   --install-tests
+```
+
+```
+## 
+```
+
+```r
 library(ggsci)
 library(gridExtra)
 data("diamonds")
@@ -698,7 +780,39 @@ grid.arrange(p1_aaas, p2_aaas, ncol = 2)
 ```r
 if (!require(ggthemes)){
 devtools::install_github("jrnold/ggthemes")}
+```
 
+```
+## Loading required package: ggthemes
+```
+
+```
+## Warning in library(package, lib.loc = lib.loc, character.only = TRUE,
+## logical.return = TRUE, : there is no package called 'ggthemes'
+```
+
+```
+## Downloading GitHub repo jrnold/ggthemes@master
+## from URL https://api.github.com/repos/jrnold/ggthemes/zipball/master
+```
+
+```
+## Installing ggthemes
+```
+
+```
+## "C:/PROGRA~1/R/R-34~1.0/bin/x64/R" --no-site-file --no-environ --no-save  \
+##   --no-restore --quiet CMD INSTALL  \
+##   "C:/Users/mrchypark/AppData/Local/Temp/RtmpUbq3OO/devtoolseb4673d7784/jrnold-ggthemes-6ff7f15"  \
+##   --library="C:/Users/mrchypark/Documents/R/win-library/3.4"  \
+##   --install-tests
+```
+
+```
+## 
+```
+
+```r
 library("ggthemes")
 
 p1_th1 &lt;- p1 + 
@@ -727,6 +841,39 @@ grid.arrange(p1_th1, p2_th2, ncol = 2)
 ```r
 if (!require(ggrepel)){
   devtools::install_github("slowkow/ggrepel")}
+```
+
+```
+## Loading required package: ggrepel
+```
+
+```
+## Warning in library(package, lib.loc = lib.loc, character.only = TRUE,
+## logical.return = TRUE, : there is no package called 'ggrepel'
+```
+
+```
+## Downloading GitHub repo slowkow/ggrepel@master
+## from URL https://api.github.com/repos/slowkow/ggrepel/zipball/master
+```
+
+```
+## Installing ggrepel
+```
+
+```
+## "C:/PROGRA~1/R/R-34~1.0/bin/x64/R" --no-site-file --no-environ --no-save  \
+##   --no-restore --quiet CMD INSTALL  \
+##   "C:/Users/mrchypark/AppData/Local/Temp/RtmpUbq3OO/devtoolseb464b648f1/slowkow-ggrepel-fd15d0a"  \
+##   --library="C:/Users/mrchypark/Documents/R/win-library/3.4"  \
+##   --install-tests
+```
+
+```
+## 
+```
+
+```r
 library(ggrepel)
 ```
 
@@ -807,7 +954,7 @@ ggedit(p)
     - [링크](https://cran.r-project.org/web/packages/ggfortify/vignettes/plot_lm.html)를 참고해서 `fit` 객체를 시각화해주세요. 링크의 2번째 그림을 따라하면 됩니다.
 ]
 .pull-right[
-
+![](class6_files/figure-html/unnamed-chunk-38-1.png)&lt;!-- --&gt;![](class6_files/figure-html/unnamed-chunk-38-2.png)&lt;!-- --&gt;
 ]
 
 ---
@@ -821,7 +968,7 @@ ggedit(p)
     - `서비스제공사명`을 기준으로 통신 3사가 아닌 제공사는 기타로 처리하고, 여러 개로 작성된 것은 각 개수 만큼 분리하여 독립 wifi로 처리하여 위의 차트를 `서비스제공사명`으로 그룹지어서 그려주세요. 총 4개 차트가 함께 나오면 됩니다.
 ]
 .pull-right[
-
+![](class6_files/figure-html/unnamed-chunk-39-1.png)&lt;!-- --&gt;
 ]
     </textarea>
 <script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
