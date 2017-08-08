@@ -1,7 +1,6 @@
 ---
 author: "박찬엽"
 date: "2017년 5월 25일"
-mainfont: NanumGothic
 output: 
   pdf_document:
     latex_engine: xelatex
@@ -9,6 +8,8 @@ output:
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+library(showtext)
+font.add.google("Noto Sans")
 ```
 
 ## 한글 이 출력되는 테스트입니다.

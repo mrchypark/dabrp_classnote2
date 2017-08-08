@@ -82,7 +82,7 @@ names(sw)<-c("tar", "N")
 sw <- sw %>% left_join(tar)
 loc<-URLencode(enc2utf8("대한민국"))
 
-pg <- get_googlemap(loc, maptype = "roadmap", zoom = 7) %>% ggmap()
+pg <- get_googlemap(loc, maptype = "roadmap",zoom =  7) %>% ggmap()
 pg + geom_point(data=sw, aes(x=lon, y=lat, size=N), color="blue", alpha=0.3)
 
 ## 과제 계속 1.3
@@ -128,9 +128,7 @@ dac[grep("lg|u\\+|엘지",dac$tar),"lg"]<-T
 dac[is.na(dac$sk)&is.na(dac$kt)&is.na(dac$lg),"etc"]<-T
 
 # for chk code
-dac[grep("케이티",dac$tar),"tar"]
-
-dac[!is.na(dac$sk),c("tar","sk","kt","lg")]
+dac[grep("kt",dac$tar),"tar"]
 dac[!is.na(dac$kt),c("tar","sk","kt","lg")]
 
 swc <- sw %>% left_join(dac[,-2],by=c(`서비스제공사명`="ori"))
