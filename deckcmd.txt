@@ -1,1 +1,3 @@
- ./phantomjs decktape.js ../notegen/class6.html ../Materials/class6.pdf
+## start shell from rstudio
+cd decktape
+./phantomjs decktape.js ../notegen/class6.html ../Materials/class6.pdf
