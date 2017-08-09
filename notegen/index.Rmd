@@ -1,0 +1,22 @@
+---
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### 실무 빅데이터 분석을 위한 SQL과 R의 활용 CAMP 2기 수업자료
+
+[블로그 돌아가기](https://mrchypark.github.io/)
+
+[1주차(pdf)](https://github.com/mrchypark/dabrp_classnote2/raw/master/Materials/1.project_github.pdf)    
+[2주차](https://mrchypark.github.io/dabrp_classnote2/class2)    
+[3주차](https://mrchypark.github.io/dabrp_classnote2/class3)    
+[4주차](https://mrchypark.github.io/dabrp_classnote2/class4)    
+[5주차](https://mrchypark.github.io/dabrp_classnote2/class5)    
+[6주차](https://mrchypark.github.io/dabrp_classnote2/class6)    
+[7주차](https://mrchypark.github.io/dabrp_classnote2/class7)    
+[8주차](https://mrchypark.github.io/dabrp_classnote2/class8)    
+
+[1]: http://www.fastcampus.co.kr/data_camp_dabrp/
