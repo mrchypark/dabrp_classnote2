@@ -8,5 +8,30 @@ recomen/chennel.csv
 run_sam.R
 *cache*
 .httr-oauth
+<<<<<<< HEAD
+<<<<<<< HEAD
+assign5.R
+*sqlite
+=======
+assign6.R
+*ggsave*
+>>>>>>> 3a81adc8ae62e18ea6c0ac782027ba64c12bfe7e
+*.csv
+*.prj
+*.sbn
+*.css
+*.shp
+*.exe
+*.json
+*.js
+*.png
+*.html
+*.svg
+*.gif
+=======
 assign7.R
 *ggsave*
+>>>>>>> 850aed63263ea3b791a7cd2ea9682d40821f6a4a
+docs
+decktape*
+class7sample
