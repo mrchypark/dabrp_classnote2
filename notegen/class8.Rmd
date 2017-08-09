@@ -36,8 +36,8 @@ class: center, middle, title-slide
 
 1. shiny
     1. 웹 어플리케이션 기초
-    1. input 과 output
-    1. 
+    1. shiny의 입출력
+    1. 반응형을 위한 도구
 
 1. htmlwidget
 
